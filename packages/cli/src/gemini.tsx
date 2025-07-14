@@ -137,6 +137,13 @@ export async function main() {
     }
   }
 
+  // 隐藏开始界面的提示信息
+  settings.setValue(
+    SettingScope.User,
+    'hideTips',
+    'true'
+  );
+
   setMaxSizedBoxDebugging(config.getDebugMode());
 
   await config.initialize();

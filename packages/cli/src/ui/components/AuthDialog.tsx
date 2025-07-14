@@ -61,19 +61,19 @@ export function AuthDialog({
   });
   const items = [
     {
-      label: 'Login with Google',
+      label: '使用Google登录',
       value: AuthType.LOGIN_WITH_GOOGLE,
     },
     ...(process.env.CLOUD_SHELL === 'true'
       ? [
           {
-            label: 'Use Cloud Shell user credentials',
+            label: '使用Cloud Shell用户凭证',
             value: AuthType.CLOUD_SHELL,
           },
         ]
       : []),
     {
-      label: 'Use Gemini API Key',
+      label: '使用Gemini API密钥',
       value: AuthType.USE_GEMINI,
     },
     { label: 'Vertex AI', value: AuthType.USE_VERTEX_AI },
@@ -134,9 +134,9 @@ export function AuthDialog({
       padding={1}
       width="100%"
     >
-      <Text bold>Get started</Text>
+      <Text bold>开始使用</Text>
       <Box marginTop={1}>
-        <Text>How would you like to authenticate for this project?</Text>
+        <Text>您想如何为此项目进行认证？</Text>
       </Box>
       <Box marginTop={1}>
         <RadioButtonSelect
@@ -152,10 +152,10 @@ export function AuthDialog({
         </Box>
       )}
       <Box marginTop={1}>
-        <Text color={Colors.Gray}>(Use Enter to select)</Text>
+        <Text color={Colors.Gray}>(按Enter键选择)</Text>
       </Box>
       <Box marginTop={1}>
-        <Text>Terms of Services and Privacy Notice for Gemini CLI</Text>
+        <Text>Gemini CLI的服务条款和隐私声明</Text>
       </Box>
       <Box marginTop={1}>
         <Text color={Colors.AccentBlue}>

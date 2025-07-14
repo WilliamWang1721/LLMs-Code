@@ -36,6 +36,7 @@ import { ThemeDialog } from './components/ThemeDialog.js';
 import { AuthDialog } from './components/AuthDialog.js';
 import { AuthInProgress } from './components/AuthInProgress.js';
 import { EditorSettingsDialog } from './components/EditorSettingsDialog.js';
+import { LanguageServiceDialog, Language, Service } from './components/LanguageServiceDialog.js';
 import { Colors } from './colors.js';
 import { Help } from './components/Help.js';
 import { loadHierarchicalGeminiMemory } from '../config/config.js';
@@ -101,6 +102,11 @@ const App = ({ config, settings, startupWarnings = [], version }: AppProps) => {
   const [updateMessage, setUpdateMessage] = useState<string | null>(null);
   const { stdout } = useStdout();
   const nightly = version.includes('nightly');
+  
+  // 语言和服务选择状态
+  const [showLanguageServiceDialog, setShowLanguageServiceDialog] = useState<boolean>(true);
+  const [selectedLanguage, setSelectedLanguage] = useState<Language | null>(null);
+  const [selectedService, setSelectedService] = useState<Service | null>(null);
 
   useEffect(() => {
     checkForUpdates().then(setUpdateMessage);
@@ -647,6 +653,39 @@ const App = ({ config, settings, startupWarnings = [], version }: AppProps) => {
   const initialPrompt = useMemo(() => config.getQuestion(), [config]);
   const geminiClient = config.getGeminiClient();
 
+  // 处理语言和服务选择完成
+  const handleLanguageServiceComplete = useCallback((language: string, service: string) => {
+    // 如果language或service为空字符串，表示用户按下了Esc键取消选择
+    if (!language || !service) {
+      setShowLanguageServiceDialog(false);
+      // 清除认证错误信息，避免显示"Authentication timed out"错误
+      setAuthError(null);
+      openAuthDialog();
+      return;
+    }
+    
+    setSelectedLanguage(language as Language);
+    setSelectedService(service as Service);
+    setShowLanguageServiceDialog(false);
+    
+    // 如果选择了Gemini服务，则打开认证对话框
+    if (service === Service.GEMINI) {
+      // 清除认证错误信息
+      setAuthError(null);
+      openAuthDialog();
+    } else {
+      // 对于其他服务，这里可以添加相应的处理逻辑
+      // 目前仅显示一个提示信息
+      addItem(
+        {
+          type: MessageType.INFO,
+          text: `${language === Language.CHINESE ? '已选择' : 'Selected'} ${service} ${language === Language.CHINESE ? '服务，此功能尚未实现' : 'service, this feature is not yet implemented'}`,
+        },
+        Date.now(),
+      );
+    }
+  }, [addItem, openAuthDialog]);
+
   useEffect(() => {
     if (
       initialPrompt &&
@@ -656,6 +695,7 @@ const App = ({ config, settings, startupWarnings = [], version }: AppProps) => {
       !isThemeDialogOpen &&
       !isEditorDialogOpen &&
       !showPrivacyNotice &&
+      !showLanguageServiceDialog &&
       geminiClient?.isInitialized?.()
     ) {
       submitQuery(initialPrompt);
@@ -669,6 +709,7 @@ const App = ({ config, settings, startupWarnings = [], version }: AppProps) => {
     isThemeDialogOpen,
     isEditorDialogOpen,
     showPrivacyNotice,
+    showLanguageServiceDialog,
     geminiClient,
   ]);
 
@@ -797,6 +838,10 @@ const App = ({ config, settings, startupWarnings = [], version }: AppProps) => {
                 }
                 terminalWidth={mainAreaWidth}
               />
+            </Box>
+          ) : showLanguageServiceDialog ? (
+            <Box flexDirection="column">
+              <LanguageServiceDialog onComplete={handleLanguageServiceComplete} />
             </Box>
           ) : isAuthenticating ? (
             <>
