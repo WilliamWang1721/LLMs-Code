@@ -1,10 +1,10 @@
 # Memory Tool (`save_memory`)
 
-This document describes the `save_memory` tool for the Gemini CLI.
+This document describes the `save_memory` tool for the LLMs Code.
 
 ## Description
 
-Use `save_memory` to save and recall information across your Gemini CLI sessions. With `save_memory`, you can direct the CLI to remember key details across sessions, providing personalized and directed assistance.
+Use `save_memory` to save and recall information across your LLMs Code sessions. With `save_memory`, you can direct the CLI to remember key details across sessions, providing personalized and directed assistance.
 
 ### Arguments
 

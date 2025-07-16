@@ -1,6 +1,6 @@
 # Shell Tool (`run_shell_command`)
 
-This document describes the `run_shell_command` tool for the Gemini CLI.
+This document describes the `run_shell_command` tool for the LLMs Code.
 
 ## Description
 

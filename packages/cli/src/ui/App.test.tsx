@@ -191,6 +191,24 @@ vi.mock('./components/Header.js', () => ({
   Header: vi.fn(() => null),
 }));
 
+vi.mock('./components/LanguageServiceDialog.js', () => ({
+  LanguageServiceDialog: vi.fn(({ onComplete }) => {
+    // Immediately call onComplete to simulate user selection
+    // and bypass the dialog.
+    onComplete('English', 'Gemini');
+    return null; // Render nothing
+  }),
+  Language: {
+    CHINESE: 'Chinese',
+    ENGLISH: 'English',
+  },
+  Service: {
+    GEMINI: 'Gemini',
+    OPENAI: 'OpenAI',
+    CLAUDE: 'Claude',
+  },
+}));
+
 describe('App UI', () => {
   let mockConfig: MockServerConfig;
   let mockSettings: LoadedSettings;

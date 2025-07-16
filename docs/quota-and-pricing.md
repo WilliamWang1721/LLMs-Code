@@ -1,8 +1,8 @@
-# Gemini CLI: Quotas and Pricing
+# LLMs Code: Quotas and Pricing
 
-Your Gemini CLI quotas and pricing depend on the type of account you use to authenticate with Google. Additionally, both quotas and pricing may be calculated differently based on the model version, requests, and tokens used. A summary of model usage is available through the `/stats` command and presented on exit at the end of a session. See [privacy and terms](./tos-privacy.md) for details on Privacy policy and Terms of Service. Note: published prices are list price; additional negotiated commercial discounting may apply.
+Your LLMs Code quotas and pricing depend on the type of account you use to authenticate with Google. Additionally, both quotas and pricing may be calculated differently based on the model version, requests, and tokens used. A summary of model usage is available through the `/stats` command and presented on exit at the end of a session. See [privacy and terms](./tos-privacy.md) for details on Privacy policy and Terms of Service. Note: published prices are list price; additional negotiated commercial discounting may apply.
 
-This article outlines the specific quotas and pricing applicable to the Gemini CLI when using different authentication methods.
+This article outlines the specific quotas and pricing applicable to the LLMs Code when using different authentication methods.
 
 ## 1. Log in with Google (Gemini Code Assist Free Tier)
 

@@ -1,6 +1,6 @@
 # Web Fetch Tool (`web_fetch`)
 
-This document describes the `web_fetch` tool for the Gemini CLI.
+This document describes the `web_fetch` tool for the LLMs Code.
 
 ## Description
 
@@ -14,7 +14,7 @@ Use `web_fetch` to summarize, compare, or extract information from web pages. Th
 
 ## How to use `web_fetch` with the Gemini CLI
 
-To use `web_fetch` with the Gemini CLI, provide a natural language prompt that contains URLs. The tool will ask for confirmation before fetching any URLs. Once confirmed, the tool will process URLs through Gemini API's `urlContext`.
+To use `web_fetch` with the LLMs Code, provide a natural language prompt that contains URLs. The tool will ask for confirmation before fetching any URLs. Once confirmed, the tool will process URLs through Gemini API's `urlContext`.
 
 If the Gemini API cannot access the URL, the tool will fall back to fetching content directly from the local machine. The tool will format the response, including source attribution and citations where possible. The tool will then provide the response to the user.
 

@@ -1,8 +1,8 @@
-# Gemini CLI Observability Guide
+# LLMs Code Observability Guide
 
-Telemetry provides data about Gemini CLI's performance, health, and usage. By enabling it, you can monitor operations, debug issues, and optimize tool usage through traces, metrics, and structured logs.
+Telemetry provides data about LLMs Code's performance, health, and usage. By enabling it, you can monitor operations, debug issues, and optimize tool usage through traces, metrics, and structured logs.
 
-Gemini CLI's telemetry system is built on the **[OpenTelemetry] (OTEL)** standard, allowing you to send data to any compatible backend.
+LLMs Code's telemetry system is built on the **[OpenTelemetry] (OTEL)** standard, allowing you to send data to any compatible backend.
 
 [OpenTelemetry]: https://opentelemetry.io/
 
@@ -73,7 +73,7 @@ Use the `npm run telemetry -- --target=local` command to automate the process of
     The script will:
     - Download Jaeger and OTEL if needed.
     - Start a local Jaeger instance.
-    - Start an OTEL collector configured to receive data from Gemini CLI.
+    - Start an OTEL collector configured to receive data from LLMs Code.
     - Automatically enable telemetry in your workspace settings.
     - On exit, disable telemetry.
 
@@ -108,13 +108,13 @@ Use the `npm run telemetry -- --target=gcp` command to automate setting up a loc
 
     The script will:
     - Download the `otelcol-contrib` binary if needed.
-    - Start an OTEL collector configured to receive data from Gemini CLI and export it to your specified Google Cloud project.
+    - Start an OTEL collector configured to receive data from LLMs Code and export it to your specified Google Cloud project.
     - Automatically enable telemetry and disable sandbox mode in your workspace settings (`.gemini/settings.json`).
     - Provide direct links to view traces, metrics, and logs in your Google Cloud Console.
     - On exit (Ctrl+C), it will attempt to restore your original telemetry and sandbox settings.
 
 1.  **Run Gemini CLI:**
-    In a separate terminal, run your Gemini CLI commands. This generates telemetry data that the collector captures.
+    In a separate terminal, run your LLMs Code commands. This generates telemetry data that the collector captures.
 
 1.  **View telemetry in Google Cloud**:
     Use the links provided by the script to navigate to the Google Cloud Console and view your traces, metrics, and logs.

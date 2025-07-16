@@ -1,9 +1,9 @@
-# Makefile for gemini-cli
+# Makefile for llms-code
 
 .PHONY: help install build build-sandbox build-all test lint format preflight clean start debug release run-npx create-alias
 
 help:
-	@echo "Makefile for gemini-cli"
+	@echo "Makefile for llms-code"
 	@echo ""
 	@echo "Usage:"
 	@echo "  make install          - Install npm dependencies"
@@ -14,8 +14,8 @@ help:
 	@echo "  make format           - Format the code"
 	@echo "  make preflight        - Run formatting, linting, and tests"
 	@echo "  make clean            - Remove generated files"
-	@echo "  make start            - Start the Gemini CLI"
-	@echo "  make debug            - Start the Gemini CLI in debug mode"
+	@echo "  make start            - Start the LLMs Code"
+	@echo "  make debug            - Start the LLMs Code in debug mode"
 	@echo ""
 	@echo "  make run-npx          - Run the CLI using npx (for testing the published package)"
 	@echo "  make create-alias     - Create a 'gemini' alias for your shell"

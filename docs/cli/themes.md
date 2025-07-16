@@ -1,10 +1,10 @@
 # Themes
 
-Gemini CLI supports a variety of themes to customize its color scheme and appearance. You can change the theme to suit your preferences via the `/theme` command or `"theme":` configuration setting.
+LLMs Code supports a variety of themes to customize its color scheme and appearance. You can change the theme to suit your preferences via the `/theme` command or `"theme":` configuration setting.
 
 ## Available Themes
 
-Gemini CLI comes with a selection of pre-defined themes, which you can list using the `/theme` command within Gemini CLI:
+LLMs Code comes with a selection of pre-defined themes, which you can list using the `/theme` command within LLMs Code:
 
 - **Dark Themes:**
   - `ANSI`
@@ -30,7 +30,7 @@ Gemini CLI comes with a selection of pre-defined themes, which you can list usin
 
 ### Theme Persistence
 
-Selected themes are saved in Gemini CLI's [configuration](./configuration.md) so your preference is remembered across sessions.
+Selected themes are saved in LLMs Code's [configuration](./configuration.md) so your preference is remembered across sessions.
 
 ## Dark Themes
 

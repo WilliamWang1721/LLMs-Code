@@ -1,16 +1,16 @@
-# Gemini CLI Execution and Deployment
+# LLMs Code Execution and Deployment
 
-This document describes how to run Gemini CLI and explains the deployment architecture that Gemini CLI uses.
+This document describes how to run LLMs Code and explains the deployment architecture that LLMs Code uses.
 
 ## Running Gemini CLI
 
-There are several ways to run Gemini CLI. The option you choose depends on how you intend to use Gemini CLI.
+There are several ways to run LLMs Code. The option you choose depends on how you intend to use LLMs Code.
 
 ---
 
 ### 1. Standard installation (Recommended for typical users)
 
-This is the recommended way for end-users to install Gemini CLI. It involves downloading the Gemini CLI package from the NPM registry.
+This is the recommended way for end-users to install LLMs Code. It involves downloading the LLMs Code package from the NPM registry.
 
 - **Global install:**
 
@@ -32,7 +32,7 @@ This is the recommended way for end-users to install Gemini CLI. It involves dow
 
 ### 2. Running in a sandbox (Docker/Podman)
 
-For security and isolation, Gemini CLI can be run inside a container. This is the default way that the CLI executes tools that might have side effects.
+For security and isolation, LLMs Code can be run inside a container. This is the default way that the CLI executes tools that might have side effects.
 
 - **Directly from the Registry:**
   You can run the published sandbox image directly. This is useful for environments where you only have Docker and want to run the CLI.
@@ -41,7 +41,7 @@ For security and isolation, Gemini CLI can be run inside a container. This is th
   docker run --rm -it us-docker.pkg.dev/gemini-code-dev/gemini-cli/sandbox:0.1.1
   ```
 - **Using the `--sandbox` flag:**
-  If you have Gemini CLI installed locally (using the standard installation described above), you can instruct it to run inside the sandbox container.
+  If you have LLMs Code installed locally (using the standard installation described above), you can instruct it to run inside the sandbox container.
   ```bash
   gemini --sandbox -y -p "your prompt here"
   ```
@@ -73,7 +73,7 @@ Contributors to the project will want to run the CLI directly from the source co
 
 ### 4. Running the latest Gemini CLI commit from GitHub
 
-You can run the most recently committed version of Gemini CLI directly from the GitHub repository. This is useful for testing features still in development.
+You can run the most recently committed version of LLMs Code directly from the GitHub repository. This is useful for testing features still in development.
 
 ```bash
 # Execute the CLI directly from the main branch on GitHub
@@ -86,12 +86,12 @@ The execution methods described above are made possible by the following archite
 
 **NPM packages**
 
-Gemini CLI project is a monorepo that publishes two core packages to the NPM registry:
+LLMs Code project is a monorepo that publishes two core packages to the NPM registry:
 
 - `@google/gemini-cli-core`: The backend, handling logic and tool execution.
 - `@google/gemini-cli`: The user-facing frontend.
 
-These packages are used when performing the standard installation and when running Gemini CLI from the source.
+These packages are used when performing the standard installation and when running LLMs Code from the source.
 
 **Build and packaging processes**
 
@@ -103,7 +103,7 @@ There are two distinct build processes used, depending on the distribution chann
 
 **Docker sandbox image**
 
-The Docker-based execution method is supported by the `gemini-cli-sandbox` container image. This image is published to a container registry and contains a pre-installed, global version of Gemini CLI.
+The Docker-based execution method is supported by the `gemini-cli-sandbox` container image. This image is published to a container registry and contains a pre-installed, global version of LLMs Code.
 
 ## Release process
 

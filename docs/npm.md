@@ -4,9 +4,9 @@ This monorepo contains two main packages: `@google/gemini-cli` and `@google/gemi
 
 ## `@google/gemini-cli`
 
-This is the main package for the Gemini CLI. It is responsible for the user interface, command parsing, and all other user-facing functionality.
+This is the main package for the LLMs Code. It is responsible for the user interface, command parsing, and all other user-facing functionality.
 
-When this package is published, it is bundled into a single executable file. This bundle includes all of the package's dependencies, including `@google/gemini-cli-core`. This means that whether a user installs the package with `npm install -g @google/gemini-cli` or runs it directly with `npx @google/gemini-cli`, they are using this single, self-contained executable.
+When running the latest version of LLMs Code directly from GitHub, a different process is triggered by the `prepare` script in `package.json`. This script uses `esbuild` to bundle the entire application and its dependencies into a single, self-contained JavaScript file. This bundle is created on-the-fly on the user's machine and is not checked into the repository.
 
 ## `@google/gemini-cli-core`
 

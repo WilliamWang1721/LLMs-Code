@@ -1,17 +1,17 @@
-# Sandboxing in the Gemini CLI
+# Sandboxing in the LLMs Code
 
-This document provides a guide to sandboxing in the Gemini CLI, including prerequisites, quickstart, and configuration.
+This document provides a guide to sandboxing in the LLMs Code, including prerequisites, quickstart, and configuration.
 
 ## Prerequisites
 
-Before using sandboxing, you need to install and set up the Gemini CLI:
+Before using sandboxing, you need to install and set up the LLMs Code:
 
 ```bash
-# install gemini-cli with npm
-npm install -g @google/gemini-cli
+# install llms-code with npm
+npm install -g llms-code-cli
 
 # Verify installation
-gemini --version
+llms-code --version
 ```
 
 ## Overview of sandboxing
@@ -45,11 +45,11 @@ Cross-platform sandboxing with complete process isolation.
 
 ```bash
 # Enable sandboxing with command flag
-gemini -s -p "analyze the code structure"
+llms-code -s -p "analyze the code structure"
 
 # Use environment variable
 export GEMINI_SANDBOX=true
-gemini -p "run the test suite"
+llms-code -p "run the test suite"
 
 # Configure in settings.json
 {
@@ -106,17 +106,17 @@ export SANDBOX_SET_UID_GID=false  # Disable UID/GID mapping
 ### Debug mode
 
 ```bash
-DEBUG=1 gemini -s -p "debug command"
+DEBUG=1 llms-code -s -p "debug command"
 ```
 
 ### Inspect sandbox
 
 ```bash
 # Check environment
-gemini -s -p "run shell command: env | grep SANDBOX"
+llms-code -s -p "run shell command: env | grep SANDBOX"
 
 # List mounts
-gemini -s -p "run shell command: mount | grep workspace"
+llms-code -s -p "run shell command: mount | grep workspace"
 ```
 
 ## Security notes

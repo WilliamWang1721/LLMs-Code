@@ -1,6 +1,6 @@
 # Multi File Read Tool (`read_many_files`)
 
-This document describes the `read_many_files` tool for the Gemini CLI.
+This document describes the `read_many_files` tool for the LLMs Code.
 
 ## Description
 

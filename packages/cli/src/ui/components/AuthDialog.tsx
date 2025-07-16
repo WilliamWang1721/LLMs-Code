@@ -30,11 +30,16 @@ function parseDefaultAuthType(
   return null;
 }
 
-export function AuthDialog({
+interface PureAuthDialogProps extends AuthDialogProps {
+  t: (key: string) => string;
+}
+
+export function PureAuthDialog({
   onSelect,
   settings,
   initialErrorMessage,
-}: AuthDialogProps): React.JSX.Element {
+  t,
+}: PureAuthDialogProps): React.JSX.Element {
   const [errorMessage, setErrorMessage] = useState<string | null>(() => {
     if (initialErrorMessage) {
       return initialErrorMessage;
@@ -55,28 +60,28 @@ export function AuthDialog({
       process.env.GEMINI_API_KEY &&
       (!defaultAuthType || defaultAuthType === AuthType.USE_GEMINI)
     ) {
-      return 'Existing API key detected (GEMINI_API_KEY). Select "Gemini API Key" option to use it.';
+      return t('existingApiKey');
     }
     return null;
   });
   const items = [
     {
-      label: '使用Google登录',
+      label: t('loginWithGoogle'),
       value: AuthType.LOGIN_WITH_GOOGLE,
     },
     ...(process.env.CLOUD_SHELL === 'true'
       ? [
           {
-            label: '使用Cloud Shell用户凭证',
+            label: t('useCloudShell'),
             value: AuthType.CLOUD_SHELL,
           },
         ]
       : []),
     {
-      label: '使用Gemini API密钥',
+      label: t('useGeminiApiKey'),
       value: AuthType.USE_GEMINI,
     },
-    { label: 'Vertex AI', value: AuthType.USE_VERTEX_AI },
+    { label: t('useVertexAi'), value: AuthType.USE_VERTEX_AI },
   ];
 
   const initialAuthIndex = items.findIndex((item) => {
@@ -117,9 +122,7 @@ export function AuthDialog({
       }
       if (settings.merged.selectedAuthType === undefined) {
         // Prevent exiting if no auth method is set
-        setErrorMessage(
-          'You must select an auth method to proceed. Press Ctrl+C twice to exit.',
-        );
+        setErrorMessage(t('mustSelectAuthMethod'));
         return;
       }
       onSelect(undefined, SettingScope.User);
@@ -134,9 +137,9 @@ export function AuthDialog({
       padding={1}
       width="100%"
     >
-      <Text bold>开始使用</Text>
+      <Text bold>{t('getStarted')}</Text>
       <Box marginTop={1}>
-        <Text>您想如何为此项目进行认证？</Text>
+        <Text>{t('howToAuthenticate')}</Text>
       </Box>
       <Box marginTop={1}>
         <RadioButtonSelect
@@ -152,10 +155,10 @@ export function AuthDialog({
         </Box>
       )}
       <Box marginTop={1}>
-        <Text color={Colors.Gray}>(按Enter键选择)</Text>
+        <Text color={Colors.Gray}>{t('pressEnterToSelect')}</Text>
       </Box>
       <Box marginTop={1}>
-        <Text>Gemini CLI的服务条款和隐私声明</Text>
+        <Text>{t('tosPrivacy')}</Text>
       </Box>
       <Box marginTop={1}>
         <Text color={Colors.AccentBlue}>
@@ -166,4 +169,44 @@ export function AuthDialog({
       </Box>
     </Box>
   );
+}
+
+export function AuthDialog(props: AuthDialogProps): React.JSX.Element {
+  const t = (key: string) => {
+    const translations: Record<string, Record<string, string>> = {
+      en: {
+        existingApiKey:
+          'Existing API key detected (GEMINI_API_KEY). Select "Gemini API Key" option to use it.',
+        loginWithGoogle: 'Login with Google',
+        useCloudShell: 'Use Cloud Shell credentials',
+        useGeminiApiKey: 'Use Gemini API Key',
+        useVertexAi: 'Vertex AI',
+        mustSelectAuthMethod:
+          'You must select an auth method to proceed. Press Ctrl+C twice to exit.',
+        getStarted: 'Get Started',
+        howToAuthenticate: 'How would you like to authenticate for this project?',
+        pressEnterToSelect: '(Press Enter to select)',
+        tosPrivacy: 'Terms of Service and Privacy Notice for Gemini CLI',
+      },
+      zh: {
+        existingApiKey:
+          '检测到现有的API密钥（GEMINI_API_KEY）。选择“Gemini API密钥”选项以使用它。',
+        loginWithGoogle: '使用Google登录',
+        useCloudShell: '使用Cloud Shell用户凭证',
+        useGeminiApiKey: '使用Gemini API密钥',
+        useVertexAi: 'Vertex AI',
+        mustSelectAuthMethod:
+          '您必须选择一种身份验证方法才能继续。按两次Ctrl+C退出。',
+        getStarted: '开始使用',
+        howToAuthenticate: '您想如何为此项目进行认证？',
+        pressEnterToSelect: '(按Enter键选择)',
+        tosPrivacy: 'Gemini CLI的服务条款和隐私声明',
+      },
+    };
+    // Simple language detection. In a real app, you'd use a proper i18n library.
+    const lang = process.env.LANG?.startsWith('zh') ? 'zh' : 'en';
+    return translations[lang][key] || key;
+  };
+
+  return <PureAuthDialog {...props} t={t} />;
 }

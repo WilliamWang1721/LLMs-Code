@@ -6,7 +6,7 @@
 
 import { render } from 'ink-testing-library';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { AuthDialog } from './AuthDialog.js';
+import { AuthDialog, PureAuthDialog } from './AuthDialog.js';
 import { LoadedSettings, SettingScope } from '../../config/settings.js';
 import { AuthType } from '@google/gemini-cli-core';
 
@@ -48,7 +48,23 @@ describe('AuthDialog', () => {
     );
 
     const { lastFrame } = render(
-      <AuthDialog
+      <PureAuthDialog t={(key) => {
+        const translations: Record<string, string> = {
+          existingApiKey:
+            'Existing API key detected (GEMINI_API_KEY). Select "Gemini API Key" option to use it.',
+          loginWithGoogle: 'Login with Google',
+          useCloudShell: 'Use Cloud Shell credentials',
+          useGeminiApiKey: 'Use Gemini API Key',
+          useVertexAi: 'Vertex AI',
+          mustSelectAuthMethod:
+            'You must select an auth method to proceed. Press Ctrl+C twice to exit.',
+          getStarted: 'Get Started',
+          howToAuthenticate: 'How would you like to authenticate for this project?',
+          pressEnterToSelect: '(Press Enter to select)',
+          tosPrivacy: 'Terms of Service and Privacy Notice for Gemini CLI',
+        };
+        return translations[key] || key;
+      }}
         onSelect={() => {}}
         settings={settings}
         initialErrorMessage="GEMINI_API_KEY  environment variable not found"
@@ -79,7 +95,23 @@ describe('AuthDialog', () => {
       );
 
       const { lastFrame } = render(
-        <AuthDialog onSelect={() => {}} settings={settings} />,
+        <PureAuthDialog t={(key) => {
+        const translations: Record<string, string> = {
+          existingApiKey:
+            'Existing API key detected (GEMINI_API_KEY). Select "Gemini API Key" option to use it.',
+          loginWithGoogle: 'Login with Google',
+          useCloudShell: 'Use Cloud Shell credentials',
+          useGeminiApiKey: 'Use Gemini API Key',
+          useVertexAi: 'Vertex AI',
+          mustSelectAuthMethod:
+            'You must select an auth method to proceed. Press Ctrl+C twice to exit.',
+          getStarted: 'Get Started',
+          howToAuthenticate: 'How would you like to authenticate for this project?',
+          pressEnterToSelect: '(Press Enter to select)',
+          tosPrivacy: 'Terms of Service and Privacy Notice for Gemini CLI',
+        };
+        return translations[key] || key;
+      }} onSelect={() => {}} settings={settings} />,
       );
 
       expect(lastFrame()).toContain(
@@ -106,7 +138,23 @@ describe('AuthDialog', () => {
       );
 
       const { lastFrame } = render(
-        <AuthDialog onSelect={() => {}} settings={settings} />,
+        <PureAuthDialog t={(key) => {
+        const translations: Record<string, string> = {
+          existingApiKey:
+            'Existing API key detected (GEMINI_API_KEY). Select "Gemini API Key" option to use it.',
+          loginWithGoogle: 'Login with Google',
+          useCloudShell: 'Use Cloud Shell credentials',
+          useGeminiApiKey: 'Use Gemini API Key',
+          useVertexAi: 'Vertex AI',
+          mustSelectAuthMethod:
+            'You must select an auth method to proceed. Press Ctrl+C twice to exit.',
+          getStarted: 'Get Started',
+          howToAuthenticate: 'How would you like to authenticate for this project?',
+          pressEnterToSelect: '(Press Enter to select)',
+          tosPrivacy: 'Terms of Service and Privacy Notice for Gemini CLI',
+        };
+        return translations[key] || key;
+      }} onSelect={() => {}} settings={settings} />,
       );
 
       expect(lastFrame()).not.toContain(
@@ -133,7 +181,23 @@ describe('AuthDialog', () => {
       );
 
       const { lastFrame } = render(
-        <AuthDialog onSelect={() => {}} settings={settings} />,
+        <PureAuthDialog t={(key) => {
+        const translations: Record<string, string> = {
+          existingApiKey:
+            'Existing API key detected (GEMINI_API_KEY). Select "Gemini API Key" option to use it.',
+          loginWithGoogle: 'Login with Google',
+          useCloudShell: 'Use Cloud Shell credentials',
+          useGeminiApiKey: 'Use Gemini API Key',
+          useVertexAi: 'Vertex AI',
+          mustSelectAuthMethod:
+            'You must select an auth method to proceed. Press Ctrl+C twice to exit.',
+          getStarted: 'Get Started',
+          howToAuthenticate: 'How would you like to authenticate for this project?',
+          pressEnterToSelect: '(Press Enter to select)',
+          tosPrivacy: 'Terms of Service and Privacy Notice for Gemini CLI',
+        };
+        return translations[key] || key;
+      }} onSelect={() => {}} settings={settings} />,
       );
 
       expect(lastFrame()).toContain(
@@ -161,7 +225,23 @@ describe('AuthDialog', () => {
       );
 
       const { lastFrame } = render(
-        <AuthDialog onSelect={() => {}} settings={settings} />,
+        <PureAuthDialog t={(key) => {
+        const translations: Record<string, string> = {
+          existingApiKey:
+            'Existing API key detected (GEMINI_API_KEY). Select "Gemini API Key" option to use it.',
+          loginWithGoogle: 'Login with Google',
+          useCloudShell: 'Use Cloud Shell credentials',
+          useGeminiApiKey: 'Use Gemini API Key',
+          useVertexAi: 'Vertex AI',
+          mustSelectAuthMethod:
+            'You must select an auth method to proceed. Press Ctrl+C twice to exit.',
+          getStarted: 'Get Started',
+          howToAuthenticate: 'How would you like to authenticate for this project?',
+          pressEnterToSelect: '(Press Enter to select)',
+          tosPrivacy: 'Terms of Service and Privacy Notice for Gemini CLI',
+        };
+        return translations[key] || key;
+      }} onSelect={() => {}} settings={settings} />,
       );
 
       // This is a bit brittle, but it's the best way to check which item is selected.
@@ -184,7 +264,23 @@ describe('AuthDialog', () => {
       );
 
       const { lastFrame } = render(
-        <AuthDialog onSelect={() => {}} settings={settings} />,
+        <PureAuthDialog t={(key) => {
+        const translations: Record<string, string> = {
+          existingApiKey:
+            'Existing API key detected (GEMINI_API_KEY). Select "Gemini API Key" option to use it.',
+          loginWithGoogle: 'Login with Google',
+          useCloudShell: 'Use Cloud Shell credentials',
+          useGeminiApiKey: 'Use Gemini API Key',
+          useVertexAi: 'Vertex AI',
+          mustSelectAuthMethod:
+            'You must select an auth method to proceed. Press Ctrl+C twice to exit.',
+          getStarted: 'Get Started',
+          howToAuthenticate: 'How would you like to authenticate for this project?',
+          pressEnterToSelect: '(Press Enter to select)',
+          tosPrivacy: 'Terms of Service and Privacy Notice for Gemini CLI',
+        };
+        return translations[key] || key;
+      }} onSelect={() => {}} settings={settings} />,
       );
 
       // Default is LOGIN_WITH_GOOGLE
@@ -209,7 +305,23 @@ describe('AuthDialog', () => {
       );
 
       const { lastFrame } = render(
-        <AuthDialog onSelect={() => {}} settings={settings} />,
+        <PureAuthDialog t={(key) => {
+        const translations: Record<string, string> = {
+          existingApiKey:
+            'Existing API key detected (GEMINI_API_KEY). Select "Gemini API Key" option to use it.',
+          loginWithGoogle: 'Login with Google',
+          useCloudShell: 'Use Cloud Shell credentials',
+          useGeminiApiKey: 'Use Gemini API Key',
+          useVertexAi: 'Vertex AI',
+          mustSelectAuthMethod:
+            'You must select an auth method to proceed. Press Ctrl+C twice to exit.',
+          getStarted: 'Get Started',
+          howToAuthenticate: 'How would you like to authenticate for this project?',
+          pressEnterToSelect: '(Press Enter to select)',
+          tosPrivacy: 'Terms of Service and Privacy Notice for Gemini CLI',
+        };
+        return translations[key] || key;
+      }} onSelect={() => {}} settings={settings} />,
       );
 
       expect(lastFrame()).toContain(
@@ -242,7 +354,23 @@ describe('AuthDialog', () => {
     );
 
     const { lastFrame, stdin, unmount } = render(
-      <AuthDialog onSelect={onSelect} settings={settings} />,
+      <PureAuthDialog t={(key) => {
+        const translations: Record<string, string> = {
+          existingApiKey:
+            'Existing API key detected (GEMINI_API_KEY). Select "Gemini API Key" option to use it.',
+          loginWithGoogle: 'Login with Google',
+          useCloudShell: 'Use Cloud Shell credentials',
+          useGeminiApiKey: 'Use Gemini API Key',
+          useVertexAi: 'Vertex AI',
+          mustSelectAuthMethod:
+            'You must select an auth method to proceed. Press Ctrl+C twice to exit.',
+          getStarted: 'Get Started',
+          howToAuthenticate: 'How would you like to authenticate for this project?',
+          pressEnterToSelect: '(Press Enter to select)',
+          tosPrivacy: 'Terms of Service and Privacy Notice for Gemini CLI',
+        };
+        return translations[key] || key;
+      }} onSelect={onSelect} settings={settings} />,
     );
     await wait();
 
@@ -273,7 +401,23 @@ describe('AuthDialog', () => {
     );
 
     const { lastFrame, stdin, unmount } = render(
-      <AuthDialog
+      <PureAuthDialog t={(key) => {
+        const translations: Record<string, string> = {
+          existingApiKey:
+            'Existing API key detected (GEMINI_API_KEY). Select "Gemini API Key" option to use it.',
+          loginWithGoogle: 'Login with Google',
+          useCloudShell: 'Use Cloud Shell credentials',
+          useGeminiApiKey: 'Use Gemini API Key',
+          useVertexAi: 'Vertex AI',
+          mustSelectAuthMethod:
+            'You must select an auth method to proceed. Press Ctrl+C twice to exit.',
+          getStarted: 'Get Started',
+          howToAuthenticate: 'How would you like to authenticate for this project?',
+          pressEnterToSelect: '(Press Enter to select)',
+          tosPrivacy: 'Terms of Service and Privacy Notice for Gemini CLI',
+        };
+        return translations[key] || key;
+      }}
         onSelect={onSelect}
         settings={settings}
         initialErrorMessage="Initial error"
@@ -313,7 +457,23 @@ describe('AuthDialog', () => {
     );
 
     const { stdin, unmount } = render(
-      <AuthDialog onSelect={onSelect} settings={settings} />,
+      <PureAuthDialog t={(key) => {
+        const translations: Record<string, string> = {
+          existingApiKey:
+            'Existing API key detected (GEMINI_API_KEY). Select "Gemini API Key" option to use it.',
+          loginWithGoogle: 'Login with Google',
+          useCloudShell: 'Use Cloud Shell credentials',
+          useGeminiApiKey: 'Use Gemini API Key',
+          useVertexAi: 'Vertex AI',
+          mustSelectAuthMethod:
+            'You must select an auth method to proceed. Press Ctrl+C twice to exit.',
+          getStarted: 'Get Started',
+          howToAuthenticate: 'How would you like to authenticate for this project?',
+          pressEnterToSelect: '(Press Enter to select)',
+          tosPrivacy: 'Terms of Service and Privacy Notice for Gemini CLI',
+        };
+        return translations[key] || key;
+      }} onSelect={onSelect} settings={settings} />,
     );
     await wait();
 
