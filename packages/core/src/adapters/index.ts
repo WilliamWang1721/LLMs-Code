@@ -16,7 +16,7 @@ export {
   MessageRole,
   Message,
   ToolCallResult,
-  Tool as LLMTool,
+  LLMTool,
   GenerationParams
 } from './LLMAdapter.js';
 

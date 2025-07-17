@@ -116,6 +116,8 @@ export class AnthropicAdapter extends BaseLLMAdapter {
         stream: true
       });
       
+      let isComplete = false;
+      
       for await (const chunk of stream) {
         if (chunk.type === 'content_block_delta' && chunk.delta.type === 'text') {
           const content = chunk.delta.text || '';
@@ -130,6 +132,7 @@ export class AnthropicAdapter extends BaseLLMAdapter {
         }
         
         if (chunk.type === 'message_stop') {
+          isComplete = true;
           callback({
             text: '',
             isLast: true,
@@ -137,7 +140,19 @@ export class AnthropicAdapter extends BaseLLMAdapter {
               model: chunk.model
             }
           });
+          break;
         }
+      }
+      
+      // 确保流式响应总是有一个最终回调
+      if (!isComplete) {
+        callback({
+          text: '',
+          isLast: true,
+          metadata: {
+            model: this.config?.name || DEFAULT_CLAUDE_MODEL
+          }
+        });
       }
     } catch (error) {
       throw new Error(`Anthropic流式生成失败: ${error instanceof Error ? error.message : String(error)}`);

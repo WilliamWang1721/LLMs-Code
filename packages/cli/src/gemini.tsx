@@ -200,10 +200,10 @@ export async function main() {
   }
 
   let input = config.getQuestion();
-  const startupWarnings = [
-    ...(await getStartupWarnings()),
-    ...(await getUserStartupWarnings(workspaceRoot)),
-  ];
+  const startupWarnings = await Promise.all([
+    getStartupWarnings(),
+    getUserStartupWarnings(workspaceRoot)
+  ]).then(([systemWarnings, userWarnings]) => [...systemWarnings, ...userWarnings]);
 
   const shouldBeInteractive =
     !!argv.promptInteractive || (process.stdin.isTTY && input?.length === 0);

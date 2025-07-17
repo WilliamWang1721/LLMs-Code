@@ -234,33 +234,44 @@ export async function main() {
   }
 
   // Set window title
-  setWindowTitle('', settings, t);
+  await setWindowTitle('', settings, t);
 
   // Register cleanup handler for checkpoints
   registerCleanup();
+
+  // 获取CLI版本
+  const version = await getCliVersion();
 
   // Render the app
   render(
     <AppWrapper
       config={config}
       settings={settings}
-      extensions={extensions}
-      startupWarnings={getStartupWarnings(config)}
-      userStartupWarnings={getUserStartupWarnings(config, settings)}
+      startupWarnings={await getStartupWarnings()}
+      version={version}
     />,
   );
 }
 
-function setWindowTitle(title: string, settings: LoadedSettings, t: (key: string) => string) {
+async function setWindowTitle(title: string, settings: LoadedSettings, t: (key: string) => string) {
   if (settings.merged.hideWindowTitle) {
     return;
   }
 
   if (process.stdout.isTTY) {
-    const windowTitle = title
-      ? t('windowTitle', { title })
-      : `LLMs Code v${getCliVersion()}`;
-    process.stdout.write(`\x1b]0;${windowTitle}\x07`);
+    try {
+      const version = await getCliVersion();
+      const windowTitle = title
+        ? t('windowTitle', { title })
+        : `LLMs Code v${version}`;
+      process.stdout.write(`\x1b]0;${windowTitle}\x07`);
+    } catch (error) {
+      // 如果获取版本失败，使用无版本的标题
+      const windowTitle = title
+        ? t('windowTitle', { title })
+        : 'LLMs Code';
+      process.stdout.write(`\x1b]0;${windowTitle}\x07`);
+    }
   }
 }
 

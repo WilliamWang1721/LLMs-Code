@@ -117,7 +117,7 @@ export class OpenAIAdapter extends BaseLLMAdapter {
       
       for await (const chunk of stream) {
         const content = chunk.choices[0]?.delta?.content || '';
-        const isLast = chunk.choices[0]?.finish_reason !== null;
+        const isLast = chunk.choices[0]?.finish_reason != null;
         
         callback({
           text: content,
