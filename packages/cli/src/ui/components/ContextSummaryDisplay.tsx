@@ -33,32 +33,29 @@ export const ContextSummaryDisplay: React.FC<ContextSummaryDisplayProps> = ({
       return '';
     }
     const allNamesTheSame = new Set(contextFileNames).size < 2;
-    const name = allNamesTheSame ? contextFileNames[0] : 'context';
-    return `${geminiMdFileCount} ${name} file${
-      geminiMdFileCount > 1 ? 's' : ''
-    }`;
-  })();
+    const name = allNamesTheSame ? contextFileNames[0] : t('contextSummary.context');
+    return t('contextSummary.geminiMdFiles', { count: geminiMdFileCount, name });
 
   const mcpText =
     mcpServerCount > 0
-      ? `${mcpServerCount} MCP server${mcpServerCount > 1 ? 's' : ''}`
+      ? t('contextSummary.mcpServers', { count: mcpServerCount })
       : '';
 
-  let summaryText = 'Using ';
+  let summaryText = t('contextSummary.using');
   if (geminiMdText) {
     summaryText += geminiMdText;
   }
   if (geminiMdText && mcpText) {
-    summaryText += ' and ';
+    summaryText += t('contextSummary.and');
   }
   if (mcpText) {
     summaryText += mcpText;
     // Add ctrl+t hint when MCP servers are available
     if (mcpServers && Object.keys(mcpServers).length > 0) {
       if (showToolDescriptions) {
-        summaryText += ' (ctrl+t to toggle)';
+        summaryText += t('contextSummary.ctrlTToToggle');
       } else {
-        summaryText += ' (ctrl+t to view)';
+        summaryText += t('contextSummary.ctrlTToView');
       }
     }
   }

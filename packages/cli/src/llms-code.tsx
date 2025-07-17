@@ -59,7 +59,7 @@ function getNodeMemoryArgs(config: Config): string[] {
     );
   }
 
-  if (process.env.GEMINI_CLI_NO_RELAUNCH) {
+  if (process.env.LLMS_CODE_CLI_NO_RELAUNCH) {
     return [];
   }
 
@@ -77,7 +77,7 @@ function getNodeMemoryArgs(config: Config): string[] {
 
 async function relaunchWithAdditionalArgs(additionalArgs: string[]) {
   const nodeArgs = [...additionalArgs, ...process.argv.slice(1)];
-  const newEnv = { ...process.env, GEMINI_CLI_NO_RELAUNCH: 'true' };
+  const newEnv = { ...process.env, LLMS_CODE_CLI_NO_RELAUNCH: 'true' };
 
   const child = spawn(process.execPath, nodeArgs, {
     stdio: 'inherit',
@@ -199,95 +199,70 @@ export async function main() {
     await getOauthClient(settings.merged.selectedAuthType, config);
   }
 
-  let input = config.getQuestion();
-  const startupWarnings = [
-    ...(await getStartupWarnings()),
-    ...(await getUserStartupWarnings(workspaceRoot)),
-  ];
-
-  const shouldBeInteractive =
-    !!argv.promptInteractive || (process.stdin.isTTY && input?.length === 0);
-
-  // Render UI, passing necessary config values. Check that there is no command line question.
-  if (shouldBeInteractive) {
-    const version = await getCliVersion();
-    setWindowTitle(basename(workspaceRoot), settings, t);
-    const instance = render(
-      <React.StrictMode>
-        <AppWrapper
-          config={config}
-          settings={settings}
-          startupWarnings={startupWarnings}
-          version={version}
-        />
-      </React.StrictMode>,
-      { exitOnCtrlC: false },
+  // If we have a question from the command line, run in non-interactive mode.
+  if (config.getQuestion() !== undefined || !process.stdin.isTTY) {
+    const nonInteractiveConfig = await loadNonInteractiveConfig(
+      config,
+      extensions,
+      settings,
+      argv,
     );
 
-    registerCleanup(() => instance.unmount());
-    return;
-  }
-  // If not a TTY, read from stdin
-  // This is for cases where the user pipes input directly into the command
-  if (!process.stdin.isTTY && !input) {
-    input += await readStdin();
-  }
-  if (!input) {
-    console.error('No input provided via stdin.');
-    process.exit(1);
+    try {
+      await validateNonInterActiveAuth(
+        settings.merged.selectedAuthType,
+        nonInteractiveConfig,
+      );
+    } catch (err) {
+      console.error('Error authenticating:', err);
+      process.exit(1);
+    }
+
+    // If we're reading from stdin, read it now.
+    let question = config.getQuestion();
+    if (question === undefined && !process.stdin.isTTY) {
+      question = await readStdin();
+    }
+
+    if (question === undefined || question.trim() === '') {
+      console.error('Error: No question provided.');
+      process.exit(1);
+    }
+
+    await runNonInteractive(nonInteractiveConfig, question);
+    process.exit(0);
   }
 
-  const prompt_id = Math.random().toString(16).slice(2);
-  logUserPrompt(config, {
-    'event.name': 'user_prompt',
-    'event.timestamp': new Date().toISOString(),
-    prompt: input,
-    prompt_id,
-    auth_type: config.getContentGeneratorConfig()?.authType,
-    prompt_length: input.length,
-  });
+  // Set window title
+  setWindowTitle('', settings, t);
 
-  // Non-interactive mode handled by runNonInteractive
-  const nonInteractiveConfig = await loadNonInteractiveConfig(
-    config,
-    extensions,
-    settings,
-    argv,
+  // Register cleanup handler for checkpoints
+  registerCleanup();
+
+  // Render the app
+  render(
+    <AppWrapper
+      config={config}
+      settings={settings}
+      extensions={extensions}
+      startupWarnings={getStartupWarnings(config)}
+      userStartupWarnings={getUserStartupWarnings(config, settings)}
+    />,
   );
-
-  await runNonInteractive(nonInteractiveConfig, input, prompt_id);
-  process.exit(0);
 }
 
 function setWindowTitle(title: string, settings: LoadedSettings, t: (key: string) => string) {
-  if (!settings.merged.hideWindowTitle) {
-    const windowTitle = (process.env.CLI_TITLE || t('windowTitle', { title })).replace(
-      // eslint-disable-next-line no-control-regex
-      /[\x00-\x1F\x7F]/g,
-      '',
-    );
-    process.stdout.write(`\x1b]2;${windowTitle}\x07`);
+  if (settings.merged.hideWindowTitle) {
+    return;
+  }
 
-    process.on('exit', () => {
-      process.stdout.write(`\x1b]2;\x07`);
-    });
+  if (process.stdout.isTTY) {
+    const windowTitle = title
+      ? t('windowTitle', { title })
+      : `LLMs Code v${getCliVersion()}`;
+    process.stdout.write(`\x1b]0;${windowTitle}\x07`);
   }
 }
-
-// --- Global Unhandled Rejection Handler ---
-process.on('unhandledRejection', (reason, _promise) => {
-  // Log other unexpected unhandled rejections as critical errors
-  console.error('=========================================');
-  console.error('CRITICAL: Unhandled Promise Rejection!');
-  console.error('=========================================');
-  console.error('Reason:', reason);
-  console.error('Stack trace may follow:');
-  if (!(reason instanceof Error)) {
-    console.error(reason);
-  }
-  // Exit for genuinely unhandled errors
-  process.exit(1);
-});
 
 async function loadNonInteractiveConfig(
   config: Config,
@@ -295,36 +270,37 @@ async function loadNonInteractiveConfig(
   settings: LoadedSettings,
   argv: CliArgs,
 ) {
-  let finalConfig = config;
-  if (config.getApprovalMode() !== ApprovalMode.YOLO) {
-    // Everything is not allowed, ensure that only read-only tools are configured.
-    const existingExcludeTools = settings.merged.excludeTools || [];
-    const interactiveTools = [
-      ShellTool.Name,
-      EditTool.Name,
-      WriteFileTool.Name,
-    ];
+  // For non-interactive mode, we need to set the approval mode to auto-edit.
+  // This is because we don't want to prompt the user for approval in non-interactive mode.
+  // We also need to set the full context flag to true, so that we get the full context.
+  // This is because we don't want to truncate the context in non-interactive mode.
+  // We also need to set the debug mode to false, because we don't want to show debug output.
+  // We also need to set the show memory usage flag to false, because we don't want to show memory usage.
+  // We also need to set the checkpointing flag to false, because we don't want to checkpoint in non-interactive mode.
+  const nonInteractiveSettings = {
+    ...settings.merged,
+    approvalMode: ApprovalMode.AUTO_EDIT,
+    fullContext: true,
+    debugMode: false,
+    showMemoryUsage: false,
+    checkpointing: false,
+  };
 
-    const newExcludeTools = [
-      ...new Set([...existingExcludeTools, ...interactiveTools]),
-    ];
+  // Override with command line arguments.
+  const nonInteractiveCliArgs = {
+    ...argv,
+    approvalMode: ApprovalMode.AUTO_EDIT,
+    fullContext: true,
+    debug: false,
+    showMemoryUsage: false,
+    checkpointing: false,
+  };
 
-    const nonInteractiveSettings = {
-      ...settings.merged,
-      excludeTools: newExcludeTools,
-    };
-    finalConfig = await loadCliConfig(
-      nonInteractiveSettings,
-      extensions,
-      config.getSessionId(),
-      argv,
-    );
-    await finalConfig.initialize();
-  }
-
-  return await validateNonInterActiveAuth(
-    settings.merged.selectedAuthType,
-    finalConfig,
+  return await loadCliConfig(
+    nonInteractiveSettings,
+    extensions,
+    sessionId,
+    nonInteractiveCliArgs,
   );
 }
 
@@ -332,23 +308,19 @@ async function validateNonInterActiveAuth(
   selectedAuthType: AuthType | undefined,
   nonInteractiveConfig: Config,
 ) {
-  // making a special case for the cli. many headless environments might not have a settings.json set
-  // so if GEMINI_API_KEY is set, we'll use that. However since the oauth things are interactive anyway, we'll
-  // still expect that exists
-  if (!selectedAuthType && !process.env.GEMINI_API_KEY) {
-    console.error(
-      `Please set an Auth method in your ${USER_SETTINGS_PATH} OR specify GEMINI_API_KEY env variable file before running`,
-    );
-    process.exit(1);
+  if (selectedAuthType) {
+    // Validate authentication here because the sandbox will interfere with the Oauth2 web redirect.
+    const err = validateAuthMethod(selectedAuthType);
+    if (err) {
+      throw new Error(err);
+    }
+    await nonInteractiveConfig.refreshAuth(selectedAuthType);
   }
-
-  selectedAuthType = selectedAuthType || AuthType.USE_GEMINI;
-  const err = validateAuthMethod(selectedAuthType);
-  if (err != null) {
-    console.error(err);
-    process.exit(1);
-  }
-
-  await nonInteractiveConfig.refreshAuth(selectedAuthType);
-  return nonInteractiveConfig;
 }
+
+if (require.main === module) {
+  main().catch((error) => {
+    console.error(error);
+    process.exit(1);
+  });
+} 

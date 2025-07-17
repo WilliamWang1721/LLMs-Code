@@ -75,28 +75,27 @@ export const Footer: React.FC<FooterProps> = ({
       >
         {process.env.SANDBOX && process.env.SANDBOX !== 'sandbox-exec' ? (
           <Text color="green">
-            {process.env.SANDBOX.replace(/^gemini-(?:cli-)?/, '')}
+            {t('footer.sandboxContainer', { sandbox: process.env.SANDBOX.replace(/^gemini-(?:cli-)?/, '') })}
           </Text>
         ) : process.env.SANDBOX === 'sandbox-exec' ? (
           <Text color={Colors.AccentYellow}>
-            MacOS Seatbelt{' '}
-            <Text color={Colors.Gray}>({process.env.SEATBELT_PROFILE})</Text>
+            {t('footer.macOsSeatbelt')}{' '}
+            <Text color={Colors.Gray}>{t('footer.profile', { profile: process.env.SEATBELT_PROFILE })}</Text>
           </Text>
         ) : (
           <Text color={Colors.AccentRed}>
-            no sandbox <Text color={Colors.Gray}>(see /docs)</Text>
+            {t('footer.noSandbox')}{' '}<Text color={Colors.Gray}>{t('footer.seeDocs')}</Text>
           </Text>
         )}
       </Box>
 
-      {/* Right Section: Gemini Label and Console Summary */}
+      {/* Right Section: LLMs Code Label and Console Summary */}
       <Box alignItems="center">
         <Text color={Colors.AccentBlue}>
           {' '}
           {model}{' '}
           <Text color={Colors.Gray}>
-            ({((1 - percentage) * 100).toFixed(0)}% context left)
-          </Text>
+            {t('footer.contextLeft', { percentage: ((1 - percentage) * 100).toFixed(0) })}
         </Text>
         {corgiMode && (
           <Text>

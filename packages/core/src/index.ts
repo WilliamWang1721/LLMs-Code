@@ -6,6 +6,10 @@
 
 // Export config
 export * from './config/config.js';
+export * from './config/models.js';
+
+// Export adapters
+export * from './adapters/index.js';
 
 // Export Core Logic
 export * from './core/client.js';

@@ -161,11 +161,7 @@ export function PureAuthDialog({
         <Text>{t('tosPrivacy')}</Text>
       </Box>
       <Box marginTop={1}>
-        <Text color={Colors.AccentBlue}>
-          {
-            'https://github.com/google-gemini/gemini-cli/blob/main/docs/tos-privacy.md'
-          }
-        </Text>
+        <Text color={Colors.AccentBlue}>{t('tosPrivacyLink')}</Text>
       </Box>
     </Box>
   );

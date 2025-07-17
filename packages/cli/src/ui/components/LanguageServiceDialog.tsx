@@ -33,11 +33,11 @@ export function LanguageServiceDialog({
 
   const languageItems = [
     {
-      label: '中文',
+      label: t('language.chinese'),
       value: Language.CHINESE,
     },
     {
-      label: 'English',
+      label: t('language.english'),
       value: Language.ENGLISH,
     },
   ];
@@ -67,7 +67,7 @@ export function LanguageServiceDialog({
     if (selectedLanguage) {
       onComplete(selectedLanguage, service);
     } else {
-      setErrorMessage('请先选择语言 / Please select a language first');
+      setErrorMessage(t('languageServiceDialog.selectLanguageFirst'));
     }
   };
 
@@ -93,7 +93,7 @@ export function LanguageServiceDialog({
     >
       {step === 'language' ? (
         <>
-          <Text bold>请选择语言 / Please select a language</Text>
+          <Text bold>{t('languageServiceDialog.selectLanguage')}</Text>
           <Box marginTop={1}>
             <RadioButtonSelect
               items={languageItems}
@@ -105,7 +105,7 @@ export function LanguageServiceDialog({
         </>
       ) : (
         <>
-          <Text bold>{selectedLanguage === Language.CHINESE ? '请选择服务' : 'Please select a service'}</Text>
+          <Text bold>{t('languageServiceDialog.selectService')}</Text>
           <Box marginTop={1}>
             <RadioButtonSelect
               items={serviceItems}
@@ -124,10 +124,8 @@ export function LanguageServiceDialog({
       <Box marginTop={1}>
         <Text color={Colors.Gray}>
           {step === 'language'
-            ? '(按Enter键选择 / Press Enter to select)'
-            : selectedLanguage === Language.CHINESE
-            ? '(按Enter键选择，按Esc返回)'
-            : '(Press Enter to select, Esc to go back)'}
+            ? t('languageServiceDialog.pressEnterToSelect')
+            : t('languageServiceDialog.pressEnterToSelectEscToGoBack')}
         </Text>
       </Box>
     </Box>

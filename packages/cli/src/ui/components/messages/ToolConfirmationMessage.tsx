@@ -96,29 +96,29 @@ export const ToolConfirmationMessage: React.FC<
           padding={1}
           overflow="hidden"
         >
-          <Text>Modify in progress: </Text>
+          <Text>{t('toolConfirmation.modifyInProgress')}</Text>
           <Text color={Colors.AccentGreen}>
-            Save and close external editor to continue
+            {t('toolConfirmation.saveAndCloseEditor')}
           </Text>
         </Box>
       );
     }
 
-    question = `Apply this change?`;
+    question = t('toolConfirmation.applyChange');
     options.push(
       {
-        label: 'Yes, allow once',
+        label: t('toolConfirmation.yesAllowOnce'),
         value: ToolConfirmationOutcome.ProceedOnce,
       },
       {
-        label: 'Yes, allow always',
+        label: t('toolConfirmation.yesAllowAlways'),
         value: ToolConfirmationOutcome.ProceedAlways,
       },
       {
-        label: 'Modify with external editor',
+        label: t('toolConfirmation.modifyWithEditor'),
         value: ToolConfirmationOutcome.ModifyWithEditor,
       },
-      { label: 'No (esc)', value: ToolConfirmationOutcome.Cancel },
+      { label: t('toolConfirmation.noEsc'), value: ToolConfirmationOutcome.Cancel },
     );
     bodyContent = (
       <DiffRenderer
@@ -132,17 +132,17 @@ export const ToolConfirmationMessage: React.FC<
     const executionProps =
       confirmationDetails as ToolExecuteConfirmationDetails;
 
-    question = `Allow execution?`;
+    question = t('toolConfirmation.allowExecution');
     options.push(
       {
-        label: 'Yes, allow once',
+        label: t('toolConfirmation.yesAllowOnce'),
         value: ToolConfirmationOutcome.ProceedOnce,
       },
       {
-        label: `Yes, allow always "${executionProps.rootCommand} ..."`,
+        label: t('toolConfirmation.yesAllowAlwaysCommand', { command: executionProps.rootCommand }),
         value: ToolConfirmationOutcome.ProceedAlways,
       },
-      { label: 'No (esc)', value: ToolConfirmationOutcome.Cancel },
+      { label: t('toolConfirmation.noEsc'), value: ToolConfirmationOutcome.Cancel },
     );
 
     let bodyContentHeight = availableBodyContentHeight();
@@ -169,25 +169,24 @@ export const ToolConfirmationMessage: React.FC<
       infoProps.urls &&
       !(infoProps.urls.length === 1 && infoProps.urls[0] === infoProps.prompt);
 
-    question = `Do you want to proceed?`;
+    question = t('toolConfirmation.proceed');
     options.push(
       {
-        label: 'Yes, allow once',
+        label: t('toolConfirmation.yesAllowOnce'),
         value: ToolConfirmationOutcome.ProceedOnce,
       },
       {
-        label: 'Yes, allow always',
+        label: t('toolConfirmation.yesAllowAlways'),
         value: ToolConfirmationOutcome.ProceedAlways,
       },
-      { label: 'No (esc)', value: ToolConfirmationOutcome.Cancel },
+      { label: t('toolConfirmation.noEsc'), value: ToolConfirmationOutcome.Cancel },
     );
 
     bodyContent = (
       <Box flexDirection="column" paddingX={1} marginLeft={1}>
-        <Text color={Colors.AccentCyan}>{infoProps.prompt}</Text>
+        <Text color={Colors.AccentCyan}>{t('toolConfirmation.urlsToFetch')}</Text>
         {displayUrls && infoProps.urls && infoProps.urls.length > 0 && (
           <Box flexDirection="column" marginTop={1}>
-            <Text>URLs to fetch:</Text>
             {infoProps.urls.map((url) => (
               <Text key={url}> - {url}</Text>
             ))}
@@ -201,8 +200,8 @@ export const ToolConfirmationMessage: React.FC<
 
     bodyContent = (
       <Box flexDirection="column" paddingX={1} marginLeft={1}>
-        <Text color={Colors.AccentCyan}>MCP Server: {mcpProps.serverName}</Text>
-        <Text color={Colors.AccentCyan}>Tool: {mcpProps.toolName}</Text>
+        <Text color={Colors.AccentCyan}>{t('toolConfirmation.mcpServer', { serverName: mcpProps.serverName })}</Text>
+        <Text color={Colors.AccentCyan}>{t('toolConfirmation.tool', { toolName: mcpProps.toolName })}</Text>
       </Box>
     );
 

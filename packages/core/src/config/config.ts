@@ -25,7 +25,7 @@ import { ReadManyFilesTool } from '../tools/read-many-files.js';
 import {
   MemoryTool,
   setGeminiMdFilename,
-  GEMINI_CONFIG_DIR as GEMINI_DIR,
+  GEMINI_CONFIG_DIR as LLMS_CODE_DIR,
 } from '../tools/memoryTool.js';
 import { WebSearchTool } from '../tools/web-search.js';
 import { GeminiClient } from '../core/client.js';
@@ -440,7 +440,7 @@ export class Config {
   }
 
   getGeminiDir(): string {
-    return path.join(this.targetDir, GEMINI_DIR);
+    return path.join(this.targetDir, LLMS_CODE_DIR);
   }
 
   getProjectTempDir(): string {

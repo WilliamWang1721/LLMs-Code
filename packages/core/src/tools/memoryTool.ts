@@ -46,11 +46,11 @@ Do NOT use this tool:
 - \`fact\` (string, required): The specific fact or piece of information to remember. This should be a clear, self-contained statement. For example, if the user says "My favorite color is blue", the fact would be "My favorite color is blue".
 `;
 
-export const GEMINI_CONFIG_DIR = '.gemini';
-export const DEFAULT_CONTEXT_FILENAME = 'GEMINI.md';
-export const MEMORY_SECTION_HEADER = '## Gemini Added Memories';
+export const GEMINI_CONFIG_DIR = '.llms-code';
+export const DEFAULT_CONTEXT_FILENAME = 'LLMS-CODE.md';
+export const MEMORY_SECTION_HEADER = '## LLMs Code Added Memories';
 
-// This variable will hold the currently configured filename for GEMINI.md context files.
+// This variable will hold the currently configured filename for LLMS-CODE.md context files.
 // It defaults to DEFAULT_CONTEXT_FILENAME but can be overridden by setGeminiMdFilename.
 let currentGeminiMdFilename: string | string[] = DEFAULT_CONTEXT_FILENAME;
 

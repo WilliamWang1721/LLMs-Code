@@ -36,13 +36,13 @@ export const AboutBox: React.FC<AboutBoxProps> = ({
   >
     <Box marginBottom={1}>
       <Text bold color={Colors.AccentPurple}>
-        About Gemini CLI
+        About LLMs Code
       </Text>
     </Box>
     <Box flexDirection="row">
       <Box width="35%">
         <Text bold color={Colors.LightBlue}>
-          CLI Version
+          {t('aboutBox.cliVersion')}
         </Text>
       </Box>
       <Box>
@@ -53,7 +53,7 @@ export const AboutBox: React.FC<AboutBoxProps> = ({
       <Box flexDirection="row">
         <Box width="35%">
           <Text bold color={Colors.LightBlue}>
-            Git Commit
+            {t('aboutBox.gitCommit')}
           </Text>
         </Box>
         <Box>
@@ -64,7 +64,7 @@ export const AboutBox: React.FC<AboutBoxProps> = ({
     <Box flexDirection="row">
       <Box width="35%">
         <Text bold color={Colors.LightBlue}>
-          Model
+          {t('aboutBox.model')}
         </Text>
       </Box>
       <Box>
@@ -74,7 +74,7 @@ export const AboutBox: React.FC<AboutBoxProps> = ({
     <Box flexDirection="row">
       <Box width="35%">
         <Text bold color={Colors.LightBlue}>
-          Sandbox
+          {t('aboutBox.sandbox')}
         </Text>
       </Box>
       <Box>
@@ -84,7 +84,7 @@ export const AboutBox: React.FC<AboutBoxProps> = ({
     <Box flexDirection="row">
       <Box width="35%">
         <Text bold color={Colors.LightBlue}>
-          OS
+          {t('aboutBox.os')}
         </Text>
       </Box>
       <Box>
@@ -94,7 +94,7 @@ export const AboutBox: React.FC<AboutBoxProps> = ({
     <Box flexDirection="row">
       <Box width="35%">
         <Text bold color={Colors.LightBlue}>
-          Auth Method
+          {t('aboutBox.authMethod')}
         </Text>
       </Box>
       <Box>
@@ -107,7 +107,7 @@ export const AboutBox: React.FC<AboutBoxProps> = ({
       <Box flexDirection="row">
         <Box width="35%">
           <Text bold color={Colors.LightBlue}>
-            GCP Project
+            {t('aboutBox.gcpProject')}
           </Text>
         </Box>
         <Box>

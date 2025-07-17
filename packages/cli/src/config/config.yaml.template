@@ -1,0 +1,22 @@
+# LLMs Code 配置文件
+# 将此文件保存为 ~/.llms-code/config.yaml
+
+# 界面语言，可选 'en' 或 'zh-CN'
+language: zh-CN
+
+# 默认使用的模型
+default_model: gpt-4o
+
+# 可用模型配置
+models:
+  - name: gpt-4o
+    provider: openai
+    api_key: env:OPENAI_API_KEY
+    
+  - name: claude-3-opus
+    provider: anthropic
+    api_key: env:ANTHROPIC_API_KEY
+    
+  - name: gemini-1.5-pro
+    provider: gemini
+    api_key: env:GEMINI_API_KEY 

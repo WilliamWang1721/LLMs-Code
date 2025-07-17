@@ -18,7 +18,7 @@ help:
 	@echo "  make debug            - Start the LLMs Code in debug mode"
 	@echo ""
 	@echo "  make run-npx          - Run the CLI using npx (for testing the published package)"
-	@echo "  make create-alias     - Create a 'gemini' alias for your shell"
+	@echo "  make create-alias     - Create a 'llms-code' alias for your shell"
 
 install:
 	npm install
@@ -53,7 +53,7 @@ debug:
 
 
 run-npx:
-	npx https://github.com/google-gemini/gemini-cli
+	npx https://github.com/WilliamWang1721/LLMs-Code.git
 
 create-alias:
 	scripts/create_alias.sh

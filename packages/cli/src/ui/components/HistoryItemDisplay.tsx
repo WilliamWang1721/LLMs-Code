@@ -75,16 +75,6 @@ export const HistoryItemDisplay: React.FC<HistoryItemDisplayProps> = ({
     {item.type === 'model_stats' && <ModelStatsDisplay />}
     {item.type === 'tool_stats' && <ToolStatsDisplay />}
     {item.type === 'quit' && <SessionSummaryDisplay duration={item.duration} />}
-    {item.type === 'tool_group' && (
-      <ToolGroupMessage
-        toolCalls={item.tools}
-        groupId={item.id}
-        availableTerminalHeight={availableTerminalHeight}
-        terminalWidth={terminalWidth}
-        config={config}
-        isFocused={isFocused}
-      />
-    )}
     {item.type === 'compression' && (
       <CompressionMessage compression={item.compression} />
     )}

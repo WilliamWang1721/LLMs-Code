@@ -11,6 +11,8 @@ import { Colors } from '../colors.js';
 import { shortAsciiLogo, longAsciiLogo } from './AsciiArt.js';
 import { getAsciiArtWidth } from '../utils/textUtils.js';
 
+import { useTranslation } from 'react-i18next';
+
 interface HeaderProps {
   customAsciiArt?: string; // For user-defined ASCII art
   terminalWidth: number; // For responsive logo
@@ -24,6 +26,7 @@ export const Header: React.FC<HeaderProps> = ({
   version,
   nightly,
 }) => {
+  const { t } = useTranslation();
   let displayTitle;
   const widthOfLongLogo = getAsciiArtWidth(longAsciiLogo);
 
@@ -54,7 +57,7 @@ export const Header: React.FC<HeaderProps> = ({
       {nightly && (
         <Box width="100%" flexDirection="row" justifyContent="flex-end">
           <Gradient colors={Colors.GradientColors}>
-            <Text>v{version}</Text>
+            <Text>{t('header.version', { version })}</Text>
           </Gradient>
         </Box>
       )}

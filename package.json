@@ -49,7 +49,7 @@
     "clean": "node scripts/clean.js"
   },
   "bin": {
-    "llms-code": "bundle/gemini.js"
+    "llms-code": "bundle/llms-code.js"
   },
   "files": [
     "bundle/",
