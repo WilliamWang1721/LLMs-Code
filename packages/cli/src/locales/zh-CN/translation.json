@@ -11,7 +11,7 @@
   "pressEnterToSelect": "(按Enter键选择)",
   "tosPrivacy": "LLMs Code的服务条款和隐私声明",
   "tosPrivacyLink": "https://github.com/google-gemini/gemini-cli/blob/main/docs/tos-privacy.md",
-  "existingApiKey": "检测到现有的API密钥（GEMINI_API_KEY）。选择“Gemini API密钥”选项以使用它。",
+  "existingApiKey": "检测到现有的API密钥（GEMINI_API_KEY）。选择\"Gemini API密钥\"选项以使用它。",
   "windowTitle": "LLMs Code - {{title}}",
   "refreshingMemory": "正在刷新分层记忆（GEMINI.md 或其他上下文文件）...",
   "memoryRefreshed": "记忆刷新成功。从 {{fileCount}} 个文件中加载了 {{count}} 个字符。",
@@ -46,8 +46,7 @@
   "footer.seeDocs": "(查看 /docs)",
   "footer.contextLeft": "({{percentage}}% 上下文剩余)",
   "header.version": "v{{version}}",
-  "inputPrompt.placeholder": "  在此输入您的消息或 @路径/到文件"
-},
+  "inputPrompt.placeholder": "  在此输入您的消息或 @路径/到文件",
   "language.chinese": "中文",
   "language.english": "English",
   "languageServiceDialog.selectLanguageFirst": "请先选择语言",

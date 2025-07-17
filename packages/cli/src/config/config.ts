@@ -7,6 +7,10 @@
 import yargs from 'yargs/yargs';
 import { hideBin } from 'yargs/helpers';
 import process from 'node:process';
+import * as fs from 'fs';
+import * as path from 'path';
+import * as yaml from 'js-yaml';
+import { homedir } from 'os';
 import {
   Config,
   loadServerHierarchicalMemory,
@@ -18,7 +22,7 @@ import {
   FileDiscoveryService,
   TelemetryTarget,
 } from '@google/gemini-cli-core';
-import { Settings } from './settings.js';
+import { Settings, SETTINGS_DIRECTORY_NAME } from './settings.js';
 
 import { Extension, filterActiveExtensions } from './extension.js';
 import { getCliVersion } from '../utils/version.js';
@@ -33,6 +37,23 @@ const logger = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   error: (...args: any[]) => console.error('[ERROR]', ...args),
 };
+
+// 从配置文件中读取默认模型
+function getDefaultModelFromConfig(): string {
+  try {
+    const configPath = path.join(homedir(), SETTINGS_DIRECTORY_NAME, 'config.yaml');
+    if (fs.existsSync(configPath)) {
+      const configContent = fs.readFileSync(configPath, 'utf8');
+      const config = yaml.load(configContent) as { default_model?: string };
+      if (config && config.default_model) {
+        return config.default_model;
+      }
+    }
+  } catch (error) {
+    logger.error('读取默认模型配置失败:', error);
+  }
+  return process.env.GEMINI_MODEL || DEFAULT_GEMINI_MODEL;
+}
 
 export interface CliArgs {
   model: string | undefined;
@@ -57,17 +78,20 @@ export interface CliArgs {
 }
 
 export async function parseArguments(): Promise<CliArgs> {
+  // 获取默认模型
+  const defaultModel = getDefaultModelFromConfig();
+  
   const yargsInstance = yargs(hideBin(process.argv))
-    .scriptName('gemini')
+    .scriptName('llms-code')
     .usage(
       '$0 [options]',
-      'Gemini CLI - Launch an interactive CLI, use -p/--prompt for non-interactive mode',
+      'LLMs Code CLI - Launch an interactive CLI, use -p/--prompt for non-interactive mode',
     )
     .option('model', {
       alias: 'm',
       type: 'string',
-      description: `Model`,
-      default: process.env.GEMINI_MODEL || DEFAULT_GEMINI_MODEL,
+      description: `Model to use (overrides default_model in config.yaml)`,
+      default: defaultModel,
     })
     .option('prompt', {
       alias: 'p',

@@ -10,8 +10,7 @@
   "howToAuthenticate": "How would you like to authenticate for this project?",
   "pressEnterToSelect": "(Press Enter to select)",
   "tosPrivacy": "Terms of Service and Privacy Notice for LLMs Code",
-  "tosPrivacyLink": "https://github.com/google-gemini/gemini-cli/blob/main/docs/tos-privacy.md"
-},
+  "tosPrivacyLink": "https://github.com/google-gemini/gemini-cli/blob/main/docs/tos-privacy.md",
   "existingApiKey": "Existing API key detected (GEMINI_API_KEY). Select \"Gemini API Key\" option to use it.",
   "windowTitle": "LLMs Code - {{title}}",
   "refreshingMemory": "Refreshing hierarchical memory (GEMINI.md or other context files)...",
@@ -48,8 +47,7 @@
   "footer.seeDocs": "(see /docs)",
   "footer.contextLeft": "({{percentage}}% context left)",
   "header.version": "v{{version}}",
-  "inputPrompt.placeholder": "  Type your message or @path/to/file"
-}
+  "inputPrompt.placeholder": "  Type your message or @path/to/file",
   "language.chinese": "中文",
   "language.english": "English",
   "languageServiceDialog.selectLanguageFirst": "Please select a language first",
