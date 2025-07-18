@@ -16,7 +16,8 @@ import {
   USER_AGREEMENT_RATE_MEDIUM,
 } from '../utils/displayUtils.js';
 import { useSessionStats } from '../contexts/SessionContext.js';
-import { ToolCallStats } from '@google/gemini-cli-core';
+import { ToolCallStats } from 'llms-code-core';
+import { useTranslation } from 'react-i18next';
 
 const TOOL_NAME_COL_WIDTH = 25;
 const CALLS_COL_WIDTH = 8;
@@ -53,6 +54,7 @@ const StatRow: React.FC<{
 };
 
 export const ToolStatsDisplay: React.FC = () => {
+  const { t } = useTranslation();
   const { stats } = useSessionStats();
   const { tools } = stats.metrics;
   const activeTools = Object.entries(tools.byName).filter(
@@ -67,7 +69,7 @@ export const ToolStatsDisplay: React.FC = () => {
         paddingY={1}
         paddingX={2}
       >
-        <Text>No tool calls have been made in this session.</Text>
+        <Text>{t('toolStats.noCalls')}</Text>
       </Box>
     );
   }
@@ -101,23 +103,23 @@ export const ToolStatsDisplay: React.FC = () => {
       width={70}
     >
       <Text bold color={Colors.AccentPurple}>
-        Tool Stats For Nerds
+        {t('toolStats.title')}
       </Text>
       <Box height={1} />
 
       {/* Header */}
       <Box>
         <Box width={TOOL_NAME_COL_WIDTH}>
-          <Text bold>Tool Name</Text>
+          <Text bold>{t('toolStats.toolName')}</Text>
         </Box>
         <Box width={CALLS_COL_WIDTH} justifyContent="flex-end">
-          <Text bold>Calls</Text>
+          <Text bold>{t('toolStats.calls')}</Text>
         </Box>
         <Box width={SUCCESS_RATE_COL_WIDTH} justifyContent="flex-end">
-          <Text bold>Success Rate</Text>
+          <Text bold>{t('toolStats.successRate')}</Text>
         </Box>
         <Box width={AVG_DURATION_COL_WIDTH} justifyContent="flex-end">
-          <Text bold>Avg Duration</Text>
+          <Text bold>{t('toolStats.avgDuration')}</Text>
         </Box>
       </Box>
 
@@ -139,12 +141,14 @@ export const ToolStatsDisplay: React.FC = () => {
       <Box height={1} />
 
       {/* User Decision Summary */}
-      <Text bold>User Decision Summary</Text>
+      <Text bold>{t('toolStats.userDecisionSummary')}</Text>
       <Box>
         <Box
           width={TOOL_NAME_COL_WIDTH + CALLS_COL_WIDTH + SUCCESS_RATE_COL_WIDTH}
         >
-          <Text color={Colors.LightBlue}>Total Reviewed Suggestions:</Text>
+          <Text color={Colors.LightBlue}>
+            {t('toolStats.totalReviewedSuggestions')}:
+          </Text>
         </Box>
         <Box width={AVG_DURATION_COL_WIDTH} justifyContent="flex-end">
           <Text>{totalReviewed}</Text>
@@ -154,7 +158,7 @@ export const ToolStatsDisplay: React.FC = () => {
         <Box
           width={TOOL_NAME_COL_WIDTH + CALLS_COL_WIDTH + SUCCESS_RATE_COL_WIDTH}
         >
-          <Text> » Accepted:</Text>
+          <Text> » {t('toolStats.accepted')}:</Text>
         </Box>
         <Box width={AVG_DURATION_COL_WIDTH} justifyContent="flex-end">
           <Text color={Colors.AccentGreen}>{totalDecisions.accept}</Text>
@@ -164,7 +168,7 @@ export const ToolStatsDisplay: React.FC = () => {
         <Box
           width={TOOL_NAME_COL_WIDTH + CALLS_COL_WIDTH + SUCCESS_RATE_COL_WIDTH}
         >
-          <Text> » Rejected:</Text>
+          <Text> » {t('toolStats.rejected')}:</Text>
         </Box>
         <Box width={AVG_DURATION_COL_WIDTH} justifyContent="flex-end">
           <Text color={Colors.AccentRed}>{totalDecisions.reject}</Text>
@@ -174,7 +178,7 @@ export const ToolStatsDisplay: React.FC = () => {
         <Box
           width={TOOL_NAME_COL_WIDTH + CALLS_COL_WIDTH + SUCCESS_RATE_COL_WIDTH}
         >
-          <Text> » Modified:</Text>
+          <Text> » {t('toolStats.modified')}:</Text>
         </Box>
         <Box width={AVG_DURATION_COL_WIDTH} justifyContent="flex-end">
           <Text color={Colors.AccentYellow}>{totalDecisions.modify}</Text>
@@ -195,7 +199,7 @@ export const ToolStatsDisplay: React.FC = () => {
         <Box
           width={TOOL_NAME_COL_WIDTH + CALLS_COL_WIDTH + SUCCESS_RATE_COL_WIDTH}
         >
-          <Text> Overall Agreement Rate:</Text>
+          <Text> {t('toolStats.overallAgreementRate')}:</Text>
         </Box>
         <Box width={AVG_DURATION_COL_WIDTH} justifyContent="flex-end">
           <Text bold color={totalReviewed > 0 ? agreementColor : undefined}>

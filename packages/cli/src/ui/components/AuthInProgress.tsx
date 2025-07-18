@@ -8,6 +8,7 @@ import React, { useState, useEffect } from 'react';
 import { Box, Text, useInput } from 'ink';
 import Spinner from 'ink-spinner';
 import { Colors } from '../colors.js';
+import { useTranslation } from 'react-i18next';
 
 interface AuthInProgressProps {
   onTimeout: () => void;
@@ -16,6 +17,7 @@ interface AuthInProgressProps {
 export function AuthInProgress({
   onTimeout,
 }: AuthInProgressProps): React.JSX.Element {
+  const { t } = useTranslation();
   const [timedOut, setTimedOut] = useState(false);
 
   useInput((_, key) => {
@@ -43,12 +45,12 @@ export function AuthInProgress({
     >
       {timedOut ? (
         <Text color={Colors.AccentRed}>
-          认证超时，请重新尝试。
+          {t('auth.timeout')}
         </Text>
       ) : (
         <Box>
           <Text>
-            <Spinner type="dots" /> Waiting for auth... (Press ESC to cancel)
+            <Spinner type="dots" /> {t('auth.waiting')} (Press ESC to cancel)
           </Text>
         </Box>
       )}

@@ -9,8 +9,9 @@ import { Box, Text, useInput } from 'ink';
 import { Colors } from '../colors.js';
 import { RadioButtonSelect } from './shared/RadioButtonSelect.js';
 import { LoadedSettings, SettingScope } from '../../config/settings.js';
-import { AuthType } from '@google/gemini-cli-core';
+import { AuthType } from 'llms-code-core';
 import { validateAuthMethod } from '../../config/auth.js';
+import { useTranslation } from 'react-i18next';
 
 interface AuthDialogProps {
   onSelect: (authMethod: AuthType | undefined, scope: SettingScope) => void;
@@ -19,7 +20,7 @@ interface AuthDialogProps {
 }
 
 function parseDefaultAuthType(
-  defaultAuthType: string | undefined,
+  defaultAuthType: string | undefined
 ): AuthType | null {
   if (
     defaultAuthType &&
@@ -30,58 +31,54 @@ function parseDefaultAuthType(
   return null;
 }
 
-interface PureAuthDialogProps extends AuthDialogProps {
-  t: (key: string) => string;
-}
-
-export function PureAuthDialog({
+export function AuthDialog({
   onSelect,
   settings,
   initialErrorMessage,
-  t,
-}: PureAuthDialogProps): React.JSX.Element {
+}: AuthDialogProps): React.JSX.Element {
+  const { t } = useTranslation();
   const [errorMessage, setErrorMessage] = useState<string | null>(() => {
     if (initialErrorMessage) {
       return initialErrorMessage;
     }
 
     const defaultAuthType = parseDefaultAuthType(
-      process.env.GEMINI_DEFAULT_AUTH_TYPE,
+      process.env.GEMINI_DEFAULT_AUTH_TYPE
     );
 
     if (process.env.GEMINI_DEFAULT_AUTH_TYPE && defaultAuthType === null) {
-      return (
-        `Invalid value for GEMINI_DEFAULT_AUTH_TYPE: "${process.env.GEMINI_DEFAULT_AUTH_TYPE}". ` +
-        `Valid values are: ${Object.values(AuthType).join(', ')}.`
-      );
+      return t('auth.invalidDefaultAuthType', {
+        value: process.env.GEMINI_DEFAULT_AUTH_TYPE,
+        validValues: Object.values(AuthType).join(', '),
+      });
     }
 
     if (
       process.env.GEMINI_API_KEY &&
       (!defaultAuthType || defaultAuthType === AuthType.USE_GEMINI)
     ) {
-      return t('existingApiKey');
+      return t('auth.existingApiKey');
     }
     return null;
   });
   const items = [
     {
-      label: t('loginWithGoogle'),
+      label: t('auth.loginWithGoogle'),
       value: AuthType.LOGIN_WITH_GOOGLE,
     },
     ...(process.env.CLOUD_SHELL === 'true'
       ? [
           {
-            label: t('useCloudShell'),
+            label: t('auth.useCloudShell'),
             value: AuthType.CLOUD_SHELL,
           },
         ]
       : []),
     {
-      label: t('useGeminiApiKey'),
+      label: t('auth.useGeminiApiKey'),
       value: AuthType.USE_GEMINI,
     },
-    { label: t('useVertexAi'), value: AuthType.USE_VERTEX_AI },
+    { label: t('auth.useVertexAi'), value: AuthType.USE_VERTEX_AI },
   ];
 
   const initialAuthIndex = items.findIndex((item) => {
@@ -90,7 +87,7 @@ export function PureAuthDialog({
     }
 
     const defaultAuthType = parseDefaultAuthType(
-      process.env.GEMINI_DEFAULT_AUTH_TYPE,
+      process.env.GEMINI_DEFAULT_AUTH_TYPE
     );
     if (defaultAuthType) {
       return item.value === defaultAuthType;
@@ -122,7 +119,7 @@ export function PureAuthDialog({
       }
       if (settings.merged.selectedAuthType === undefined) {
         // Prevent exiting if no auth method is set
-        setErrorMessage(t('mustSelectAuthMethod'));
+        setErrorMessage(t('auth.mustSelectAuthMethod'));
         return;
       }
       onSelect(undefined, SettingScope.User);
@@ -137,9 +134,9 @@ export function PureAuthDialog({
       padding={1}
       width="100%"
     >
-      <Text bold>{t('getStarted')}</Text>
+      <Text bold>{t('auth.getStarted')}</Text>
       <Box marginTop={1}>
-        <Text>{t('howToAuthenticate')}</Text>
+        <Text>{t('auth.howToAuthenticate')}</Text>
       </Box>
       <Box marginTop={1}>
         <RadioButtonSelect
@@ -155,54 +152,14 @@ export function PureAuthDialog({
         </Box>
       )}
       <Box marginTop={1}>
-        <Text color={Colors.Gray}>{t('pressEnterToSelect')}</Text>
+        <Text color={Colors.Gray}>{t('auth.pressEnterToSelect')}</Text>
       </Box>
       <Box marginTop={1}>
-        <Text>{t('tosPrivacy')}</Text>
+        <Text>{t('auth.tosPrivacy')}</Text>
       </Box>
       <Box marginTop={1}>
         <Text color={Colors.AccentBlue}>{t('tosPrivacyLink')}</Text>
       </Box>
     </Box>
   );
-}
-
-export function AuthDialog(props: AuthDialogProps): React.JSX.Element {
-  const t = (key: string) => {
-    const translations: Record<string, Record<string, string>> = {
-      en: {
-        existingApiKey:
-          'Existing API key detected (GEMINI_API_KEY). Select "Gemini API Key" option to use it.',
-        loginWithGoogle: 'Login with Google',
-        useCloudShell: 'Use Cloud Shell credentials',
-        useGeminiApiKey: 'Use Gemini API Key',
-        useVertexAi: 'Vertex AI',
-        mustSelectAuthMethod:
-          'You must select an auth method to proceed. Press Ctrl+C twice to exit.',
-        getStarted: 'Get Started',
-        howToAuthenticate: 'How would you like to authenticate for this project?',
-        pressEnterToSelect: '(Press Enter to select)',
-        tosPrivacy: 'Terms of Service and Privacy Notice for Gemini CLI',
-      },
-      zh: {
-        existingApiKey:
-          '检测到现有的API密钥（GEMINI_API_KEY）。选择“Gemini API密钥”选项以使用它。',
-        loginWithGoogle: '使用Google登录',
-        useCloudShell: '使用Cloud Shell用户凭证',
-        useGeminiApiKey: '使用Gemini API密钥',
-        useVertexAi: 'Vertex AI',
-        mustSelectAuthMethod:
-          '您必须选择一种身份验证方法才能继续。按两次Ctrl+C退出。',
-        getStarted: '开始使用',
-        howToAuthenticate: '您想如何为此项目进行认证？',
-        pressEnterToSelect: '(按Enter键选择)',
-        tosPrivacy: 'Gemini CLI的服务条款和隐私声明',
-      },
-    };
-    // Simple language detection. In a real app, you'd use a proper i18n library.
-    const lang = process.env.LANG?.startsWith('zh') ? 'zh' : 'en';
-    return translations[lang][key] || key;
-  };
-
-  return <PureAuthDialog {...props} t={t} />;
 }

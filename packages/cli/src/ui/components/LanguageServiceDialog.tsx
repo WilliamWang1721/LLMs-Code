@@ -8,6 +8,7 @@ import React, { useState } from 'react';
 import { Box, Text, useInput } from 'ink';
 import { Colors } from '../colors.js';
 import { RadioButtonSelect } from './shared/RadioButtonSelect.js';
+import { useTranslation } from 'react-i18next';
 
 interface LanguageServiceDialogProps {
   onComplete: (language: string, service: string) => void;
@@ -27,8 +28,11 @@ export enum Service {
 export function LanguageServiceDialog({
   onComplete,
 }: LanguageServiceDialogProps): React.JSX.Element {
+  const { t } = useTranslation();
   const [step, setStep] = useState<'language' | 'service'>('language');
-  const [selectedLanguage, setSelectedLanguage] = useState<Language | null>(null);
+  const [selectedLanguage, setSelectedLanguage] = useState<Language | null>(
+    null
+  );
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const languageItems = [
@@ -44,15 +48,15 @@ export function LanguageServiceDialog({
 
   const serviceItems = [
     {
-      label: 'OpenAI',
+      label: t('service.openai'),
       value: Service.OPENAI,
     },
     {
-      label: 'Claude',
+      label: t('service.claude'),
       value: Service.CLAUDE,
     },
     {
-      label: 'Gemini',
+      label: t('service.gemini'),
       value: Service.GEMINI,
     },
   ];
@@ -76,7 +80,6 @@ export function LanguageServiceDialog({
       if (step === 'service') {
         setStep('language');
       } else {
-        // 如果在语言选择步骤按Esc，调用onComplete回调，传递空值表示取消
         // If Esc is pressed in language selection step, call onComplete with empty values to indicate cancellation
         onComplete('', '');
       }

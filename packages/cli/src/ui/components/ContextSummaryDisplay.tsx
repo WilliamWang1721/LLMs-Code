@@ -7,7 +7,8 @@
 import React from 'react';
 import { Text } from 'ink';
 import { Colors } from '../colors.js';
-import { type MCPServerConfig } from '@google/gemini-cli-core';
+import { type MCPServerConfig } from 'llms-code-core';
+import { useTranslation } from 'react-i18next';
 
 interface ContextSummaryDisplayProps {
   geminiMdFileCount: number;
@@ -22,6 +23,7 @@ export const ContextSummaryDisplay: React.FC<ContextSummaryDisplayProps> = ({
   mcpServers,
   showToolDescriptions,
 }) => {
+  const { t } = useTranslation();
   const mcpServerCount = Object.keys(mcpServers || {}).length;
 
   if (geminiMdFileCount === 0 && mcpServerCount === 0) {
@@ -33,8 +35,11 @@ export const ContextSummaryDisplay: React.FC<ContextSummaryDisplayProps> = ({
       return '';
     }
     const allNamesTheSame = new Set(contextFileNames).size < 2;
-    const name = allNamesTheSame ? contextFileNames[0] : t('contextSummary.context');
+    const name = allNamesTheSame
+      ? contextFileNames[0]
+      : t('contextSummary.context');
     return t('contextSummary.geminiMdFiles', { count: geminiMdFileCount, name });
+  })();
 
   const mcpText =
     mcpServerCount > 0
@@ -43,19 +48,19 @@ export const ContextSummaryDisplay: React.FC<ContextSummaryDisplayProps> = ({
 
   let summaryText = t('contextSummary.using');
   if (geminiMdText) {
-    summaryText += geminiMdText;
+    summaryText += ` ${geminiMdText}`;
   }
   if (geminiMdText && mcpText) {
-    summaryText += t('contextSummary.and');
+    summaryText += ` ${t('contextSummary.and')}`;
   }
   if (mcpText) {
-    summaryText += mcpText;
+    summaryText += ` ${mcpText}`;
     // Add ctrl+t hint when MCP servers are available
     if (mcpServers && Object.keys(mcpServers).length > 0) {
       if (showToolDescriptions) {
-        summaryText += t('contextSummary.ctrlTToToggle');
+        summaryText += ` (${t('contextSummary.ctrlTToToggle')})`;
       } else {
-        summaryText += t('contextSummary.ctrlTToView');
+        summaryText += ` (${t('contextSummary.ctrlTToView')})`;
       }
     }
   }
