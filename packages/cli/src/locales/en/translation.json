@@ -48,6 +48,7 @@
   "footer.contextLeft": "({{percentage}}% context left)",
   "header.version": "v{{version}}",
   "inputPrompt.placeholder": "  Type your message or @path/to/file",
+  "suggestions.loading": "Loading suggestions...",
   "language.chinese": "中文",
   "language.english": "English",
   "languageServiceDialog.selectLanguageFirst": "Please select a language first",

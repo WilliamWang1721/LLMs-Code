@@ -8,12 +8,14 @@ import React from 'react';
 import { Box, Text } from 'ink';
 import { Colors } from '../colors.js';
 import { type Config } from '@google/gemini-cli-core';
+import { useTranslation } from 'react-i18next';
 
 interface TipsProps {
   config: Config;
 }
 
 export const Tips: React.FC<TipsProps> = ({ config }) => {
+  const { t } = useTranslation();
   const geminiMdFileCount = config.getGeminiMdFileCount();
   return (
     <Box flexDirection="column" marginBottom={1}>

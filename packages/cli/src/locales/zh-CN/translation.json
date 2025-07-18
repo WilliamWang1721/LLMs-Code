@@ -47,6 +47,7 @@
   "footer.contextLeft": "({{percentage}}% 上下文剩余)",
   "header.version": "v{{version}}",
   "inputPrompt.placeholder": "  在此输入您的消息或 @路径/到文件",
+  "suggestions.loading": "正在加载建议...",
   "language.chinese": "中文",
   "language.english": "English",
   "languageServiceDialog.selectLanguageFirst": "请先选择语言",

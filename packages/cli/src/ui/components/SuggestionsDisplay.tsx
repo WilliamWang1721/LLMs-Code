@@ -6,6 +6,8 @@
 
 import { Box, Text } from 'ink';
 import { Colors } from '../colors.js';
+import { useTranslation } from 'react-i18next';
+
 export interface Suggestion {
   label: string;
   value: string;
@@ -30,10 +32,12 @@ export function SuggestionsDisplay({
   scrollOffset,
   userInput,
 }: SuggestionsDisplayProps) {
+  const { t } = useTranslation();
+  
   if (isLoading) {
     return (
       <Box paddingX={1} width={width}>
-        <Text color="gray">Loading suggestions...</Text>
+        <Text color="gray">{t('suggestions.loading')}</Text>
       </Box>
     );
   }

@@ -25,6 +25,7 @@ import {
   cleanupOldClipboardImages,
 } from '../utils/clipboardUtils.js';
 import * as path from 'path';
+import { useTranslation } from 'react-i18next';
 
 export interface InputPromptProps {
   buffer: TextBuffer;
@@ -50,13 +51,16 @@ export const InputPrompt: React.FC<InputPromptProps> = ({
   config,
   slashCommands,
   commandContext,
-  placeholder = t('inputPrompt.placeholder'),
+  placeholder,
   focus = true,
   inputWidth,
   suggestionsWidth,
   shellModeActive,
   setShellModeActive,
 }) => {
+  const { t } = useTranslation();
+  const defaultPlaceholder = t('inputPrompt.placeholder');
+  const finalPlaceholder = placeholder || defaultPlaceholder;
   const [justNavigatedHistory, setJustNavigatedHistory] = useState(false);
   const completion = useCompletion(
     buffer.text,
@@ -420,14 +424,14 @@ export const InputPrompt: React.FC<InputPromptProps> = ({
           {shellModeActive ? '! ' : '> '}
         </Text>
         <Box flexGrow={1} flexDirection="column">
-          {buffer.text.length === 0 && placeholder ? (
+          {buffer.text.length === 0 && finalPlaceholder ? (
             focus ? (
               <Text>
-                {chalk.inverse(placeholder.slice(0, 1))}
-                <Text color={Colors.Gray}>{placeholder.slice(1)}</Text>
+                {chalk.inverse(finalPlaceholder.slice(0, 1))}
+                <Text color={Colors.Gray}>{finalPlaceholder.slice(1)}</Text>
               </Text>
             ) : (
-              <Text color={Colors.Gray}>{placeholder}</Text>
+              <Text color={Colors.Gray}>{finalPlaceholder}</Text>
             )
           ) : (
             linesToRender.map((lineText, visualIdxInRenderedSet) => {

@@ -8,6 +8,7 @@ import React from 'react';
 import { Box, Text } from 'ink';
 import { Colors } from '../colors.js';
 import { GIT_COMMIT_INFO } from '../../generated/git-commit.js';
+import { useTranslation } from 'react-i18next';
 
 interface AboutBoxProps {
   cliVersion: string;
@@ -25,7 +26,10 @@ export const AboutBox: React.FC<AboutBoxProps> = ({
   modelVersion,
   selectedAuthType,
   gcpProject,
-}) => (
+}) => {
+  const { t } = useTranslation();
+  
+  return (
   <Box
     borderStyle="round"
     borderColor={Colors.Gray}
@@ -117,3 +121,4 @@ export const AboutBox: React.FC<AboutBoxProps> = ({
     )}
   </Box>
 );
+};

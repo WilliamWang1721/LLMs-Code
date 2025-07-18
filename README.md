@@ -67,7 +67,7 @@ models:
 
 2. 设置环境变量：
 
-```bash
+   ```bash
 # 对于OpenAI模型
 export OPENAI_API_KEY="YOUR_API_KEY"
 
@@ -75,8 +75,8 @@ export OPENAI_API_KEY="YOUR_API_KEY"
 export ANTHROPIC_API_KEY="YOUR_API_KEY"
 
 # 对于Gemini模型
-export GEMINI_API_KEY="YOUR_API_KEY"
-```
+   export GEMINI_API_KEY="YOUR_API_KEY"
+   ```
 
 3. 启动LLMs Code，它会自动使用配置文件中设置的默认模型：
 
@@ -86,7 +86,7 @@ llms-code
 
 4. 你也可以在命令行中指定要使用的模型：
 
-```bash
+   ```bash
 llms-code chat "你好" -m claude-3-opus
 ```
 

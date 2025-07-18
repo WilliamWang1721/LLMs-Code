@@ -12,6 +12,7 @@ import { ConsoleSummaryDisplay } from './ConsoleSummaryDisplay.js';
 import process from 'node:process';
 import Gradient from 'ink-gradient';
 import { MemoryUsageDisplay } from './MemoryUsageDisplay.js';
+import { useTranslation } from 'react-i18next';
 
 interface FooterProps {
   model: string;
@@ -40,6 +41,7 @@ export const Footer: React.FC<FooterProps> = ({
   promptTokenCount,
   nightly,
 }) => {
+  const { t } = useTranslation();
   const limit = tokenLimit(model);
   const percentage = promptTokenCount / limit;
 
@@ -96,6 +98,7 @@ export const Footer: React.FC<FooterProps> = ({
           {model}{' '}
           <Text color={Colors.Gray}>
             {t('footer.contextLeft', { percentage: ((1 - percentage) * 100).toFixed(0) })}
+          </Text>
         </Text>
         {corgiMode && (
           <Text>
