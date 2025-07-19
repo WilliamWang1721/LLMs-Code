@@ -4,6 +4,8 @@
 
 ![LLMs Code Screenshot](./docs/assets/llms-code-screenshot.png)
 
+# 请注意：该项目目前已实现相关底层适配器工作，但仍未完成交互逻辑方面内容，当前处于不可用状态，请稍作等候！
+
 这个仓库包含了LLMs Code，一个命令行AI工作流工具，它可以连接到你的工具，理解你的代码，并加速你的工作流程。
 
 使用LLMs Code，你可以：
