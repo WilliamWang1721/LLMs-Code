@@ -21,7 +21,7 @@ import {
   DEFAULT_GEMINI_EMBEDDING_MODEL,
   FileDiscoveryService,
   TelemetryTarget,
-} from '@google/gemini-cli-core';
+} from 'llms-code-core';
 import { Settings, SETTINGS_DIRECTORY_NAME } from './settings.js';
 
 import { Extension, filterActiveExtensions } from './extension.js';

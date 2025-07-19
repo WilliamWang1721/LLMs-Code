@@ -19,4 +19,10 @@ models:
     
   - name: gemini-1.5-pro
     provider: gemini
-    api_key: env:GEMINI_API_KEY 
+    api_key: env:GEMINI_API_KEY
+    
+  - name: silicon-pro
+    provider: silicon_flow
+    api_key: env:SILICON_FLOW_API_KEY
+    # 可选: 自定义API端点
+    # endpoint: https://api.custom-silicon-flow.com/v1 

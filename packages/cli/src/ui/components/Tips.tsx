@@ -7,7 +7,7 @@
 import React from 'react';
 import { Box, Text } from 'ink';
 import { Colors } from '../colors.js';
-import { type Config } from '@google/gemini-cli-core';
+import { type Config } from 'llms-code-core';
 import { useTranslation } from 'react-i18next';
 
 interface TipsProps {

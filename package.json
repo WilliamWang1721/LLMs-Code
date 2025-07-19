@@ -49,10 +49,13 @@
     "clean": "node scripts/clean.js"
   },
   "bin": {
-    "llms-code": "bundle/llms-code.js"
+    "llms": "bin/llms-code.js",
+    "llms-code": "bin/llms-code.js"
   },
   "files": [
     "bundle/",
+    "bin/",
+    "examples/",
     "README.md",
     "LICENSE"
   ],

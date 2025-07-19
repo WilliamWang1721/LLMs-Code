@@ -1,69 +1,0 @@
-# # 项目设计与规划文档：**LLMs Code**
-**版本:** 2.0 **状态:** 规划中 **核心愿景:** 打造一个无缝、优雅且具备国际化能力的统一大语言模型（LLM）命令行交互终端。
-
-### 1. 项目使命与定位 (Mission & Positioning)
-**1.1. 使命宣言:** LLMs Code 致力于破除当前大语言模型工具链的壁垒。我们相信，开发者应该拥有一个统一、高效、且符合其母语习惯的命令行工具，自由地驾驭任何顶级的 LLM，而不是被特定厂商的 API 所束缚。
-**1.2. 项目定位:** 本项目是对 Gemini CLI 的一次雄心勃勃的**“进化性改造”**。我们并非从零开始，而是站在巨人的肩膀上，继承其顶级的交互界面和工程实践。我们的核心任务是：**“替换其专一的心，赋予其包容的魂”**。我们将用一个可插拔的、支持多模型的适配器核心，替换掉其原有的、仅服务于 Gemini 的 API 模块，并在此基础上，构建国际化支持等差异化的优秀特性。
-
-### 2. 核心目标与范围 (Goals & Scope)
-**2.1. 项目核心目标 (In Scope):**
-* **目标一：实现通用模型支持。** 这是项目的基石。必须实现一个可扩展的适配器层，原生支持 Google (Gemini), OpenAI (GPT), 和 Anthropic (Claude) 的模型。
-* **目标二：完成彻底的品牌重塑。** 从代码到用户界面，将所有 Gemini CLI 的痕迹替换为 LLMs Code，建立独立的品牌认知。
-* **目标三：实现完整的国际化 (i18n) 支持。** UI 界面的所有硬编码英文字符串都必须被替换为可通过语言包配置的键值。项目初始阶段必须支持**英文 (en)** 和**简体中文 (zh-CN)**。
-* **目标四：提供灵活的配置体系。** 用户必须能通过一个清晰的 YAML 配置文件来管理模型、API 密钥和语言偏好。
-* **目标五：完整保留并继承原有的优秀用户体验。** 改造过程中，不得以任何形式牺牲或降级原项目流畅的交互式 UI。
-
-⠀**2.2. 非目标范围 (Out of Scope):**
-* 开发图形用户界面 (GUI)。LLMs Code 始终是一个纯粹的命令行工具。
-* 支持图像、音频等多模态输入。在 V1 版本中，我们专注于纯文本交互。
-* 自己训练或托管 LLM。我们是模型的“调用者”，而非“提供者”。
-
-⠀
-### 3. 核心架构设计原则 （Architectural Principles）
-**1** **UI 与逻辑的绝对分离:** 严格遵守原项目的 Monorepo 结构。packages/cli 负责“外观”，packages/core 负责“大脑”。所有核心改造都发生在 core 包中。
-**2** **面向接口而非实现编程:** 采用“适配器模式”。所有与外部 LLM API 的通信，都必须通过我们定义的标准 LLMAdapter 接口进行。这保证了未来扩展到任何新模型都无需改动上层业务逻辑。
-**3** **配置驱动一切:** 无论是模型选择、API 密钥还是界面语言，都不允许硬编码。所有行为都必须由用户的配置文件来驱动。
-**4** **国际化优先:** 在进行任何 UI 文本修改或添加时，必须优先考虑国际化。禁止在 .tsx 组件中直接写入面向用户的字符串，必须通过 i18n 框架（如 i18next）提供的翻译函数进行包裹。
-
-⠀
-### 4. 详细的功能模块与开发史诗 (Feature Epics)
-这是一个宏大的、分阶段的任务规划，您可以将每个“用户故事”作为一条独立的指令交给您的 AI 助手。
-* **用户故事 1.1:** 作为项目所有者，我希望将原始 Gemini CLI 仓库克隆并重命名为 llms-code，并成功在本地搭建起完整的开发和测试环境。
-* **用户故事 1.2:** 作为项目所有者，我希望将项目中所有 package.json 的 name 和 bin 命令，以及代码和文档中所有 Gemini CLI 的引用，全部更新为 LLMs Code。
-* **用户故事 1.3:** 作为用户，我希望我的配置文件存储在 ~/.config/llms-code/ 目录下，而不是旧的目录。
-* **用户故事 2.1:** 作为开发者，我希望在 packages/cli 中集成一个标准的 i18n 框架（推荐 i18next），并建立 locales 文件夹，包含 en/translation.json 和 zh-CN/translation.json 两个语言包文件。
-  * *示例* *en/translation.json**:* 生成的 json  {
-  * "welcome_message": "Welcome to LLMs Code!",
-  * "chat_input_placeholder": "Type your message here..."
-  * }     Use code [with caution](https://support.google.com/legal/answer/13505487).  Json     
-  * *示例* *zh-CN/translation.json**:* Generated json  {
-  * "welcome_message": "欢迎使用 LLMs Code！",
-  * "chat_input_placeholder": "在此输入您的消息..."
-  * }     Use code [with caution](https://support.google.com/legal/answer/13505487).  Json     
-* **用户故事 2.2:** 作为开发者，我希望将 packages/cli/src 目录下的所有 .tsx 文件中的硬编码英文字符串（如 "Chat", "History", "Settings" 等），全部替换为 i18n 翻译函数（如 t('welcome_message')）。
-* **用户故事 2.3:** 作为用户，我希望可以在配置文件中通过 language: zh-CN 的设置，将 CLI 的界面语言切换为中文。
-* **用户故事 3.1:** 作为架构师，我希望在 packages/core 中定义一个清晰、标准的 LLMAdapter TypeScript 接口，作为所有模型通信的契约。
-* **用户故事 3.2:** 作为后端开发者，我希望基于 LLMAdapter 接口，分别实现 OpenAIAdapter, ClaudeAdapter, 和 GeminiAdapter 三个具体的类，它们各自负责调用对应厂商的官方 SDK。
-* **用户故事 3.3:** 作为后端开发者，我希望重构原有的核心 API 调用逻辑，用一个“适配器工厂”来替代它。该工厂能根据用户配置动态地选择并实例化正确的适配器。
-* **用户故事 4.1:** 作为用户，我希望拥有一个 config.yaml 文件，在其中可以统一管理我的 language 偏好和 models 列表。
-  * *示例* *config.yaml**:* Generated yaml  # 'en' or 'zh-CN'
-  * language: zh-CN
-  * default_model: gpt-4o
-  * models:
-  * - name: gpt-4o
-  * provider: openai
-  * api_key: env:OPENAI_API_KEY
-  * - name: claude-3-opus
-  * provider: anthropic
-  * api_key: env:ANTHROPIC_API_KEY
-  * - name: gemini-1.5-pro
-  * provider: gemini
-  * api_key: env:GEMINI_API_KEY     Use code [with caution](https://support.google.com/legal/answer/13505487).  Yaml     
-* **用户故事 4.2:** 作为用户，我希望可以通过 llms-code chat "你好" -m claude-3-opus 命令，临时覆盖默认模型，使用指定的模型进行交互。
-
-⠀
-**给您的执行建议：**
-这份文档的结构是层层递进的。您可以按照**史诗（Epic）的顺序**推进项目。在执行每个史诗时，将下面的**用户故事（User Story）**逐条作为清晰、明确的任务指令交给您的 AI 开发助手。
-例如，您可以这样下达第一个指令：
-“你好，我们将启动一个名为 LLMs Code 的新项目。这是我们的项目设计文档（[您可以附上本文档的部分或全部内容]）。现在，请为我执行 **史诗一** 中的 **用户故事 1.1**：克隆 Gemini CLI 仓库到 llms-code 文件夹，并搭建好本地开发环境，确保所有依赖安装成功，并且 npm run build 和 npm run test 命令可以正常工作。”
-这份文档为您提供了坚实的战略蓝图。现在，是时候开始指挥您的 AI 工程师，将这个蓝图变为现实了。

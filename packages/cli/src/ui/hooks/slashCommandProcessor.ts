@@ -18,7 +18,7 @@ import {
   MCPServerStatus,
   getMCPDiscoveryState,
   getMCPServerStatus,
-} from '@google/gemini-cli-core';
+} from 'llms-code-core';
 import { useSessionStats } from '../contexts/SessionContext.js';
 import {
   Message,

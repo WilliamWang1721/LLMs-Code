@@ -24,7 +24,7 @@
   ],
   "dependencies": {
     "@google/generative-ai": "^0.2.1",
-    "@google/gemini-cli-core": "file:../core",
+    "llms-code-core": "file:../core",
     "@types/js-yaml": "^4.0.9",
     "ansi-escapes": "^6.2.0",
     "chalk": "^5.3.0",

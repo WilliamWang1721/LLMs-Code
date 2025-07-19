@@ -9,11 +9,11 @@ import { memoryCommand } from './memoryCommand.js';
 import { type CommandContext, SlashCommand } from './types.js';
 import { createMockCommandContext } from '../../test-utils/mockCommandContext.js';
 import { MessageType } from '../types.js';
-import { getErrorMessage } from '@google/gemini-cli-core';
+import { getErrorMessage } from 'llms-code-core';
 
-vi.mock('@google/gemini-cli-core', async (importOriginal) => {
+vi.mock('llms-code-core', async (importOriginal) => {
   const original =
-    await importOriginal<typeof import('@google/gemini-cli-core')>();
+    await importOriginal<typeof import('llms-code-core')>();
   return {
     ...original,
     getErrorMessage: vi.fn((error: unknown) => {

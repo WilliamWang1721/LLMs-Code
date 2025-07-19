@@ -58,12 +58,12 @@ export const ContextSummaryDisplay: React.FC<ContextSummaryDisplayProps> = ({
     // Add ctrl+t hint when MCP servers are available
     if (mcpServers && Object.keys(mcpServers).length > 0) {
       if (showToolDescriptions) {
-        summaryText += ` (${t('contextSummary.ctrlTToToggle')})`;
+        summaryText += ` ${t('contextSummary.ctrlTToToggle')}`;
       } else {
-        summaryText += ` (${t('contextSummary.ctrlTToView')})`;
+        summaryText += ` ${t('contextSummary.ctrlTToView')}`;
       }
     }
   }
 
   return <Text color={Colors.Gray}>{summaryText}</Text>;
-};
+}
