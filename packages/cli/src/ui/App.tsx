@@ -81,6 +81,7 @@ import ansiEscapes from 'ansi-escapes';
 import { OverflowProvider } from './contexts/OverflowContext.js';
 import { ShowMoreLines } from './components/ShowMoreLines.js';
 import { PrivacyNotice } from './privacy/PrivacyNotice.js';
+import { useTranslation } from 'react-i18next';
 
 const CTRL_EXIT_PROMPT_DURATION_MS = 1000;
 
@@ -99,6 +100,7 @@ export const AppWrapper = (props: AppProps) => (
 
 const App = ({ config, settings, startupWarnings = [], version }: AppProps) => {
   useBracketedPaste();
+  const { t } = useTranslation();
   const [updateMessage, setUpdateMessage] = useState<string | null>(null);
   const { stdout } = useStdout();
   const nightly = version.includes('nightly');
@@ -273,7 +275,7 @@ const App = ({ config, settings, startupWarnings = [], version }: AppProps) => {
       );
       console.error('Error refreshing memory:', error);
     }
-  }, [config, addItem]);
+  }, [config, addItem, t]);
 
   // Watch for model changes (e.g., from Flash fallback)
   useEffect(() => {
@@ -350,7 +352,7 @@ const App = ({ config, settings, startupWarnings = [], version }: AppProps) => {
     };
 
     config.setFlashFallbackHandler(flashFallbackHandler);
-  }, [config, addItem, userTier]);
+  }, [config, addItem, userTier, t]);
 
   const {
     handleSlashCommand,

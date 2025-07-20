@@ -6,6 +6,7 @@
 
 import React from 'react';
 import { Box, Text, useInput } from 'ink';
+import { useTranslation } from 'react-i18next';
 import { DiffRenderer } from './DiffRenderer.js';
 import { Colors } from '../../colors.js';
 import {
@@ -37,6 +38,7 @@ export const ToolConfirmationMessage: React.FC<
   availableTerminalHeight,
   terminalWidth,
 }) => {
+  const { t } = useTranslation();
   const { onConfirm } = confirmationDetails;
   const childWidth = terminalWidth - 2; // 2 for padding
 

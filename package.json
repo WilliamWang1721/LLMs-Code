@@ -87,6 +87,11 @@
   },
   "dependencies": {
     "@types/js-yaml": "^4.0.9",
-    "js-yaml": "^4.1.0"
+    "command-exists": "^1.2.9",
+    "ink-gradient": "^3.0.0",
+    "js-yaml": "^4.1.0",
+    "lowlight": "^3.3.0",
+    "read-package-up": "^11.0.0",
+    "update-notifier": "^7.3.1"
   }
 }

@@ -7,8 +7,7 @@
 import React from 'react';
 import { render } from 'ink';
 import './i18n'; // Import i18n configuration
-import { useTranslation } from 'react-i18next';
-const { t } = useTranslation();
+import i18n from './i18n';
 import { AppWrapper } from './ui/App.js';
 import { loadCliConfig, parseArguments, CliArgs } from './config/config.js';
 import { readStdin } from './utils/readStdin.js';
@@ -234,7 +233,7 @@ export async function main() {
   }
 
   // Set window title
-  await setWindowTitle('', settings, t);
+  await setWindowTitle('', settings);
 
   // Register cleanup handler for checkpoints
   registerCleanup();
@@ -253,25 +252,26 @@ export async function main() {
   );
 }
 
-async function setWindowTitle(title: string, settings: LoadedSettings, t: (key: string) => string) {
-  if (settings.merged.hideWindowTitle) {
-    return;
+async function setWindowTitle(title: string, settings: LoadedSettings) {
+  // 如果标题为空，设置为默认标题
+  if (title === '') {
+    title = 'Chat';
   }
 
-  if (process.stdout.isTTY) {
-    try {
-      const version = await getCliVersion();
-      const windowTitle = title
-        ? t('windowTitle', { title })
-        : `LLMs Code v${version}`;
-      process.stdout.write(`\x1b]0;${windowTitle}\x07`);
-    } catch (error) {
-      // 如果获取版本失败，使用无版本的标题
-      const windowTitle = title
-        ? t('windowTitle', { title })
-        : 'LLMs Code';
-      process.stdout.write(`\x1b]0;${windowTitle}\x07`);
-    }
+  if (process.platform === 'darwin' || process.platform === 'linux') {
+    // On macOS/Linux, set the terminal window title
+    const windowTitle = (process.env.CLI_TITLE || i18n.t('windowTitle', { title })).replace(
+      /[\x00-\x1F\x7F]/g,
+      '',
+    );
+    process.stdout.write(`\x1B]0;${windowTitle}\x07`);
+  } else if (process.platform === 'win32') {
+    // On Windows, set the console window title
+    const windowTitle = (process.env.CLI_TITLE || i18n.t('windowTitle', { title })).replace(
+      /[\x00-\x1F\x7F]/g,
+      '',
+    );
+    process.title = windowTitle;
   }
 }
 
