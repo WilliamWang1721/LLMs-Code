@@ -1,6 +1,8 @@
+import { useState } from "react";
 import type React from "react";
 import { BadgeDollarSign, EllipsisVertical, History, Images, List, LogOut, Map, PanelLeft, Plus, Settings, UserRound } from "lucide-react";
 
+import { useI18n } from "@/i18n";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 export type SidebarTab = "map" | "list" | "brands" | "profile" | "history";
@@ -8,9 +10,23 @@ export type SidebarTab = "map" | "list" | "brands" | "profile" | "history";
 interface FluxaSidebarProps {
   activeTab: SidebarTab;
   onTabChange: (tab: SidebarTab) => void;
+  onAddLocation?: () => void;
+  onAddBrand?: () => void;
+  onOpenSettings?: () => void;
 }
 
-export function FluxaSidebar({ activeTab, onTabChange }: FluxaSidebarProps): React.JSX.Element {
+export function FluxaSidebar({ activeTab, onTabChange, onAddLocation, onAddBrand, onOpenSettings }: FluxaSidebarProps): React.JSX.Element {
+  const { t } = useI18n();
+  const [collapsedLabels, setCollapsedLabels] = useState(false);
+
+  const handlePrimaryAddClick = (): void => {
+    if (activeTab === "map" || activeTab === "list") {
+      onAddLocation?.();
+      return;
+    }
+    onAddBrand?.();
+  };
+
   return (
     <aside className="flex h-full w-[72px] shrink-0 flex-col rounded-l-none rounded-r-m border border-[var(--sidebar-border)] bg-[var(--sidebar)] md:w-56 lg:w-[240px]">
       <div className="flex items-center gap-2 p-6">
@@ -24,12 +40,13 @@ export function FluxaSidebar({ activeTab, onTabChange }: FluxaSidebarProps): Rea
               <path d="M16 26c1.65686 0 3 1.34314 3 3 0 1.65686-1.34314 3-3 3-1.65686 0-3-1.34314-3-3 0-1.65686 1.34314-3 3-3z m-10-2c1.10457 0 2 0.89543 2 2 0 1.10457-0.89543 2-2 2-1.10457 0-2-0.89543-2-2 0-1.10457 0.89543-2 2-2z m20 0c1.10457 0 2 0.89543 2 2 0 1.10457-0.89543 2-2 2-1.10457 0-2-0.89543-2-2 0-1.10457 0.89543-2 2-2z m-10-12c2.20914 0 4 1.79086 4 4 0 2.20914-1.79086 4-4 4-2.20914 0-4-1.79086-4-4 0-2.20914 1.79086-4 4-4z m-13 1c1.65685 0 3 1.34314 3 3 0 1.65686-1.34315 3-3 3-1.65685 0-3-1.34314-3-3 0-1.65686 1.34315-3 3-3z m26 0c1.65686 0 3 1.34314 3 3 0 1.65686-1.34314 3-3 3-1.65686 0-3-1.34314-3-3 0-1.65686 1.34314-3 3-3z m-23-9c1.10457 0 2 0.89543 2 2 0 1.10457-0.89543 2-2 2-1.10457 0-2-0.89543-2-2 0-1.10457 0.89543-2 2-2z m20 0c1.10457 0 2 0.89543 2 2 0 1.10457-0.89543 2-2 2-1.10457 0-2-0.89543-2-2 0-1.10457 0.89543-2 2-2z m-10-4c1.65686 0 3 1.34315 3 3 0 1.65685-1.34314 3-3 3-1.65686 0-3-1.34315-3-3 0-1.65685 1.34314-3 3-3z" />
             </svg>
           </div>
-          <p className="hidden text-sm font-semibold leading-[1.5] text-[var(--sidebar-primary-foreground)] md:block">FLUXA</p>
+          <p className={`text-sm font-semibold leading-[1.5] text-[var(--sidebar-primary-foreground)] ${collapsedLabels ? "hidden" : "hidden md:block"}`}>FLUXA</p>
         </div>
 
         <button
           aria-label="Collapse sidebar"
           className="ui-hover-shadow hidden h-10 w-10 place-items-center rounded-pill border border-[var(--input)] bg-white text-[var(--sidebar-foreground)] transition-colors duration-200 hover:bg-[var(--muted-hover)] hover:border-[var(--border-hover)] [--hover-outline:#2a293333] md:grid"
+          onClick={() => setCollapsedLabels((prev) => !prev)}
           type="button"
         >
           <PanelLeft className="h-4 w-4" />
@@ -37,7 +54,7 @@ export function FluxaSidebar({ activeTab, onTabChange }: FluxaSidebarProps): Rea
       </div>
 
       <nav className="flex min-h-0 flex-1 flex-col gap-1.5 overflow-y-auto px-2 md:px-4" aria-label="Main navigation">
-        <p className="hidden h-8 text-xs font-medium leading-8 text-[var(--sidebar-foreground)] md:block">Discover</p>
+        <p className={`h-8 text-xs font-medium leading-8 text-[var(--sidebar-foreground)] ${collapsedLabels ? "hidden" : "hidden md:block"}`}>{t("Discover")}</p>
 
         <button
           className={`ui-hover-shadow flex h-12 w-full items-center justify-center gap-2 rounded-[24px] px-0 py-3 text-left transition-colors duration-200 hover:bg-[var(--sidebar-accent-hover)] [--hover-outline:#2a293340] [--hover-outline-active:#2a293352] md:justify-start md:px-6 ${
@@ -46,7 +63,7 @@ export function FluxaSidebar({ activeTab, onTabChange }: FluxaSidebarProps): Rea
           onClick={() => onTabChange("map")}
           type="button"
         >
-          <span className="hidden flex-1 text-left text-base font-medium leading-6 text-[var(--sidebar-accent-foreground)] md:block">Map</span>
+          <span className={`flex-1 text-left text-base font-medium leading-6 text-[var(--sidebar-accent-foreground)] ${collapsedLabels ? "hidden" : "hidden md:block"}`}>{t("Map")}</span>
           <Map className={`h-6 w-6 transition-colors ${activeTab === "map" ? "text-[var(--sidebar-accent-foreground)]" : "text-[var(--sidebar-foreground)]"}`} />
         </button>
 
@@ -57,7 +74,7 @@ export function FluxaSidebar({ activeTab, onTabChange }: FluxaSidebarProps): Rea
           onClick={() => onTabChange("list")}
           type="button"
         >
-          <span className="hidden flex-1 text-left text-base font-medium leading-6 text-[var(--sidebar-accent-foreground)] md:block">List</span>
+          <span className={`flex-1 text-left text-base font-medium leading-6 text-[var(--sidebar-accent-foreground)] ${collapsedLabels ? "hidden" : "hidden md:block"}`}>{t("List")}</span>
           <List className={`h-6 w-6 transition-colors ${activeTab === "list" ? "text-[var(--sidebar-accent-foreground)]" : "text-[var(--sidebar-foreground)]"}`} />
         </button>
 
@@ -68,16 +85,17 @@ export function FluxaSidebar({ activeTab, onTabChange }: FluxaSidebarProps): Rea
           onClick={() => onTabChange("brands")}
           type="button"
         >
-          <span className="hidden flex-1 text-left text-base font-medium leading-6 text-[var(--sidebar-accent-foreground)] md:block">Brands</span>
+          <span className={`flex-1 text-left text-base font-medium leading-6 text-[var(--sidebar-accent-foreground)] ${collapsedLabels ? "hidden" : "hidden md:block"}`}>{t("Brands")}</span>
           <BadgeDollarSign className={`h-6 w-6 transition-colors ${activeTab === "brands" ? "text-[var(--sidebar-accent-foreground)]" : "text-[var(--sidebar-foreground)]"}`} />
         </button>
 
         <button
           className="ui-hover-shadow mt-1.5 flex h-10 w-full items-center justify-center gap-1.5 rounded-pill bg-[var(--primary)] px-2 py-2.5 text-sm font-medium leading-[1.4286] text-[var(--primary-foreground)] transition-colors duration-200 hover:bg-[var(--primary-hover)] [--hover-outline:#4134cc73] [--hover-outline-active:#372cb8a6] md:px-4"
+          onClick={handlePrimaryAddClick}
           type="button"
         >
           <Plus className="h-4 w-4" />
-          <span className="hidden md:inline">{activeTab === "brands" ? "Add Brand" : "Add Location"}</span>
+          <span className={collapsedLabels ? "hidden" : "hidden md:inline"}>{activeTab === "brands" ? t("Add Brand") : t("Add Location")}</span>
         </button>
       </nav>
 
@@ -88,7 +106,7 @@ export function FluxaSidebar({ activeTab, onTabChange }: FluxaSidebarProps): Rea
             className="ui-hover-shadow group flex w-full cursor-pointer items-start justify-center gap-2 rounded-m p-3 text-left transition-colors duration-200 hover:bg-[var(--muted)] [--hover-outline:#2a293338] [--hover-outline-active:#2a29334d] md:justify-start md:p-6"
             type="button"
           >
-            <div className="hidden flex-1 md:block">
+            <div className={`flex-1 ${collapsedLabels ? "hidden" : "hidden md:block"}`}>
               <p className="text-base font-semibold leading-6 text-[var(--sidebar-accent-foreground)]">Joe Doe</p>
               <p className="text-base leading-6 text-[var(--sidebar-foreground)]">joe@acmecorp.com</p>
             </div>
@@ -108,27 +126,36 @@ export function FluxaSidebar({ activeTab, onTabChange }: FluxaSidebarProps): Rea
             onSelect={() => onTabChange("profile")}
           >
             <UserRound className="h-4 w-4" />
-            Profile
+            {t("Profile")}
           </DropdownMenuItem>
           <DropdownMenuItem
             className="flex h-10 cursor-pointer items-center gap-2.5 !rounded-xs px-3.5 py-2.5 text-sm font-medium leading-[1.4286] text-[var(--foreground)] outline-none transition-colors data-[highlighted]:!rounded-m data-[highlighted]:bg-[var(--accent)]"
             onSelect={() => onTabChange("history")}
           >
             <History className="h-4 w-4" />
-            History
+            {t("History")}
           </DropdownMenuItem>
-          <DropdownMenuItem className="flex h-10 cursor-pointer items-center gap-2.5 !rounded-xs px-3.5 py-2.5 text-sm font-medium leading-[1.4286] text-[var(--foreground)] outline-none transition-colors data-[highlighted]:!rounded-m data-[highlighted]:bg-[var(--accent)]">
+          <DropdownMenuItem
+            className="flex h-10 cursor-pointer items-center gap-2.5 !rounded-xs px-3.5 py-2.5 text-sm font-medium leading-[1.4286] text-[var(--foreground)] outline-none transition-colors data-[highlighted]:!rounded-m data-[highlighted]:bg-[var(--accent)]"
+            onSelect={() => onTabChange("history")}
+          >
             <Images className="h-4 w-4" />
-            Album
+            {t("Album")}
           </DropdownMenuItem>
-          <DropdownMenuItem className="flex h-10 cursor-pointer items-center gap-2.5 !rounded-xs px-3.5 py-2.5 text-sm font-medium leading-[1.4286] text-[var(--foreground)] outline-none transition-colors data-[highlighted]:!rounded-m data-[highlighted]:bg-[var(--accent)]">
+          <DropdownMenuItem
+            className="flex h-10 cursor-pointer items-center gap-2.5 !rounded-xs px-3.5 py-2.5 text-sm font-medium leading-[1.4286] text-[var(--foreground)] outline-none transition-colors data-[highlighted]:!rounded-m data-[highlighted]:bg-[var(--accent)]"
+            onSelect={() => onOpenSettings?.()}
+          >
             <Settings className="h-4 w-4" />
-            Settings
+            {t("Settings")}
           </DropdownMenuItem>
           <DropdownMenuSeparator className="mx-3 my-1.5 h-px bg-[var(--border)]" />
-          <DropdownMenuItem className="flex h-10 cursor-pointer items-center gap-2.5 !rounded-xs px-3.5 py-2.5 text-sm font-medium leading-[1.4286] text-[#f04f38] outline-none data-[highlighted]:bg-[#f04f3814] data-[highlighted]:text-[#f04f38]">
+          <DropdownMenuItem
+            className="flex h-10 cursor-pointer items-center gap-2.5 !rounded-xs px-3.5 py-2.5 text-sm font-medium leading-[1.4286] text-[#f04f38] outline-none data-[highlighted]:bg-[#f04f3814] data-[highlighted]:text-[#f04f38]"
+            onSelect={() => onTabChange("map")}
+          >
             <LogOut className="h-4 w-4" />
-            Log out
+            {t("Log out")}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

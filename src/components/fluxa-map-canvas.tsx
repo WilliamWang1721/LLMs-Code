@@ -1,9 +1,26 @@
+import { useEffect, useMemo, useState } from "react";
 import type React from "react";
-import { ArrowUpRight, ChevronLeft, ChevronRight, CupSoda, ListFilter, MapPinned, MoreHorizontal, RefreshCw, ShoppingBag, SquarePen, Store, Trash2, Utensils } from "lucide-react";
+import {
+  ArrowUpRight,
+  ChevronLeft,
+  ChevronRight,
+  CupSoda,
+  ListFilter,
+  MapPinned,
+  MoreHorizontal,
+  RefreshCw,
+  ShoppingBag,
+  SquarePen,
+  Store,
+  Trash2,
+  Utensils
+} from "lucide-react";
 
 import type { SidebarTab } from "@/components/fluxa-sidebar";
+import { useI18n } from "@/i18n";
 
 interface MerchantCard {
+  id: string;
   name: string;
   status: "active" | "inactive" | "unknown";
   address: string;
@@ -11,7 +28,7 @@ interface MerchantCard {
   author: string;
 }
 
-const CARDS: MerchantCard[] = [
+const BASE_CARDS: Array<Omit<MerchantCard, "id">> = [
   {
     name: "Starbucks Jing'an",
     status: "active",
@@ -42,18 +59,24 @@ const CARDS: MerchantCard[] = [
   }
 ];
 
+type BrandCategoryLabel = "Coffee" | "Fast Food" | "Retail" | "Convenience";
+type BrandSegment = Exclude<BrandCategoryLabel, "Retail">;
+
 interface BrandMerchantCard {
+  id: string;
   brand: string;
   category: string;
+  segment: BrandSegment;
   coverage: string;
   issues: string;
   owner: string;
 }
 
-const BRAND_CARDS: BrandMerchantCard[] = [
+const BASE_BRAND_CARDS: Array<Omit<BrandMerchantCard, "id">> = [
   {
     brand: "Starbucks",
     category: "Coffee & Beverage",
+    segment: "Coffee",
     coverage: "Coverage 124 stores · 92% online",
     issues: "Issue stores 6 · Last sync 5m ago",
     owner: "Owner: Evelyn Chen"
@@ -61,6 +84,7 @@ const BRAND_CARDS: BrandMerchantCard[] = [
   {
     brand: "McDonald's",
     category: "Quick Service",
+    segment: "Fast Food",
     coverage: "Coverage 198 stores · 89% online",
     issues: "Issue stores 14 · Last sync 12m ago",
     owner: "Owner: Jason Li"
@@ -68,6 +92,7 @@ const BRAND_CARDS: BrandMerchantCard[] = [
   {
     brand: "FamilyMart",
     category: "Convenience",
+    segment: "Convenience",
     coverage: "Coverage 76 stores · 84% online",
     issues: "Issue stores 11 · Last sync 23m ago",
     owner: "Owner: Amber Zhao"
@@ -75,13 +100,12 @@ const BRAND_CARDS: BrandMerchantCard[] = [
 ];
 
 interface BrandCategory {
-  label: string;
+  label: BrandCategoryLabel;
   icon: React.ComponentType<{ className?: string }>;
-  active?: boolean;
 }
 
 const BRAND_CATEGORIES: BrandCategory[] = [
-  { label: "Coffee", icon: CupSoda, active: true },
+  { label: "Coffee", icon: CupSoda },
   { label: "Fast Food", icon: Utensils },
   { label: "Retail", icon: ShoppingBag },
   { label: "Convenience", icon: Store }
@@ -141,6 +165,11 @@ const HISTORY_VISITS: HistoryVisit[] = [
 ];
 
 const HISTORY_TRAFFIC_SOURCES = ["Search: 14", "Recommendations: 6", "Saved items: 4"];
+const LIST_TOTAL_RECORDS = 324;
+const LIST_PAGE_SIZE = 4;
+const LIST_PAGE_COUNT = 3;
+const BRAND_TOTAL_RECORDS = 186;
+const BRAND_PAGE_SIZE = 3;
 
 function statusClass(status: MerchantCard["status"]): string {
   if (status === "active") {
@@ -160,37 +189,134 @@ function statusLabel(status: MerchantCard["status"]): string {
 
 interface FluxaMapCanvasProps {
   activeTab: SidebarTab;
+  brandDraftCount?: number;
+  onOpenDetail?: () => void;
 }
 
-export function FluxaMapCanvas({ activeTab }: FluxaMapCanvasProps): React.JSX.Element {
+export function FluxaMapCanvas({ activeTab, brandDraftCount = 0, onOpenDetail }: FluxaMapCanvasProps): React.JSX.Element {
+  const { t } = useI18n();
+  const [historyFilter, setHistoryFilter] = useState<"all" | "today">("all");
+  const [historyCleared, setHistoryCleared] = useState(false);
+  const [profileEditing, setProfileEditing] = useState(false);
+  const [profileFields, setProfileFields] = useState(PROFILE_FIELDS);
+  const [profileBio, setProfileBio] = useState(PROFILE_BIO);
+  const [quickAccessTarget, setQuickAccessTarget] = useState<string | null>(null);
+  const [mapRefreshCount, setMapRefreshCount] = useState(0);
+  const [brandCategory, setBrandCategory] = useState<BrandCategoryLabel>("Coffee");
+  const [brandPage, setBrandPage] = useState(1);
+  const [brandActionTarget, setBrandActionTarget] = useState<string | null>(null);
+  const [listPage, setListPage] = useState(1);
+
+  const listRecords = useMemo<MerchantCard[]>(
+    () =>
+      Array.from({ length: LIST_PAGE_SIZE * LIST_PAGE_COUNT }, (_, index) => {
+        const base = BASE_CARDS[index % BASE_CARDS.length];
+        return {
+          ...base,
+          id: `merchant-${index + 1}`,
+          name: index < BASE_CARDS.length ? base.name : `${base.name} #${index + 1}`,
+          distanceMeta: `${(1.1 + index * 0.2).toFixed(1)} km · ${8 + index}m ago`
+        };
+      }),
+    []
+  );
+
+  const brandCards = useMemo<BrandMerchantCard[]>(
+    () =>
+      Array.from({ length: 9 }, (_, index) => {
+        const base = BASE_BRAND_CARDS[index % BASE_BRAND_CARDS.length];
+        return {
+          ...base,
+          id: `${base.brand.toLowerCase().replace(/\s+/g, "-")}-${index + 1}`
+        };
+      }),
+    []
+  );
+
+  const historyVisits = useMemo<HistoryVisit[]>(() => {
+    if (historyCleared) {
+      return [];
+    }
+    if (historyFilter === "today") {
+      return HISTORY_VISITS.slice(0, 2);
+    }
+    return HISTORY_VISITS;
+  }, [historyCleared, historyFilter]);
+
+  const filteredBrandCards = useMemo<BrandMerchantCard[]>(() => {
+    if (brandCategory === "Retail") {
+      return brandCards;
+    }
+    return brandCards.filter((card) => card.segment === brandCategory);
+  }, [brandCards, brandCategory]);
+
+  const brandPageCount = Math.max(1, Math.ceil(filteredBrandCards.length / BRAND_PAGE_SIZE));
+  const pagedBrandCards = filteredBrandCards.slice((brandPage - 1) * BRAND_PAGE_SIZE, brandPage * BRAND_PAGE_SIZE);
+
+  const pagedListRecords = listRecords.slice((listPage - 1) * LIST_PAGE_SIZE, listPage * LIST_PAGE_SIZE);
+  const listStart = (listPage - 1) * LIST_PAGE_SIZE + 1;
+  const listEnd = listStart + pagedListRecords.length - 1;
+  const mapLocationsInView = 326 + mapRefreshCount * 2;
+
+  useEffect(() => {
+    setBrandPage(1);
+  }, [brandCategory]);
+
+  useEffect(() => {
+    if (brandPage > brandPageCount) {
+      setBrandPage(brandPageCount);
+    }
+  }, [brandPage, brandPageCount]);
+
+  const handleProfileFieldChange = (label: string, value: string): void => {
+    setProfileFields((prev) => prev.map((field) => (field.label === label ? { ...field, value } : field)));
+  };
+
   if (activeTab === "history") {
     return (
       <section className="flex h-full w-full min-w-0 flex-col gap-2.5 bg-[var(--background)] px-6 py-4">
         <div className="flex w-full flex-wrap items-center justify-between gap-3">
           <div className="flex min-w-0 flex-1 flex-col gap-1">
-            <h1 className="text-[32px] font-semibold leading-[1.2] text-[var(--foreground)]">Browsing History</h1>
-            <p className="text-sm leading-[1.4] text-[var(--muted-foreground)]">Recently visited pages and search history</p>
+            <h1 className="text-[32px] font-semibold leading-[1.2] text-[var(--foreground)]">{t("Browsing History")}</h1>
+            <p className="text-sm leading-[1.4] text-[var(--muted-foreground)]">{t("Recently visited pages and search history")}</p>
           </div>
           <div className="flex flex-wrap items-center gap-2">
             <button
-              className="ui-hover-shadow inline-flex h-10 items-center gap-1.5 rounded-pill bg-[var(--primary)] px-4 py-2 text-sm font-medium leading-[1.4286] text-[var(--primary-foreground)] transition-colors duration-200 hover:bg-[var(--primary-hover)] [--hover-outline:#4134cc73] [--hover-outline-active:#372cb8a6]"
+              className={`ui-hover-shadow inline-flex h-10 items-center gap-1.5 rounded-pill px-4 py-2 text-sm font-medium leading-[1.4286] transition-colors duration-200 [--hover-outline:#4134cc73] [--hover-outline-active:#372cb8a6] ${
+                historyFilter === "all"
+                  ? "bg-[var(--primary)] text-[var(--primary-foreground)] hover:bg-[var(--primary-hover)]"
+                  : "border border-[var(--input)] bg-white text-[var(--foreground)] hover:border-[var(--border-hover)] hover:bg-[var(--muted-hover)]"
+              }`}
+              onClick={() => {
+                setHistoryFilter("all");
+                setHistoryCleared(false);
+              }}
               type="button"
             >
               <ListFilter className="h-4 w-4" />
-              <span>All</span>
+              <span>{t("All")}</span>
             </button>
             <button
-              className="ui-hover-shadow inline-flex h-10 items-center rounded-pill border border-[var(--input)] bg-white px-4 py-2 text-sm font-medium leading-[1.4286] text-[var(--foreground)] transition-colors duration-200 hover:border-[var(--border-hover)] hover:bg-[var(--muted-hover)] [--hover-outline:#2a293333]"
+              className={`ui-hover-shadow inline-flex h-10 items-center rounded-pill border px-4 py-2 text-sm font-medium leading-[1.4286] transition-colors duration-200 [--hover-outline:#2a293333] ${
+                historyFilter === "today"
+                  ? "border-[var(--primary)] bg-[var(--secondary)] text-[var(--secondary-foreground)] hover:bg-[var(--secondary-hover)]"
+                  : "border-[var(--input)] bg-white text-[var(--foreground)] hover:border-[var(--border-hover)] hover:bg-[var(--muted-hover)]"
+              }`}
+              onClick={() => {
+                setHistoryFilter("today");
+                setHistoryCleared(false);
+              }}
               type="button"
             >
-              Today
+              {t("Today")}
             </button>
             <button
               className="ui-hover-shadow inline-flex h-10 items-center gap-1.5 rounded-pill bg-[var(--secondary)] px-4 py-2 text-sm font-medium leading-[1.4286] text-[var(--secondary-foreground)] transition-colors duration-200 hover:bg-[var(--secondary-hover)] [--hover-outline:#2a293336]"
+              onClick={() => setHistoryCleared(true)}
               type="button"
             >
               <Trash2 className="h-4 w-4" />
-              <span>Clear</span>
+              <span>{t("Clear")}</span>
             </button>
           </div>
         </div>
@@ -198,40 +324,46 @@ export function FluxaMapCanvas({ activeTab }: FluxaMapCanvasProps): React.JSX.El
         <div className="flex min-h-0 w-full flex-1 flex-col gap-3 xl:flex-row">
           <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-2.5">
             <div className="flex w-full items-center justify-between gap-3">
-              <h2 className="text-lg font-semibold leading-[1.3] text-[var(--foreground)]">Recent Visits</h2>
-              <span className="text-xs leading-[1.3] text-[var(--muted-foreground)]">Last 24 hours</span>
+              <h2 className="text-lg font-semibold leading-[1.3] text-[var(--foreground)]">{t("Recent Visits")}</h2>
+              <span className="text-xs leading-[1.3] text-[var(--muted-foreground)]">{historyFilter === "today" ? t("Today") : t("Last 24 hours")}</span>
             </div>
             <div className="flex min-h-0 flex-1 flex-col gap-2.5 overflow-y-auto pr-1">
-              {HISTORY_VISITS.map((visit) => (
-                <article className="flex min-w-0 flex-col gap-1.5 rounded-m border border-[var(--border)] bg-[var(--card)] px-4 py-3.5" key={visit.title}>
-                  <div className="flex items-start justify-between gap-3">
-                    <h3 className="truncate text-sm font-medium leading-[1.3] text-[var(--foreground)]">{visit.title}</h3>
-                    <span className="shrink-0 text-xs leading-[1.3] text-[var(--muted-foreground)]">{visit.time}</span>
-                  </div>
-                  <p className="truncate text-xs leading-[1.3] text-[var(--muted-foreground)]">{visit.meta}</p>
+              {historyVisits.length > 0 ? (
+                historyVisits.map((visit) => (
+                  <article className="flex min-w-0 flex-col gap-1.5 rounded-m border border-[var(--border)] bg-[var(--card)] px-4 py-3.5" key={visit.title}>
+                    <div className="flex items-start justify-between gap-3">
+                      <h3 className="truncate text-sm font-medium leading-[1.3] text-[var(--foreground)]">{t(visit.title)}</h3>
+                      <span className="shrink-0 text-xs leading-[1.3] text-[var(--muted-foreground)]">{visit.time}</span>
+                    </div>
+                    <p className="truncate text-xs leading-[1.3] text-[var(--muted-foreground)]">{t(visit.meta)}</p>
+                  </article>
+                ))
+              ) : (
+                <article className="flex min-h-[120px] items-center justify-center rounded-m border border-dashed border-[var(--border)] bg-[var(--card)] px-4 py-3.5 text-sm text-[var(--muted-foreground)]">
+                  {t("No history data. Click All or Today to reload.")}
                 </article>
-              ))}
+              )}
             </div>
           </div>
 
           <div className="flex w-full shrink-0 flex-col gap-2.5 xl:w-[320px]">
             <article className="rounded-m border border-[var(--border)] bg-[var(--card)] p-4">
-              <p className="text-xs font-medium leading-[1.3] text-[var(--muted-foreground)]">Visits Today</p>
-              <p className="mt-1 text-4xl font-bold leading-[1.1] text-[var(--foreground)]">24</p>
-              <p className="mt-1 text-xs font-medium leading-[1.3] text-[var(--muted-foreground)]">+12% vs yesterday</p>
+              <p className="text-xs font-medium leading-[1.3] text-[var(--muted-foreground)]">{t("Visits Today")}</p>
+              <p className="mt-1 text-4xl font-bold leading-[1.1] text-[var(--foreground)]">{historyVisits.length}</p>
+              <p className="mt-1 text-xs font-medium leading-[1.3] text-[var(--muted-foreground)]">{historyCleared ? t("History cleared") : "+12% vs yesterday"}</p>
             </article>
 
             <article className="rounded-m border border-[var(--border)] bg-[var(--card)] p-4">
-              <p className="text-xs font-medium leading-[1.3] text-[var(--muted-foreground)]">Peak Browsing Hour</p>
+              <p className="text-xs font-medium leading-[1.3] text-[var(--muted-foreground)]">{t("Peak Browsing Hour")}</p>
               <p className="mt-1 text-[22px] font-semibold leading-[1.2] text-[var(--foreground)]">20:00 - 21:00</p>
             </article>
 
             <article className="rounded-m border border-[var(--border)] bg-[var(--card)] p-4">
-              <h3 className="text-sm font-semibold leading-[1.3] text-[var(--foreground)]">Traffic Sources</h3>
+              <h3 className="text-sm font-semibold leading-[1.3] text-[var(--foreground)]">{t("Traffic Sources")}</h3>
               <div className="mt-2 flex flex-col gap-1">
                 {HISTORY_TRAFFIC_SOURCES.map((item) => (
                   <p className="text-[13px] leading-[1.4] text-[var(--muted-foreground)]" key={item}>
-                    {item}
+                    {t(item)}
                   </p>
                 ))}
               </div>
@@ -247,59 +379,78 @@ export function FluxaMapCanvas({ activeTab }: FluxaMapCanvasProps): React.JSX.El
       <section className="flex h-full w-full min-w-0 flex-col gap-2 rounded-m bg-[var(--background)] p-4">
         <div className="flex w-full flex-wrap items-start justify-between gap-3">
           <div className="flex min-w-0 flex-1 flex-col gap-1">
-            <h1 className="text-2xl font-semibold leading-[1.3] text-[var(--foreground)]">Profile</h1>
+            <h1 className="text-2xl font-semibold leading-[1.3] text-[var(--foreground)]">{t("Profile")}</h1>
             <p className="text-[13px] leading-[1.4286] text-[var(--muted-foreground)]">
-              View your profile, activity, and contributions.
+              {t("View your profile, activity, and contributions.")}
             </p>
           </div>
           <button
             className="ui-hover-shadow inline-flex h-10 items-center gap-1.5 rounded-pill border border-[var(--input)] bg-white px-4 py-2 text-sm font-medium leading-[1.4286] text-[var(--foreground)] transition-colors duration-200 hover:border-[var(--border-hover)] hover:bg-[var(--muted-hover)] [--hover-outline:#2a293333]"
+            onClick={() => setProfileEditing((prev) => !prev)}
             type="button"
           >
             <SquarePen className="h-4 w-4" />
-            <span>Edit Profile</span>
+            <span>{profileEditing ? t("Save Profile") : t("Edit Profile")}</span>
           </button>
         </div>
 
         <div className="flex min-h-0 w-full flex-1 flex-col gap-2.5 xl:flex-row">
           <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-2.5">
             <article className="flex min-h-[320px] min-w-0 flex-col gap-3 rounded-m border border-[var(--border)] bg-[var(--card)] p-4">
-              <h2 className="text-sm font-semibold leading-[1.4286] text-[var(--foreground)]">Account Information</h2>
+              <h2 className="text-sm font-semibold leading-[1.4286] text-[var(--foreground)]">{t("Account Information")}</h2>
 
               <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
-                {PROFILE_FIELDS.map((field) => (
+                {profileFields.map((field) => (
                   <div className="flex min-w-0 flex-col gap-1" key={field.label}>
-                    <span className="text-xs leading-[1.2] text-[var(--muted-foreground)]">{field.label}</span>
+                    <span className="text-xs leading-[1.2] text-[var(--muted-foreground)]">{t(field.label)}</span>
                     <div className="inline-flex min-h-9 items-center rounded-pill bg-[var(--muted)] px-3 py-2 text-sm text-[var(--foreground)]">
-                      <span className="truncate">{field.value}</span>
+                      {profileEditing ? (
+                        <input
+                          className="w-full bg-transparent outline-none"
+                          onChange={(event) => handleProfileFieldChange(field.label, event.target.value)}
+                          type="text"
+                          value={field.value}
+                        />
+                      ) : (
+                        <span className="truncate">{field.value}</span>
+                      )}
                     </div>
                   </div>
                 ))}
               </div>
 
               <div className="flex min-w-0 flex-col gap-1">
-                <span className="text-xs leading-[1.2] text-[var(--muted-foreground)]">Bio</span>
-                <p className="rounded-m bg-[var(--muted)] px-3 py-2 text-sm leading-[1.4286] text-[var(--foreground)]">{PROFILE_BIO}</p>
+                <span className="text-xs leading-[1.2] text-[var(--muted-foreground)]">{t("Bio")}</span>
+                {profileEditing ? (
+                  <textarea
+                    className="min-h-[72px] rounded-m bg-[var(--muted)] px-3 py-2 text-sm leading-[1.4286] text-[var(--foreground)] outline-none"
+                    onChange={(event) => setProfileBio(event.target.value)}
+                    rows={3}
+                    value={profileBio}
+                  />
+                ) : (
+                  <p className="rounded-m bg-[var(--muted)] px-3 py-2 text-sm leading-[1.4286] text-[var(--foreground)]">{t(profileBio)}</p>
+                )}
               </div>
             </article>
 
             <article className="flex min-h-[320px] min-w-0 flex-col gap-3 rounded-m border border-[var(--border)] bg-[var(--card)] p-4">
-              <h2 className="text-sm font-semibold leading-[1.4286] text-[var(--foreground)]">Your Stats</h2>
+              <h2 className="text-sm font-semibold leading-[1.4286] text-[var(--foreground)]">{t("Your Stats")}</h2>
               <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
                 {PROFILE_STATS.map((item) => (
                   <div className="rounded-m bg-[var(--muted)] p-3" key={item.label}>
                     <p className="text-[28px] font-semibold leading-[1.15] text-[var(--foreground)]">{item.value}</p>
-                    <p className="mt-1 text-xs leading-[1.2] text-[var(--muted-foreground)]">{item.label}</p>
+                    <p className="mt-1 text-xs leading-[1.2] text-[var(--muted-foreground)]">{t(item.label)}</p>
                   </div>
                 ))}
               </div>
               <div className="mt-auto rounded-m bg-[var(--muted)] px-3 py-2">
                 <div className="flex items-center justify-between gap-4 text-xs leading-[1.2] text-[var(--muted-foreground)]">
-                  <span>Activity score this week</span>
+                  <span>{t("Activity score this week")}</span>
                   <span className="font-medium text-[var(--foreground)]">4.8</span>
                 </div>
                 <div className="mt-1 flex items-center justify-between gap-4 text-xs leading-[1.2] text-[var(--muted-foreground)]">
-                  <span>Quality score this month</span>
+                  <span>{t("Quality score this month")}</span>
                   <span className="font-medium text-[var(--foreground)]">+9</span>
                 </div>
               </div>
@@ -308,23 +459,28 @@ export function FluxaMapCanvas({ activeTab }: FluxaMapCanvasProps): React.JSX.El
 
           <div className="flex min-h-0 w-full shrink-0 flex-col gap-2.5 xl:w-[340px]">
             <article className="rounded-m border border-[var(--border)] bg-[var(--card)] p-4">
-              <h2 className="text-sm font-semibold leading-[1.4286] text-[var(--foreground)]">Profile Photo</h2>
+              <h2 className="text-sm font-semibold leading-[1.4286] text-[var(--foreground)]">{t("Profile Photo")}</h2>
               <div className="mt-3 inline-flex h-12 w-12 items-center justify-center rounded-full bg-[var(--secondary)] text-sm font-semibold text-[var(--foreground)]">
                 JD
               </div>
-              <p className="mt-3 text-xs leading-[1.2] text-[var(--muted-foreground)]">Profile settings and visibility controls.</p>
+              <p className="mt-3 text-xs leading-[1.2] text-[var(--muted-foreground)]">{t("Profile settings and visibility controls.")}</p>
             </article>
 
             <article className="rounded-m border border-[var(--border)] bg-[var(--card)] p-4">
-              <h2 className="text-sm font-semibold leading-[1.4286] text-[var(--foreground)]">Quick Access</h2>
+              <h2 className="text-sm font-semibold leading-[1.4286] text-[var(--foreground)]">{t("Quick Access")}</h2>
               <div className="mt-2 flex flex-col gap-1.5">
                 {QUICK_ACCESS_ITEMS.map((item) => (
                   <button
-                    className="ui-hover-shadow inline-flex h-9 w-full items-center justify-between rounded-pill bg-[var(--muted)] px-3 py-2 text-sm font-medium leading-[1.4286] text-[var(--foreground)] transition-colors duration-200 hover:bg-[var(--muted-hover)] [--hover-outline:#2a29332e]"
+                    className={`ui-hover-shadow inline-flex h-9 w-full items-center justify-between rounded-pill px-3 py-2 text-sm font-medium leading-[1.4286] transition-colors duration-200 [--hover-outline:#2a29332e] ${
+                      quickAccessTarget === item
+                        ? "bg-[var(--secondary)] text-[var(--secondary-foreground)] hover:bg-[var(--secondary-hover)]"
+                        : "bg-[var(--muted)] text-[var(--foreground)] hover:bg-[var(--muted-hover)]"
+                    }`}
                     key={item}
+                    onClick={() => setQuickAccessTarget(item)}
                     type="button"
                   >
-                    <span>{item}</span>
+                    <span>{t(item)}</span>
                     <ChevronRight className="h-4 w-4 text-[var(--muted-foreground)]" />
                   </button>
                 ))}
@@ -332,11 +488,12 @@ export function FluxaMapCanvas({ activeTab }: FluxaMapCanvasProps): React.JSX.El
             </article>
 
             <article className="flex min-h-[170px] flex-1 flex-col rounded-m border border-[var(--border)] bg-[var(--card)] p-4">
-              <h2 className="text-sm font-semibold leading-[1.4286] text-[var(--foreground)]">Recent Activity</h2>
+              <h2 className="text-sm font-semibold leading-[1.4286] text-[var(--foreground)]">{t("Recent Activity")}</h2>
+              {quickAccessTarget ? <p className="mt-2 text-xs leading-[1.2] text-[var(--muted-foreground)]">{t("Opened:")} {t(quickAccessTarget)}</p> : null}
               <ul className="mt-2 flex flex-col gap-2 text-xs leading-[1.2] text-[var(--muted-foreground)]">
                 {RECENT_ACTIVITY.map((item) => (
                   <li className="list-disc pl-1 marker:text-[var(--muted-foreground)]" key={item}>
-                    {item}
+                    {t(item)}
                   </li>
                 ))}
               </ul>
@@ -352,23 +509,24 @@ export function FluxaMapCanvas({ activeTab }: FluxaMapCanvasProps): React.JSX.El
       <section className="flex h-full w-full min-w-0 flex-col justify-between gap-3 rounded-m border border-[var(--border)] bg-[var(--background)] p-4">
         <div className="flex min-h-10 w-full flex-wrap items-center justify-between gap-2">
           <div className="inline-flex h-8 items-center justify-center rounded-pill bg-[var(--color-success)] px-3 py-2 text-sm font-medium leading-[1.142857] text-[var(--color-success-foreground)]">
-            326 Locations in View
+            {mapLocationsInView} {t("Locations in View")}
           </div>
 
           <button
             className="ui-hover-shadow flex h-10 items-center justify-center gap-1.5 rounded-pill bg-[var(--accent)] px-4 py-2 text-sm font-medium leading-[1.4286] text-[var(--foreground)] transition-colors duration-200 hover:bg-[var(--accent-hover)] [--hover-outline:#2a29332e]"
+            onClick={() => setMapRefreshCount((prev) => prev + 1)}
             type="button"
           >
             <RefreshCw className="h-4 w-4" />
-            <span>Refresh</span>
+            <span>{mapRefreshCount > 0 ? t("Refreshed") : t("Refresh")}</span>
           </button>
         </div>
 
         <div className="flex h-full w-full flex-col items-center justify-center gap-2.5">
           <MapPinned className="h-11 w-11 text-[var(--muted-foreground)]" />
-          <h1 className="text-[22px] font-bold leading-[1.2] text-[var(--foreground)]">AMap Live Layer</h1>
+          <h1 className="text-[22px] font-bold leading-[1.2] text-[var(--foreground)]">{t("AMap Live Layer")}</h1>
           <p className="w-full max-w-[520px] px-2 text-center text-[13px] font-normal text-[var(--muted-foreground)]">
-            Cluster / marker click / double-click to create Location with prefilled coordinate and address.
+            {t("Cluster / marker click / double-click to create Location with prefilled coordinate and address.")}
           </p>
         </div>
       </section>
@@ -381,45 +539,54 @@ export function FluxaMapCanvas({ activeTab }: FluxaMapCanvasProps): React.JSX.El
         <div className="flex w-full flex-wrap items-center gap-2">
           {BRAND_CATEGORIES.map((item) => {
             const Icon = item.icon;
+            const isActive = brandCategory === item.label;
             return (
               <button
                 className={`ui-hover-shadow inline-flex h-10 items-center gap-1.5 rounded-pill px-4 py-2 text-sm font-medium leading-[1.4286] text-[var(--foreground)] ${
-                  item.active
+                  isActive
                     ? "bg-[var(--secondary)] transition-colors duration-200 hover:bg-[var(--secondary-hover)] [--hover-outline:#2a293336]"
                     : "bg-[var(--muted)] transition-colors duration-200 hover:bg-[var(--muted-hover)] [--hover-outline:#2a29332e]"
                 }`}
                 key={item.label}
+                onClick={() => setBrandCategory(item.label)}
                 type="button"
               >
                 <Icon className="h-4 w-4" />
-                <span>{item.label}</span>
+                <span>{t(item.label)}</span>
               </button>
             );
           })}
+          {brandDraftCount > 0 ? (
+            <div className="inline-flex h-8 items-center justify-center rounded-pill bg-[var(--color-info)] px-3 py-2 text-xs font-medium text-[var(--color-info-foreground)]">
+              {brandDraftCount} {brandDraftCount > 1 ? t("Draft Brands") : t("Draft Brand")}
+            </div>
+          ) : null}
         </div>
 
         <div className="grid grid-cols-1 gap-2.5 md:grid-cols-2 xl:grid-cols-3">
-          {BRAND_CARDS.map((item) => (
+          {pagedBrandCards.map((item) => (
             <article
-              className="ui-hover-shadow flex min-h-[182px] min-w-0 flex-col rounded-m border border-[var(--border)] bg-[var(--muted-hover)] transition-colors duration-200 hover:border-[var(--border-hover)] hover:bg-[var(--secondary)] [--hover-outline:#2a293329]"
-              key={item.brand}
+              className="flex min-h-[182px] min-w-0 flex-col rounded-m border border-[var(--border)] bg-[var(--muted-hover)] transition-colors duration-200 hover:border-[var(--border-hover)] hover:bg-[var(--secondary)]"
+              key={item.id}
             >
               <div className="flex min-h-20 flex-col justify-center gap-0.5 px-3 pb-1.5 pt-3">
                 <h3 className="truncate text-base font-semibold leading-6 text-[var(--foreground)]">{item.brand}</h3>
-                <p className="truncate text-xs leading-[1.2] text-[var(--muted-foreground)]">{item.category}</p>
+                <p className="truncate text-xs leading-[1.2] text-[var(--muted-foreground)]">{t(item.category)}</p>
               </div>
 
               <div className="flex flex-col gap-1 px-3 pb-2.5">
-                <p className="truncate text-[13px] font-medium leading-[1.2] text-[var(--foreground)]">{item.coverage}</p>
-                <p className="truncate text-xs leading-[1.2] text-[var(--muted-foreground)]">{item.issues}</p>
-                <p className="truncate text-xs leading-[1.2] text-[var(--muted-foreground)]">{item.owner}</p>
+                <p className="truncate text-[13px] font-medium leading-[1.2] text-[var(--foreground)]">{t(item.coverage)}</p>
+                <p className="truncate text-xs leading-[1.2] text-[var(--muted-foreground)]">{t(item.issues)}</p>
+                <p className="truncate text-xs leading-[1.2] text-[var(--muted-foreground)]">{t(item.owner)}</p>
+                {brandActionTarget === item.id ? <p className="truncate text-xs leading-[1.2] text-[var(--foreground)]">{t("Actions opened")}</p> : null}
               </div>
 
               <div className="mt-auto flex items-center justify-between px-3 pb-3">
-                <span className="text-xs font-medium leading-[1.2] text-[var(--muted-foreground)]">Trend</span>
+                <span className="text-xs font-medium leading-[1.2] text-[var(--muted-foreground)]">{t("Trend")}</span>
                 <button
                   aria-label={`More actions for ${item.brand}`}
                   className="ui-hover-shadow inline-flex h-10 w-10 items-center justify-center rounded-pill bg-[var(--secondary)] text-[var(--foreground)] transition-colors duration-200 hover:bg-[var(--secondary-hover)] [--hover-outline:#2a293336]"
+                  onClick={() => setBrandActionTarget((prev) => (prev === item.id ? null : item.id))}
                   type="button"
                 >
                   <MoreHorizontal className="h-4 w-4" />
@@ -430,28 +597,42 @@ export function FluxaMapCanvas({ activeTab }: FluxaMapCanvasProps): React.JSX.El
         </div>
 
         <div className="mt-auto flex w-full flex-col gap-3 pt-1 lg:flex-row lg:items-center lg:justify-between">
-          <p className="text-[13px] font-normal text-[var(--muted-foreground)]">Showing 3 of 186 merchants</p>
+          <p className="text-[13px] font-normal text-[var(--muted-foreground)]">
+            {t("Showing")} {pagedBrandCards.length} {t("of")} {BRAND_TOTAL_RECORDS} {t("merchants")}
+          </p>
           <div className="flex items-center gap-2">
             <button
-              className="ui-hover-shadow inline-flex h-10 items-center gap-2 rounded-pill border border-[var(--input)] px-[18px] py-2.5 text-sm font-medium text-[var(--foreground)] transition-colors duration-200 hover:border-[var(--border-hover)] hover:bg-[var(--muted-hover)] [--hover-outline:#2a293333]"
+              className="ui-hover-shadow inline-flex h-10 items-center gap-2 rounded-pill border border-[var(--input)] px-[18px] py-2.5 text-sm font-medium text-[var(--foreground)] transition-colors duration-200 hover:border-[var(--border-hover)] hover:bg-[var(--muted-hover)] [--hover-outline:#2a293333] disabled:opacity-50"
+              disabled={brandPage === 1}
+              onClick={() => setBrandPage((prev) => Math.max(1, prev - 1))}
               type="button"
             >
               <ChevronLeft className="h-5 w-5" />
-              <span>Previous</span>
+              <span>{t("Previous")}</span>
             </button>
 
-            <button
-              className="ui-hover-shadow inline-flex h-10 w-10 items-center justify-center rounded-pill border border-[var(--border)] text-sm text-[var(--foreground)] transition-colors duration-200 hover:border-[var(--border-hover)] hover:bg-[var(--secondary-hover)] [--hover-outline:#2a293336]"
-              type="button"
-            >
-              1
-            </button>
+            {Array.from({ length: brandPageCount }, (_, index) => index + 1).map((page) => (
+              <button
+                className={`ui-hover-shadow inline-flex h-10 w-10 items-center justify-center rounded-pill border text-sm transition-colors duration-200 [--hover-outline:#2a293336] ${
+                  brandPage === page
+                    ? "border-[var(--primary)] bg-white text-[var(--primary)]"
+                    : "border-[var(--border)] text-[var(--foreground)] hover:border-[var(--border-hover)] hover:bg-[var(--secondary-hover)]"
+                }`}
+                key={page}
+                onClick={() => setBrandPage(page)}
+                type="button"
+              >
+                {page}
+              </button>
+            ))}
 
             <button
-              className="ui-hover-shadow inline-flex h-10 items-center gap-2 rounded-pill border border-[var(--input)] px-[18px] py-2.5 text-sm font-medium text-[var(--foreground)] transition-colors duration-200 hover:border-[var(--border-hover)] hover:bg-[var(--muted-hover)] [--hover-outline:#2a293333]"
+              className="ui-hover-shadow inline-flex h-10 items-center gap-2 rounded-pill border border-[var(--input)] px-[18px] py-2.5 text-sm font-medium text-[var(--foreground)] transition-colors duration-200 hover:border-[var(--border-hover)] hover:bg-[var(--muted-hover)] [--hover-outline:#2a293333] disabled:opacity-50"
+              disabled={brandPage === brandPageCount}
+              onClick={() => setBrandPage((prev) => Math.min(brandPageCount, prev + 1))}
               type="button"
             >
-              <span>Next</span>
+              <span>{t("Next")}</span>
               <ChevronRight className="h-5 w-5" />
             </button>
           </div>
@@ -460,26 +641,25 @@ export function FluxaMapCanvas({ activeTab }: FluxaMapCanvasProps): React.JSX.El
     );
   }
 
-  // list tab
   return (
     <section className="flex h-full w-full min-w-0 flex-col gap-[7px]">
       <div className="flex w-full flex-wrap items-center gap-2">
         <div className="inline-flex h-8 items-center justify-center rounded-pill bg-[var(--color-success)] px-3 py-2 text-sm font-medium leading-[1.142857] text-[var(--color-success-foreground)]">
-          324 Results
+          {LIST_TOTAL_RECORDS} {t("Results")}
         </div>
         <div className="inline-flex h-8 items-center justify-center rounded-pill bg-[var(--color-info)] px-3 py-2 text-sm font-medium leading-[1.142857] text-[var(--color-info-foreground)]">
-          219 Active
+          219 {t("Active")}
         </div>
         <div className="inline-flex h-8 items-center justify-center rounded-pill bg-[var(--color-warning)] px-3 py-2 text-sm font-medium leading-[1.142857] text-[var(--color-warning-foreground)]">
-          27 Issues
+          27 {t("Issues")}
         </div>
       </div>
 
       <div className="grid grid-cols-1 gap-2.5 xl:grid-cols-2">
-        {CARDS.map((card) => (
+        {pagedListRecords.map((card) => (
           <article
-            className="ui-hover-shadow flex min-h-[124px] min-w-0 flex-col rounded-m border border-[var(--border)] bg-[var(--card)] transition-colors duration-200 hover:border-[var(--border-hover)] hover:bg-[var(--card-hover)] [--hover-outline:#2a293324]"
-            key={card.name}
+            className="flex min-h-[124px] min-w-0 flex-col rounded-m border border-[var(--border)] bg-[var(--card)] transition-colors duration-200 hover:border-[var(--border-hover)] hover:bg-[var(--card-hover)]"
+            key={card.id}
           >
             <div className="flex items-center justify-between px-5 pb-3 pt-[18px]">
               <h3 className="truncate text-base font-semibold leading-6 text-[var(--foreground)]">{card.name}</h3>
@@ -487,14 +667,15 @@ export function FluxaMapCanvas({ activeTab }: FluxaMapCanvasProps): React.JSX.El
                 <span
                   className={`inline-flex h-8 items-center justify-center rounded-pill px-3 py-2 text-sm font-medium leading-[1.142857] ${statusClass(card.status)}`}
                 >
-                  {statusLabel(card.status)}
+                  {t(statusLabel(card.status))}
                 </span>
                 <button
                   className="ui-hover-shadow inline-flex h-10 items-center gap-1.5 rounded-m border border-[var(--input)] px-4 py-2 text-sm font-medium leading-[1.4286] text-[var(--foreground)] transition-colors duration-200 hover:border-[var(--border-hover)] hover:bg-[var(--muted-hover)] [--hover-outline:#2a293333]"
+                  onClick={onOpenDetail}
                   type="button"
                 >
                   <ArrowUpRight className="h-4 w-4" />
-                  <span>Jump</span>
+                  <span>{t("Detail")}</span>
                 </button>
               </div>
             </div>
@@ -511,40 +692,42 @@ export function FluxaMapCanvas({ activeTab }: FluxaMapCanvasProps): React.JSX.El
       </div>
 
       <div className="mt-auto flex w-full flex-col gap-3 pt-1 lg:flex-row lg:items-center lg:justify-between">
-        <p className="text-[13px] font-normal text-[var(--muted-foreground)]">Showing 1-3 of 324 records</p>
+        <p className="text-[13px] font-normal text-[var(--muted-foreground)]">
+          {t("Showing")} {listStart}-{listEnd} {t("of")} {LIST_TOTAL_RECORDS} {t("records")}
+        </p>
         <div className="flex items-center gap-2">
           <button
-            className="ui-hover-shadow inline-flex h-10 items-center gap-2 rounded-pill border border-[var(--input)] px-[18px] py-2.5 text-sm font-medium text-[var(--foreground)] transition-colors duration-200 hover:border-[var(--border-hover)] hover:bg-[var(--muted-hover)] [--hover-outline:#2a293333]"
+            className="ui-hover-shadow inline-flex h-10 items-center gap-2 rounded-pill border border-[var(--input)] px-[18px] py-2.5 text-sm font-medium text-[var(--foreground)] transition-colors duration-200 hover:border-[var(--border-hover)] hover:bg-[var(--muted-hover)] [--hover-outline:#2a293333] disabled:opacity-50"
+            disabled={listPage === 1}
+            onClick={() => setListPage((prev) => Math.max(1, prev - 1))}
             type="button"
           >
             <ChevronLeft className="h-5 w-5" />
-            <span>Previous</span>
+            <span>{t("Previous")}</span>
           </button>
 
-          <button
-            className="ui-hover-shadow inline-flex h-10 w-10 items-center justify-center rounded-pill border border-[var(--border)] text-sm text-[var(--foreground)] transition-colors duration-200 hover:border-[var(--border-hover)] hover:bg-[var(--secondary-hover)] [--hover-outline:#2a293336]"
-            type="button"
-          >
-            1
-          </button>
-          <button
-            className="ui-hover-shadow inline-flex h-10 w-10 items-center justify-center rounded-pill border border-transparent text-sm text-[var(--foreground)] transition-colors duration-200 hover:border-[var(--border-hover)] hover:bg-[var(--muted-hover)] [--hover-outline:#2a29332e]"
-            type="button"
-          >
-            2
-          </button>
-          <button
-            className="ui-hover-shadow inline-flex h-10 w-10 items-center justify-center rounded-pill border border-transparent text-sm text-[var(--foreground)] transition-colors duration-200 hover:border-[var(--border-hover)] hover:bg-[var(--muted-hover)] [--hover-outline:#2a29332e]"
-            type="button"
-          >
-            3
-          </button>
+          {Array.from({ length: LIST_PAGE_COUNT }, (_, index) => index + 1).map((page) => (
+            <button
+              className={`ui-hover-shadow inline-flex h-10 w-10 items-center justify-center rounded-pill border text-sm transition-colors duration-200 [--hover-outline:#2a293336] ${
+                listPage === page
+                  ? "border-[var(--primary)] bg-white text-[var(--primary)]"
+                  : "border-transparent text-[var(--foreground)] hover:border-[var(--border-hover)] hover:bg-[var(--muted-hover)]"
+              }`}
+              key={page}
+              onClick={() => setListPage(page)}
+              type="button"
+            >
+              {page}
+            </button>
+          ))}
 
           <button
-            className="ui-hover-shadow inline-flex h-10 items-center gap-2 rounded-pill border border-[var(--input)] px-[18px] py-2.5 text-sm font-medium text-[var(--foreground)] transition-colors duration-200 hover:border-[var(--border-hover)] hover:bg-[var(--muted-hover)] [--hover-outline:#2a293333]"
+            className="ui-hover-shadow inline-flex h-10 items-center gap-2 rounded-pill border border-[var(--input)] px-[18px] py-2.5 text-sm font-medium text-[var(--foreground)] transition-colors duration-200 hover:border-[var(--border-hover)] hover:bg-[var(--muted-hover)] [--hover-outline:#2a293333] disabled:opacity-50"
+            disabled={listPage === LIST_PAGE_COUNT}
+            onClick={() => setListPage((prev) => Math.min(LIST_PAGE_COUNT, prev + 1))}
             type="button"
           >
-            <span>Next</span>
+            <span>{t("Next")}</span>
             <ChevronRight className="h-5 w-5" />
           </button>
         </div>
