@@ -1,0 +1,124 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --sidebar: #ffffff;
+  --sidebar-foreground: #939399;
+  --sidebar-primary: #f5f5f5;
+  --sidebar-primary-foreground: #2a2933;
+  --sidebar-border: #d9d9db;
+  --sidebar-accent: #f5f5f5;
+  --sidebar-accent-hover: #e4e4e8;
+  --sidebar-accent-foreground: #2a2933;
+  --background: #f5f5f5;
+  --foreground: #2a2933;
+  --card: #ffffff;
+  --card-hover: #f6f6f8;
+  --primary: #5749f4;
+  --primary-hover: #4c40e1;
+  --primary-foreground: #ffffff;
+  --secondary: #d9d9db;
+  --secondary-hover: #cdced4;
+  --secondary-foreground: #2a2933;
+  --muted: #f5f5f5;
+  --muted-hover: #e9e9ed;
+  --muted-foreground: #616167;
+  --accent: #f5f5f5;
+  --accent-hover: #e9e9ed;
+  --accent-foreground: #2a2933;
+  --border: #c5c5cb;
+  --border-hover: #b3b4bc;
+  --input: #c5c5cb;
+  --ring: #e1e2e5;
+  --color-success: #a1e5a1;
+  --color-success-foreground: #003300;
+  --color-warning: #ffd9b2;
+  --color-warning-foreground: #4d2700;
+  --color-info: #c9d6f0;
+  --color-info-foreground: #001133;
+  --radius-l: 40px;
+  --radius-m: 24px;
+  --radius-xs: 6px;
+  --radius-pill: 999px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Inter, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+svg {
+  display: block;
+}
+
+.ui-hover-shadow {
+  --hover-outline: #2a293324;
+  --hover-outline-active: #2a29333d;
+  transition:
+    box-shadow 180ms ease,
+    background-color 220ms ease,
+    border-color 220ms ease,
+    color 220ms ease;
+}
+
+.ui-hover-shadow:hover {
+  box-shadow: 0 0 0 1px var(--hover-outline);
+}
+
+.ui-hover-shadow:active {
+  box-shadow: 0 0 0 1px var(--hover-outline-active);
+}
+
+@keyframes tab-switch-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  60% {
+    opacity: 0.92;
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tab-switch-enter {
+  animation: tab-switch-in 460ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ui-hover-shadow {
+    transition: none;
+  }
+
+  .ui-hover-shadow:hover,
+  .ui-hover-shadow:active {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .tab-switch-enter {
+    animation: none;
+  }
+}
