@@ -18346,12 +18346,8 @@
               "type": "ref",
               "ref": "1St63",
               "width": 520,
-              "x": {
-                "type": "center"
-              },
-              "y": {
-                "type": "center"
-              },
+              "x": 460,
+              "y": 180,
               "name": "dialog",
               "descendants": {
                 "SaWqo": {
@@ -18384,6 +18380,7 @@
                     16,
                     24
                   ],
+                  "height": "fit_content",
                   "children": [
                     {
                       "id": "HGi5s",
@@ -18449,6 +18446,18 @@
                 },
                 "508Xp": {
                   "justifyContent": "start"
+                },
+                "aZctM/2Pl0N": {
+                  "enabled": false
+                },
+                "aZctM/FT3cO": {
+                  "content": "Create Brand"
+                },
+                "Gih9z/2Pl0N": {
+                  "enabled": false
+                },
+                "Gih9z/FT3cO": {
+                  "content": "Cancel"
                 }
               }
             }
