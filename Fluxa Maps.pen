@@ -17556,231 +17556,657 @@
     },
     {
       "type": "frame",
-      "id": "CKfmT",
+      "id": "3Jbxy",
       "x": 10719,
       "y": 1188,
       "name": "payments-maps-web-brand-add",
       "width": 1440,
       "height": 936,
       "fill": "#FFFFFF",
-      "layout": "none",
       "children": [
         {
-          "type": "frame",
-          "id": "aSRXF",
+          "id": "eiRfa",
+          "type": "ref",
+          "ref": "Cpvvc",
+          "width": 240,
+          "height": "fill_container",
+          "name": "profileSidebar",
           "x": 0,
           "y": 0,
-          "name": "contentContainer",
-          "width": 1440,
-          "height": 936,
+          "cornerRadius": [
+            0,
+            "$--radius-m",
+            "$--radius-m",
+            0
+          ],
+          "descendants": {
+            "hYFpr": {
+              "type": "frame",
+              "id": "jP9rx",
+              "name": "Sidebar Content",
+              "width": "fill_container",
+              "height": "fill_container",
+              "layout": "vertical",
+              "gap": 6,
+              "padding": [
+                0,
+                16
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "9RxTa",
+                  "name": "section",
+                  "fill": "$--sidebar-foreground",
+                  "textGrowth": "fixed-width-height",
+                  "width": "fill_container",
+                  "height": 32,
+                  "content": "Discover",
+                  "textAlignVertical": "middle",
+                  "fontFamily": "Inter",
+                  "fontSize": 12,
+                  "fontWeight": "500"
+                },
+                {
+                  "id": "LlKRe",
+                  "type": "ref",
+                  "ref": "x40ze",
+                  "width": "fill_container",
+                  "name": "navMap",
+                  "descendants": {
+                    "W2XqE": {
+                      "content": "Map"
+                    },
+                    "edTIG": {
+                      "iconFontName": "map"
+                    }
+                  }
+                },
+                {
+                  "id": "usWTG",
+                  "type": "ref",
+                  "ref": "x40ze",
+                  "width": "fill_container",
+                  "name": "navList",
+                  "descendants": {
+                    "W2XqE": {
+                      "content": "List"
+                    },
+                    "edTIG": {
+                      "iconFontName": "list"
+                    }
+                  }
+                },
+                {
+                  "id": "i18Uh",
+                  "type": "ref",
+                  "ref": "x40ze",
+                  "width": "fill_container",
+                  "name": "navBrand",
+                  "padding": [
+                    12,
+                    16,
+                    22,
+                    24
+                  ],
+                  "descendants": {
+                    "W2XqE": {
+                      "content": "Brands"
+                    },
+                    "edTIG": {
+                      "iconFontName": "badge-dollar-sign"
+                    }
+                  }
+                },
+                {
+                  "id": "mqqeA",
+                  "type": "ref",
+                  "ref": "xBc88",
+                  "width": "fill_container",
+                  "name": "sideAdd",
+                  "height": 48,
+                  "descendants": {
+                    "2Pl0N": {
+                      "x": 46.5,
+                      "y": 14
+                    },
+                    "zF167": {
+                      "iconFontName": "plus"
+                    },
+                    "FT3cO": {
+                      "content": "Add Location",
+                      "x": 72.5,
+                      "y": 14
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "frame",
+          "id": "iOw8b",
+          "name": "profileMain",
+          "width": "fill_container",
+          "height": "fill_container",
+          "fill": "#FAFAFA",
+          "layout": "vertical",
+          "gap": 10,
+          "padding": 18,
           "children": [
             {
-              "id": "RNCqG",
-              "type": "ref",
-              "ref": "Cpvvc",
-              "width": 240,
-              "height": "fill_container",
-              "name": "sidebar",
-              "x": 0,
-              "y": 0,
-              "cornerRadius": [
-                0,
-                "$--radius-m",
-                "$--radius-m",
-                0
-              ],
-              "descendants": {
-                "hYFpr": {
-                  "gap": 6,
+              "type": "frame",
+              "id": "PNLy1",
+              "name": "profileHeader",
+              "width": "fill_container",
+              "gap": 12,
+              "justifyContent": "space_between",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "JyUhs",
+                  "name": "headerText",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 4,
                   "children": [
                     {
                       "type": "text",
-                      "id": "r2vDu",
-                      "name": "section",
-                      "fill": "$--sidebar-foreground",
-                      "textGrowth": "fixed-width-height",
-                      "width": "fill_container",
-                      "height": 32,
-                      "content": "Discover",
-                      "textAlignVertical": "middle",
+                      "id": "0qojU",
+                      "fill": "$--foreground",
+                      "content": "Add Brand",
                       "fontFamily": "Inter",
-                      "fontSize": 12,
-                      "fontWeight": "500"
+                      "fontSize": 28,
+                      "fontWeight": "600"
                     },
                     {
-                      "id": "WFqnL",
-                      "type": "ref",
-                      "ref": "x40ze",
-                      "width": "fill_container",
-                      "name": "navMap",
-                      "descendants": {
-                        "W2XqE": {
-                          "content": "Map"
-                        },
-                        "edTIG": {
-                          "iconFontName": "map"
-                        }
-                      }
-                    },
+                      "type": "text",
+                      "id": "pz3U4",
+                      "fill": "$--muted-foreground",
+                      "content": "Create a new brand entity",
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "hrxBg",
+                  "name": "actions",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
                     {
-                      "id": "9f7UY",
+                      "id": "azG0F",
                       "type": "ref",
-                      "ref": "x40ze",
-                      "width": "fill_container",
-                      "name": "navList",
-                      "descendants": {
-                        "W2XqE": {
-                          "content": "List"
-                        },
-                        "edTIG": {
-                          "iconFontName": "list"
-                        }
-                      }
-                    },
-                    {
-                      "id": "VJUzd",
-                      "type": "ref",
-                      "ref": "zARg5",
-                      "width": "fill_container",
-                      "name": "navBrands",
-                      "padding": [
-                        12,
-                        16,
-                        18,
-                        24
-                      ],
-                      "descendants": {
-                        "W2XqE": {
-                          "content": "Brands"
-                        },
-                        "edTIG": {
-                          "iconFontName": "badge-dollar-sign"
-                        }
-                      }
-                    },
-                    {
-                      "id": "qtD6a",
-                      "type": "ref",
-                      "ref": "xBc88",
-                      "width": "fill_container",
-                      "name": "addBrand",
+                      "ref": "L73ds",
+                      "name": "cancelBtn",
                       "descendants": {
                         "zF167": {
-                          "iconFontName": "plus"
+                          "enabled": true,
+                          "iconFontName": "x"
                         },
                         "FT3cO": {
-                          "content": "Add Brand"
+                          "content": "Cancel"
+                        }
+                      }
+                    },
+                    {
+                      "id": "TNjtN",
+                      "type": "ref",
+                      "ref": "xBc88",
+                      "name": "saveBtn",
+                      "descendants": {
+                        "zF167": {
+                          "enabled": true,
+                          "iconFontName": "check"
+                        },
+                        "FT3cO": {
+                          "content": "Save Brand"
                         }
                       }
                     }
                   ]
-                },
-                "d16lm": {
-                  "flipX": false,
-                  "flipY": false,
-                  "width": "fill_container",
-                  "height": "fit_content",
-                  "x": 0,
-                  "y": 836,
-                  "textGrowth": "auto"
                 }
-              }
+              ]
             },
             {
               "type": "frame",
-              "id": "LEdI5",
-              "name": "main",
-              "width": 1200,
-              "height": 936,
-              "fill": "#FAFAFA",
-              "layout": "vertical",
-              "gap": 7,
-              "padding": 16,
+              "id": "ZGqvD",
+              "name": "newContent",
+              "width": "fill_container",
+              "height": "fill_container",
+              "gap": 32,
+              "padding": [
+                32,
+                48
+              ],
+              "justifyContent": "center",
               "children": [
                 {
                   "type": "frame",
-                  "id": "08oH5",
-                  "name": "header",
-                  "width": "fill_container",
-                  "justifyContent": "space_between",
-                  "alignItems": "center",
+                  "id": "TT67m",
+                  "name": "leftCol",
+                  "width": 880,
+                  "height": "fill_container",
+                  "layout": "vertical",
+                  "gap": 24,
                   "children": [
                     {
-                      "id": "CGnLr",
-                      "type": "ref",
-                      "ref": "xUnz2",
-                      "width": 560,
-                      "name": "search",
-                      "descendants": {
-                        "4K0sM": {
-                          "content": "Search brand / category / website..."
+                      "type": "frame",
+                      "id": "vHklY",
+                      "name": "card1",
+                      "width": "fill_container",
+                      "fill": "$--card",
+                      "cornerRadius": "$--radius-m",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$--border"
+                      },
+                      "layout": "vertical",
+                      "gap": 16,
+                      "padding": 24,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "pRQ0a",
+                          "fill": "$--card-foreground",
+                          "content": "Basic Information",
+                          "fontFamily": "Inter",
+                          "fontSize": 20,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "id": "56sZD",
+                          "type": "ref",
+                          "ref": "uEeaR",
+                          "width": "fill_container",
+                          "descendants": {
+                            "EVJFg": {
+                              "content": "Brand Name"
+                            },
+                            "SdDrF": {
+                              "content": "e.g. Starbucks, McDonald's"
+                            }
+                          }
+                        },
+                        {
+                          "id": "qsiBq",
+                          "type": "ref",
+                          "ref": "gqrFC",
+                          "width": "fill_container",
+                          "descendants": {
+                            "yBLtW": {
+                              "content": "Category / Industry"
+                            },
+                            "8mNGM": {
+                              "content": "Select a category"
+                            }
+                          }
                         }
-                      }
+                      ]
                     },
                     {
                       "type": "frame",
-                      "id": "6bHnl",
-                      "name": "tools",
-                      "gap": 8,
+                      "id": "3QV65",
+                      "name": "card2",
+                      "width": "fill_container",
+                      "fill": "$--card",
+                      "cornerRadius": "$--radius-m",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$--border"
+                      },
+                      "layout": "vertical",
+                      "gap": 16,
+                      "padding": [
+                        16,
+                        24
+                      ],
                       "children": [
                         {
-                          "id": "g8EZe",
+                          "type": "text",
+                          "id": "kBFc6",
+                          "fill": "$--card-foreground",
+                          "content": "Additional Information",
+                          "fontFamily": "Inter",
+                          "fontSize": 20,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "id": "zIFqT",
                           "type": "ref",
-                          "ref": "mxrlX",
-                          "name": "tabOnline",
+                          "ref": "uEeaR",
+                          "width": "fill_container",
                           "descendants": {
-                            "zF167": {
-                              "iconFontName": "wifi"
+                            "EVJFg": {
+                              "content": "Website URL"
                             },
-                            "FT3cO": {
-                              "content": "Online"
+                            "SdDrF": {
+                              "content": "https://"
                             }
                           }
                         },
                         {
-                          "id": "JPi1O",
+                          "id": "waTGp",
                           "type": "ref",
-                          "ref": "Iskt0",
-                          "name": "tabOffline",
+                          "ref": "5QESV",
+                          "width": "fill_container",
                           "descendants": {
-                            "zF167": {
-                              "iconFontName": "store"
+                            "J6cRM": {
+                              "content": "Description"
                             },
-                            "FT3cO": {
-                              "content": "Offline"
-                            }
-                          }
-                        },
-                        {
-                          "id": "8G1We",
-                          "type": "ref",
-                          "ref": "Iskt0",
-                          "name": "viewGrid",
-                          "descendants": {
-                            "zF167": {
-                              "iconFontName": "layout-grid"
-                            },
-                            "FT3cO": {
-                              "content": "Grid"
+                            "7Lfkv": {
+                              "content": "Optional brand description..."
                             }
                           }
                         }
                       ]
                     }
                   ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "B611W",
+      "x": 9112,
+      "y": 5733,
+      "name": "payments-maps-web-cards",
+      "width": 1440,
+      "height": 936,
+      "fill": "#FFFFFF",
+      "children": [
+        {
+          "id": "Yt0hp",
+          "type": "ref",
+          "ref": "Cpvvc",
+          "width": 240,
+          "height": "fill_container",
+          "name": "sidebar",
+          "x": 0,
+          "y": 0,
+          "cornerRadius": [
+            0,
+            "$--radius-m",
+            "$--radius-m",
+            0
+          ],
+          "descendants": {
+            "hYFpr": {
+              "gap": 6,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "CvQQc",
+                  "name": "section",
+                  "fill": "$--sidebar-foreground",
+                  "textGrowth": "fixed-width-height",
+                  "width": "fill_container",
+                  "height": 32,
+                  "content": "Discover",
+                  "textAlignVertical": "middle",
+                  "fontFamily": "Inter",
+                  "fontSize": 12,
+                  "fontWeight": "500"
+                },
+                {
+                  "id": "JjZd3",
+                  "type": "ref",
+                  "ref": "x40ze",
+                  "width": "fill_container",
+                  "name": "navMap",
+                  "descendants": {
+                    "W2XqE": {
+                      "content": "Map"
+                    },
+                    "edTIG": {
+                      "iconFontName": "map"
+                    }
+                  }
+                },
+                {
+                  "id": "KgwAx",
+                  "type": "ref",
+                  "ref": "x40ze",
+                  "width": "fill_container",
+                  "name": "navList",
+                  "descendants": {
+                    "W2XqE": {
+                      "content": "List"
+                    },
+                    "edTIG": {
+                      "iconFontName": "list"
+                    }
+                  }
+                },
+                {
+                  "id": "vOBfz",
+                  "type": "ref",
+                  "ref": "zARg5",
+                  "width": "fill_container",
+                  "name": "navBrands",
+                  "padding": [
+                    12,
+                    16,
+                    18,
+                    24
+                  ],
+                  "descendants": {
+                    "W2XqE": {
+                      "content": "Brands"
+                    },
+                    "edTIG": {
+                      "iconFontName": "badge-dollar-sign"
+                    }
+                  }
+                },
+                {
+                  "id": "27KbM",
+                  "type": "ref",
+                  "ref": "xBc88",
+                  "width": "fill_container",
+                  "name": "addBrand",
+                  "descendants": {
+                    "zF167": {
+                      "iconFontName": "plus"
+                    },
+                    "FT3cO": {
+                      "content": "Add Brand"
+                    }
+                  }
+                }
+              ]
+            },
+            "d16lm": {
+              "flipX": false,
+              "flipY": false,
+              "width": "fill_container",
+              "height": "fit_content",
+              "x": 0,
+              "y": 836,
+              "textGrowth": "auto"
+            }
+          }
+        },
+        {
+          "type": "frame",
+          "id": "SjL7C",
+          "name": "main",
+          "width": "fill_container",
+          "height": "fill_container",
+          "fill": "#FAFAFA",
+          "layout": "vertical",
+          "gap": 7,
+          "padding": 16,
+          "children": [
+            {
+              "type": "frame",
+              "id": "n17dd",
+              "name": "header",
+              "width": "fill_container",
+              "justifyContent": "space_between",
+              "alignItems": "center",
+              "children": [
+                {
+                  "id": "2Tyma",
+                  "type": "ref",
+                  "ref": "xUnz2",
+                  "width": 560,
+                  "name": "search",
+                  "descendants": {
+                    "4K0sM": {
+                      "content": "Search brand / category / website..."
+                    }
+                  }
                 },
                 {
                   "type": "frame",
-                  "id": "yfqNV",
-                  "name": "brandBoard",
-                  "width": "fill_container",
-                  "height": "fill_container",
+                  "id": "b9KBv",
+                  "name": "tools",
                   "gap": 8,
                   "children": [
                     {
+                      "id": "RTntx",
+                      "type": "ref",
+                      "ref": "mxrlX",
+                      "name": "tabOnline",
+                      "descendants": {
+                        "zF167": {
+                          "iconFontName": "wifi"
+                        },
+                        "FT3cO": {
+                          "content": "Online"
+                        }
+                      }
+                    },
+                    {
+                      "id": "0ttRO",
+                      "type": "ref",
+                      "ref": "Iskt0",
+                      "name": "tabOffline",
+                      "descendants": {
+                        "zF167": {
+                          "iconFontName": "store"
+                        },
+                        "FT3cO": {
+                          "content": "Offline"
+                        }
+                      }
+                    },
+                    {
+                      "id": "E9xpj",
+                      "type": "ref",
+                      "ref": "Iskt0",
+                      "name": "viewGrid",
+                      "descendants": {
+                        "zF167": {
+                          "iconFontName": "layout-grid"
+                        },
+                        "FT3cO": {
+                          "content": "Grid"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "rjAgt",
+              "name": "brandBoard",
+              "width": "fill_container",
+              "height": "fill_container",
+              "gap": 8,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "sMyRg",
+                  "name": "leftCol",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "layout": "vertical",
+                  "gap": 10,
+                  "children": [
+                    {
                       "type": "frame",
-                      "id": "cNcPu",
-                      "name": "leftCol",
+                      "id": "NJq19",
+                      "name": "categoryRow",
+                      "width": "fill_container",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "id": "sS9JO",
+                          "type": "ref",
+                          "ref": "mxrlX",
+                          "name": "cat1",
+                          "descendants": {
+                            "zF167": {
+                              "iconFontName": "cup-soda"
+                            },
+                            "FT3cO": {
+                              "content": "Coffee"
+                            }
+                          }
+                        },
+                        {
+                          "id": "IzO8H",
+                          "type": "ref",
+                          "ref": "Iskt0",
+                          "name": "cat2",
+                          "descendants": {
+                            "zF167": {
+                              "iconFontName": "utensils"
+                            },
+                            "FT3cO": {
+                              "content": "Fast Food"
+                            }
+                          }
+                        },
+                        {
+                          "id": "JmVU6",
+                          "type": "ref",
+                          "ref": "Iskt0",
+                          "name": "cat3",
+                          "descendants": {
+                            "zF167": {
+                              "iconFontName": "shopping-bag"
+                            },
+                            "FT3cO": {
+                              "content": "Retail"
+                            }
+                          }
+                        },
+                        {
+                          "id": "zmxxQ",
+                          "type": "ref",
+                          "ref": "Iskt0",
+                          "name": "cat4",
+                          "descendants": {
+                            "zF167": {
+                              "iconFontName": "store"
+                            },
+                            "FT3cO": {
+                              "content": "Convenience"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Y2IQj",
+                      "name": "tileGrid",
                       "width": "fill_container",
                       "height": "fill_container",
                       "layout": "vertical",
@@ -17788,678 +18214,469 @@
                       "children": [
                         {
                           "type": "frame",
-                          "id": "m2iOX",
-                          "name": "categoryRow",
+                          "id": "jH7D1",
+                          "name": "brandRow1",
                           "width": "fill_container",
-                          "gap": 8,
-                          "children": [
-                            {
-                              "id": "OX08X",
-                              "type": "ref",
-                              "ref": "mxrlX",
-                              "name": "cat1",
-                              "descendants": {
-                                "zF167": {
-                                  "iconFontName": "cup-soda"
-                                },
-                                "FT3cO": {
-                                  "content": "Coffee"
-                                }
-                              }
-                            },
-                            {
-                              "id": "HEH8c",
-                              "type": "ref",
-                              "ref": "Iskt0",
-                              "name": "cat2",
-                              "descendants": {
-                                "zF167": {
-                                  "iconFontName": "utensils"
-                                },
-                                "FT3cO": {
-                                  "content": "Fast Food"
-                                }
-                              }
-                            },
-                            {
-                              "id": "emfAz",
-                              "type": "ref",
-                              "ref": "Iskt0",
-                              "name": "cat3",
-                              "descendants": {
-                                "zF167": {
-                                  "iconFontName": "shopping-bag"
-                                },
-                                "FT3cO": {
-                                  "content": "Retail"
-                                }
-                              }
-                            },
-                            {
-                              "id": "l0bOa",
-                              "type": "ref",
-                              "ref": "Iskt0",
-                              "name": "cat4",
-                              "descendants": {
-                                "zF167": {
-                                  "iconFontName": "store"
-                                },
-                                "FT3cO": {
-                                  "content": "Convenience"
-                                }
-                              }
-                            }
-                          ]
-                        },
-                        {
-                          "type": "frame",
-                          "id": "iSiAp",
-                          "name": "tileGrid",
-                          "width": "fill_container",
-                          "height": "fill_container",
-                          "layout": "vertical",
                           "gap": 10,
                           "children": [
                             {
-                              "type": "frame",
-                              "id": "sheZ5",
-                              "name": "brandRow1",
+                              "id": "ih2B5",
+                              "type": "ref",
+                              "ref": "hI8J0",
+                              "name": "brandStarbucks",
                               "width": "fill_container",
-                              "gap": 10,
-                              "children": [
-                                {
-                                  "id": "8i39w",
-                                  "type": "ref",
-                                  "ref": "hI8J0",
-                                  "name": "brandStarbucks",
+                              "height": "fit_content",
+                              "fill": "#FFFFFF",
+                              "cornerRadius": 24,
+                              "padding": 16,
+                              "stroke": {
+                                "align": "inside",
+                                "thickness": 1,
+                                "fill": "#C5C5CB"
+                              },
+                              "effect": [],
+                              "descendants": {
+                                "SaWqo": {
+                                  "layout": "vertical",
+                                  "gap": 2,
+                                  "padding": [
+                                    12,
+                                    12,
+                                    6,
+                                    12
+                                  ],
                                   "width": "fill_container",
-                                  "height": "fit_content",
-                                  "fill": "#FFFFFF",
-                                  "cornerRadius": 24,
-                                  "padding": 16,
-                                  "stroke": {
-                                    "align": "inside",
-                                    "thickness": 1,
-                                    "fill": "#C5C5CB"
-                                  },
-                                  "effect": [],
-                                  "descendants": {
-                                    "SaWqo": {
-                                      "layout": "vertical",
-                                      "gap": 2,
-                                      "padding": [
-                                        12,
-                                        12,
-                                        6,
-                                        12
-                                      ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "QKrab",
+                                      "fill": "$--foreground",
+                                      "textGrowth": "fixed-width",
                                       "width": "fill_container",
-                                      "children": [
-                                        {
-                                          "type": "text",
-                                          "id": "6A87D",
-                                          "fill": "$--foreground",
-                                          "textGrowth": "fixed-width",
-                                          "width": "fill_container",
-                                          "content": "Starbucks",
-                                          "fontFamily": "Inter",
-                                          "fontSize": 16,
-                                          "fontWeight": "600"
-                                        },
-                                        {
-                                          "type": "text",
-                                          "id": "dOHwW",
-                                          "fill": "$--muted-foreground",
-                                          "textGrowth": "fixed-width",
-                                          "width": "fill_container",
-                                          "content": "Coffee & Beverage",
-                                          "fontFamily": "Inter",
-                                          "fontSize": 12,
-                                          "fontWeight": "normal"
-                                        }
-                                      ]
+                                      "content": "Starbucks",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 16,
+                                      "fontWeight": "600"
                                     },
-                                    "KD4A5": {
-                                      "layout": "vertical",
-                                      "gap": 4,
-                                      "padding": [
-                                        0,
-                                        12,
-                                        10,
-                                        12
-                                      ],
+                                    {
+                                      "type": "text",
+                                      "id": "lqF6x",
+                                      "fill": "$--muted-foreground",
+                                      "textGrowth": "fixed-width",
                                       "width": "fill_container",
-                                      "children": [
-                                        {
-                                          "type": "text",
-                                          "id": "XJH18",
-                                          "fill": "$--foreground",
-                                          "textGrowth": "fixed-width",
-                                          "width": "fill_container",
-                                          "content": "Coverage 124 stores · 92% online",
-                                          "fontFamily": "Inter",
-                                          "fontSize": 13,
-                                          "fontWeight": "500"
-                                        },
-                                        {
-                                          "type": "text",
-                                          "id": "AoeMz",
-                                          "fill": "$--muted-foreground",
-                                          "textGrowth": "fixed-width",
-                                          "width": "fill_container",
-                                          "content": "Issue stores 6 · Last sync 5m ago",
-                                          "fontFamily": "Inter",
-                                          "fontSize": 12,
-                                          "fontWeight": "normal"
-                                        },
-                                        {
-                                          "type": "text",
-                                          "id": "juqpq",
-                                          "fill": "$--muted-foreground",
-                                          "textGrowth": "fixed-width",
-                                          "width": "fill_container",
-                                          "content": "Owner: Evelyn Chen",
-                                          "fontFamily": "Inter",
-                                          "fontSize": 12,
-                                          "fontWeight": "normal"
-                                        }
-                                      ]
-                                    },
-                                    "508Xp": {
-                                      "enabled": true,
-                                      "layout": "horizontal",
-                                      "justifyContent": "space_between",
-                                      "alignItems": "center",
-                                      "gap": 8,
-                                      "height": "fit_content",
-                                      "padding": [
-                                        0,
-                                        12,
-                                        12,
-                                        12
-                                      ],
-                                      "width": "fill_container",
-                                      "children": [
-                                        {
-                                          "type": "text",
-                                          "id": "kBjuJ",
-                                          "fill": "$--muted-foreground",
-                                          "content": "Trend",
-                                          "fontFamily": "Inter",
-                                          "fontSize": 12,
-                                          "fontWeight": "500"
-                                        },
-                                        {
-                                          "id": "YhjUt",
-                                          "type": "ref",
-                                          "ref": "uUsbB",
-                                          "descendants": {
-                                            "zF167": {
-                                              "iconFontName": "ellipsis"
-                                            }
-                                          }
-                                        }
-                                      ]
+                                      "content": "Coffee & Beverage",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 12,
+                                      "fontWeight": "normal"
                                     }
-                                  }
+                                  ]
                                 },
-                                {
-                                  "id": "GKVqC",
-                                  "type": "ref",
-                                  "ref": "hI8J0",
-                                  "name": "brandMcd",
+                                "KD4A5": {
+                                  "layout": "vertical",
+                                  "gap": 4,
+                                  "padding": [
+                                    0,
+                                    12,
+                                    10,
+                                    12
+                                  ],
                                   "width": "fill_container",
-                                  "height": "fit_content",
-                                  "fill": "#FFFFFF",
-                                  "cornerRadius": 24,
-                                  "padding": 16,
-                                  "stroke": {
-                                    "align": "inside",
-                                    "thickness": 1,
-                                    "fill": "#C5C5CB"
-                                  },
-                                  "effect": [],
-                                  "descendants": {
-                                    "SaWqo": {
-                                      "layout": "vertical",
-                                      "gap": 2,
-                                      "padding": [
-                                        12,
-                                        12,
-                                        6,
-                                        12
-                                      ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "FiPyw",
+                                      "fill": "$--foreground",
+                                      "textGrowth": "fixed-width",
                                       "width": "fill_container",
-                                      "children": [
-                                        {
-                                          "type": "text",
-                                          "id": "xoCUI",
-                                          "fill": "$--foreground",
-                                          "textGrowth": "fixed-width",
-                                          "width": "fill_container",
-                                          "content": "McDonald's",
-                                          "fontFamily": "Inter",
-                                          "fontSize": 16,
-                                          "fontWeight": "600"
-                                        },
-                                        {
-                                          "type": "text",
-                                          "id": "cmENZ",
-                                          "fill": "$--muted-foreground",
-                                          "textGrowth": "fixed-width",
-                                          "width": "fill_container",
-                                          "content": "Quick Service",
-                                          "fontFamily": "Inter",
-                                          "fontSize": 12,
-                                          "fontWeight": "normal"
-                                        }
-                                      ]
+                                      "content": "Coverage 124 stores · 92% online",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 13,
+                                      "fontWeight": "500"
                                     },
-                                    "KD4A5": {
-                                      "layout": "vertical",
-                                      "gap": 4,
-                                      "padding": [
-                                        0,
-                                        12,
-                                        10,
-                                        12
-                                      ],
+                                    {
+                                      "type": "text",
+                                      "id": "7Kdp6",
+                                      "fill": "$--muted-foreground",
+                                      "textGrowth": "fixed-width",
                                       "width": "fill_container",
-                                      "children": [
-                                        {
-                                          "type": "text",
-                                          "id": "f5CRx",
-                                          "fill": "$--foreground",
-                                          "textGrowth": "fixed-width",
-                                          "width": "fill_container",
-                                          "content": "Coverage 198 stores · 89% online",
-                                          "fontFamily": "Inter",
-                                          "fontSize": 13,
-                                          "fontWeight": "500"
-                                        },
-                                        {
-                                          "type": "text",
-                                          "id": "hJItz",
-                                          "fill": "$--muted-foreground",
-                                          "textGrowth": "fixed-width",
-                                          "width": "fill_container",
-                                          "content": "Issue stores 14 · Last sync 12m ago",
-                                          "fontFamily": "Inter",
-                                          "fontSize": 12,
-                                          "fontWeight": "normal"
-                                        },
-                                        {
-                                          "type": "text",
-                                          "id": "dgMXM",
-                                          "fill": "$--muted-foreground",
-                                          "textGrowth": "fixed-width",
-                                          "width": "fill_container",
-                                          "content": "Owner: Jason Li",
-                                          "fontFamily": "Inter",
-                                          "fontSize": 12,
-                                          "fontWeight": "normal"
-                                        }
-                                      ]
+                                      "content": "Issue stores 6 · Last sync 5m ago",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 12,
+                                      "fontWeight": "normal"
                                     },
-                                    "508Xp": {
-                                      "enabled": true,
-                                      "layout": "horizontal",
-                                      "justifyContent": "space_between",
-                                      "alignItems": "center",
-                                      "gap": 8,
-                                      "height": "fit_content",
-                                      "padding": [
-                                        0,
-                                        12,
-                                        12,
-                                        12
-                                      ],
+                                    {
+                                      "type": "text",
+                                      "id": "7VJub",
+                                      "fill": "$--muted-foreground",
+                                      "textGrowth": "fixed-width",
                                       "width": "fill_container",
-                                      "children": [
-                                        {
-                                          "type": "text",
-                                          "id": "PBrN3",
-                                          "fill": "$--muted-foreground",
-                                          "content": "Trend",
-                                          "fontFamily": "Inter",
-                                          "fontSize": 12,
-                                          "fontWeight": "500"
-                                        },
-                                        {
-                                          "id": "TrCWN",
-                                          "type": "ref",
-                                          "ref": "uUsbB",
-                                          "descendants": {
-                                            "zF167": {
-                                              "iconFontName": "ellipsis"
-                                            }
-                                          }
-                                        }
-                                      ]
+                                      "content": "Owner: Evelyn Chen",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 12,
+                                      "fontWeight": "normal"
                                     }
-                                  }
+                                  ]
                                 },
-                                {
-                                  "id": "QdlNT",
-                                  "type": "ref",
-                                  "ref": "hI8J0",
-                                  "name": "brandFamilyMart",
-                                  "width": "fill_container",
+                                "508Xp": {
+                                  "enabled": true,
+                                  "layout": "horizontal",
+                                  "justifyContent": "space_between",
+                                  "alignItems": "center",
+                                  "gap": 8,
                                   "height": "fit_content",
-                                  "fill": "#FFFFFF",
-                                  "cornerRadius": 24,
-                                  "padding": 16,
-                                  "stroke": {
-                                    "align": "inside",
-                                    "thickness": 1,
-                                    "fill": "#C5C5CB"
-                                  },
-                                  "effect": [],
-                                  "descendants": {
-                                    "SaWqo": {
-                                      "layout": "vertical",
-                                      "gap": 2,
-                                      "padding": [
-                                        12,
-                                        12,
-                                        6,
-                                        12
-                                      ],
-                                      "width": "fill_container",
-                                      "children": [
-                                        {
-                                          "type": "text",
-                                          "id": "OgVN0",
-                                          "fill": "$--foreground",
-                                          "textGrowth": "fixed-width",
-                                          "width": "fill_container",
-                                          "content": "FamilyMart",
-                                          "fontFamily": "Inter",
-                                          "fontSize": 16,
-                                          "fontWeight": "600"
-                                        },
-                                        {
-                                          "type": "text",
-                                          "id": "zn3FE",
-                                          "fill": "$--muted-foreground",
-                                          "textGrowth": "fixed-width",
-                                          "width": "fill_container",
-                                          "content": "Convenience",
-                                          "fontFamily": "Inter",
-                                          "fontSize": 12,
-                                          "fontWeight": "normal"
-                                        }
-                                      ]
+                                  "padding": [
+                                    0,
+                                    12,
+                                    12,
+                                    12
+                                  ],
+                                  "width": "fill_container",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "Nna9T",
+                                      "fill": "$--muted-foreground",
+                                      "content": "Trend",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 12,
+                                      "fontWeight": "500"
                                     },
-                                    "KD4A5": {
-                                      "layout": "vertical",
-                                      "gap": 4,
-                                      "padding": [
-                                        0,
-                                        12,
-                                        10,
-                                        12
-                                      ],
-                                      "width": "fill_container",
-                                      "children": [
-                                        {
-                                          "type": "text",
-                                          "id": "9Sn9S",
-                                          "fill": "$--foreground",
-                                          "textGrowth": "fixed-width",
-                                          "width": "fill_container",
-                                          "content": "Coverage 76 stores · 84% online",
-                                          "fontFamily": "Inter",
-                                          "fontSize": 13,
-                                          "fontWeight": "500"
-                                        },
-                                        {
-                                          "type": "text",
-                                          "id": "UTZq2",
-                                          "fill": "$--muted-foreground",
-                                          "textGrowth": "fixed-width",
-                                          "width": "fill_container",
-                                          "content": "Issue stores 11 · Last sync 23m ago",
-                                          "fontFamily": "Inter",
-                                          "fontSize": 12,
-                                          "fontWeight": "normal"
-                                        },
-                                        {
-                                          "type": "text",
-                                          "id": "QjTKd",
-                                          "fill": "$--muted-foreground",
-                                          "textGrowth": "fixed-width",
-                                          "width": "fill_container",
-                                          "content": "Owner: Amber Zhao",
-                                          "fontFamily": "Inter",
-                                          "fontSize": 12,
-                                          "fontWeight": "normal"
+                                    {
+                                      "id": "5Mw9F",
+                                      "type": "ref",
+                                      "ref": "uUsbB",
+                                      "descendants": {
+                                        "zF167": {
+                                          "iconFontName": "ellipsis"
                                         }
-                                      ]
-                                    },
-                                    "508Xp": {
-                                      "enabled": true,
-                                      "layout": "horizontal",
-                                      "justifyContent": "space_between",
-                                      "alignItems": "center",
-                                      "gap": 8,
-                                      "height": "fit_content",
-                                      "padding": [
-                                        0,
-                                        12,
-                                        12,
-                                        12
-                                      ],
-                                      "width": "fill_container",
-                                      "children": [
-                                        {
-                                          "type": "text",
-                                          "id": "xs2f4",
-                                          "fill": "$--muted-foreground",
-                                          "content": "Trend",
-                                          "fontFamily": "Inter",
-                                          "fontSize": 12,
-                                          "fontWeight": "500"
-                                        },
-                                        {
-                                          "id": "3cYLF",
-                                          "type": "ref",
-                                          "ref": "uUsbB",
-                                          "descendants": {
-                                            "zF167": {
-                                              "iconFontName": "ellipsis"
-                                            }
-                                          }
-                                        }
-                                      ]
+                                      }
                                     }
-                                  }
+                                  ]
                                 }
-                              ]
+                              }
+                            },
+                            {
+                              "id": "0zYBs",
+                              "type": "ref",
+                              "ref": "hI8J0",
+                              "name": "brandMcd",
+                              "width": "fill_container",
+                              "height": "fit_content",
+                              "fill": "#FFFFFF",
+                              "cornerRadius": 24,
+                              "padding": 16,
+                              "stroke": {
+                                "align": "inside",
+                                "thickness": 1,
+                                "fill": "#C5C5CB"
+                              },
+                              "effect": [],
+                              "descendants": {
+                                "SaWqo": {
+                                  "layout": "vertical",
+                                  "gap": 2,
+                                  "padding": [
+                                    12,
+                                    12,
+                                    6,
+                                    12
+                                  ],
+                                  "width": "fill_container",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "iWBJA",
+                                      "fill": "$--foreground",
+                                      "textGrowth": "fixed-width",
+                                      "width": "fill_container",
+                                      "content": "McDonald's",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 16,
+                                      "fontWeight": "600"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "jPtsx",
+                                      "fill": "$--muted-foreground",
+                                      "textGrowth": "fixed-width",
+                                      "width": "fill_container",
+                                      "content": "Quick Service",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 12,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                },
+                                "KD4A5": {
+                                  "layout": "vertical",
+                                  "gap": 4,
+                                  "padding": [
+                                    0,
+                                    12,
+                                    10,
+                                    12
+                                  ],
+                                  "width": "fill_container",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "4diL0",
+                                      "fill": "$--foreground",
+                                      "textGrowth": "fixed-width",
+                                      "width": "fill_container",
+                                      "content": "Coverage 198 stores · 89% online",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 13,
+                                      "fontWeight": "500"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "6GSFj",
+                                      "fill": "$--muted-foreground",
+                                      "textGrowth": "fixed-width",
+                                      "width": "fill_container",
+                                      "content": "Issue stores 14 · Last sync 12m ago",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 12,
+                                      "fontWeight": "normal"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "CNpBy",
+                                      "fill": "$--muted-foreground",
+                                      "textGrowth": "fixed-width",
+                                      "width": "fill_container",
+                                      "content": "Owner: Jason Li",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 12,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                },
+                                "508Xp": {
+                                  "enabled": true,
+                                  "layout": "horizontal",
+                                  "justifyContent": "space_between",
+                                  "alignItems": "center",
+                                  "gap": 8,
+                                  "height": "fit_content",
+                                  "padding": [
+                                    0,
+                                    12,
+                                    12,
+                                    12
+                                  ],
+                                  "width": "fill_container",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "d1RFG",
+                                      "fill": "$--muted-foreground",
+                                      "content": "Trend",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 12,
+                                      "fontWeight": "500"
+                                    },
+                                    {
+                                      "id": "5OVlp",
+                                      "type": "ref",
+                                      "ref": "uUsbB",
+                                      "descendants": {
+                                        "zF167": {
+                                          "iconFontName": "ellipsis"
+                                        }
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
+                            },
+                            {
+                              "id": "wCQfa",
+                              "type": "ref",
+                              "ref": "hI8J0",
+                              "name": "brandFamilyMart",
+                              "width": "fill_container",
+                              "height": "fit_content",
+                              "fill": "#FFFFFF",
+                              "cornerRadius": 24,
+                              "padding": 16,
+                              "stroke": {
+                                "align": "inside",
+                                "thickness": 1,
+                                "fill": "#C5C5CB"
+                              },
+                              "effect": [],
+                              "descendants": {
+                                "SaWqo": {
+                                  "layout": "vertical",
+                                  "gap": 2,
+                                  "padding": [
+                                    12,
+                                    12,
+                                    6,
+                                    12
+                                  ],
+                                  "width": "fill_container",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "KV88Y",
+                                      "fill": "$--foreground",
+                                      "textGrowth": "fixed-width",
+                                      "width": "fill_container",
+                                      "content": "FamilyMart",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 16,
+                                      "fontWeight": "600"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "Bo1g6",
+                                      "fill": "$--muted-foreground",
+                                      "textGrowth": "fixed-width",
+                                      "width": "fill_container",
+                                      "content": "Convenience",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 12,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                },
+                                "KD4A5": {
+                                  "layout": "vertical",
+                                  "gap": 4,
+                                  "padding": [
+                                    0,
+                                    12,
+                                    10,
+                                    12
+                                  ],
+                                  "width": "fill_container",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "fyXh4",
+                                      "fill": "$--foreground",
+                                      "textGrowth": "fixed-width",
+                                      "width": "fill_container",
+                                      "content": "Coverage 76 stores · 84% online",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 13,
+                                      "fontWeight": "500"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "DMAcs",
+                                      "fill": "$--muted-foreground",
+                                      "textGrowth": "fixed-width",
+                                      "width": "fill_container",
+                                      "content": "Issue stores 11 · Last sync 23m ago",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 12,
+                                      "fontWeight": "normal"
+                                    },
+                                    {
+                                      "type": "text",
+                                      "id": "g1G3l",
+                                      "fill": "$--muted-foreground",
+                                      "textGrowth": "fixed-width",
+                                      "width": "fill_container",
+                                      "content": "Owner: Amber Zhao",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 12,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                },
+                                "508Xp": {
+                                  "enabled": true,
+                                  "layout": "horizontal",
+                                  "justifyContent": "space_between",
+                                  "alignItems": "center",
+                                  "gap": 8,
+                                  "height": "fit_content",
+                                  "padding": [
+                                    0,
+                                    12,
+                                    12,
+                                    12
+                                  ],
+                                  "width": "fill_container",
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "pm71r",
+                                      "fill": "$--muted-foreground",
+                                      "content": "Trend",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 12,
+                                      "fontWeight": "500"
+                                    },
+                                    {
+                                      "id": "quW5T",
+                                      "type": "ref",
+                                      "ref": "uUsbB",
+                                      "descendants": {
+                                        "zF167": {
+                                          "iconFontName": "ellipsis"
+                                        }
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
                             }
                           ]
                         }
                       ]
                     }
                   ]
-                },
-                {
-                  "type": "frame",
-                  "id": "lA8at",
-                  "name": "footer",
-                  "width": "fill_container",
-                  "justifyContent": "space_between",
-                  "alignItems": "center",
-                  "children": [
-                    {
-                      "type": "text",
-                      "id": "6mtWk",
-                      "name": "footTxt",
-                      "fill": "$--muted-foreground",
-                      "content": "Showing 3 of 186 merchants",
-                      "fontFamily": "Inter",
-                      "fontSize": 13,
-                      "fontWeight": "normal"
-                    },
-                    {
-                      "id": "Kyabh",
-                      "type": "ref",
-                      "ref": "JMcAm",
-                      "name": "pager",
-                      "descendants": {
-                        "JNfCW": {
-                          "children": [
-                            {
-                              "id": "qAmMb",
-                              "type": "ref",
-                              "ref": "sVFkJ",
-                              "name": "p1",
-                              "descendants": {
-                                "Q8IAk": {
-                                  "content": "1"
-                                }
-                              }
-                            }
-                          ]
-                        }
-                      }
-                    }
-                  ]
                 }
               ]
-            }
-          ]
-        },
-        {
-          "type": "frame",
-          "id": "xKur8",
-          "x": 0,
-          "y": 0,
-          "name": "dimOverlay",
-          "width": 1440,
-          "height": 936,
-          "fill": "#00000080",
-          "layout": "none",
-          "children": [
+            },
             {
-              "id": "EDd9L",
-              "type": "ref",
-              "ref": "1St63",
-              "width": 520,
-              "x": 460,
-              "y": 180,
-              "name": "dialog",
-              "descendants": {
-                "SaWqo": {
-                  "children": [
-                    {
-                      "type": "text",
-                      "id": "iW2Ho",
-                      "fill": "$--foreground",
-                      "content": "Add New Brand",
-                      "fontFamily": "$--font-primary",
-                      "fontSize": 20,
-                      "fontWeight": "600"
-                    },
-                    {
-                      "type": "text",
-                      "id": "mRJYq",
-                      "fill": "$--muted-foreground",
-                      "content": "Create a new brand to associate locations with.",
-                      "fontFamily": "$--font-secondary",
-                      "fontSize": 14,
-                      "fontWeight": "normal"
+              "type": "frame",
+              "id": "tW96e",
+              "name": "footer",
+              "width": "fill_container",
+              "justifyContent": "space_between",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "xXru0",
+                  "name": "footTxt",
+                  "fill": "$--muted-foreground",
+                  "content": "Showing 3 of 186 merchants",
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                },
+                {
+                  "id": "136rN",
+                  "type": "ref",
+                  "ref": "JMcAm",
+                  "name": "pager",
+                  "descendants": {
+                    "JNfCW": {
+                      "children": [
+                        {
+                          "id": "TigvT",
+                          "type": "ref",
+                          "ref": "sVFkJ",
+                          "name": "p1",
+                          "descendants": {
+                            "Q8IAk": {
+                              "content": "1"
+                            }
+                          }
+                        }
+                      ]
                     }
-                  ]
-                },
-                "KD4A5": {
-                  "enabled": true,
-                  "layout": "vertical",
-                  "gap": 16,
-                  "padding": [
-                    16,
-                    24
-                  ],
-                  "height": "fit_content",
-                  "children": [
-                    {
-                      "id": "HGi5s",
-                      "type": "ref",
-                      "ref": "uEeaR",
-                      "width": "fill_container",
-                      "name": "inputName",
-                      "descendants": {
-                        "EVJFg": {
-                          "content": "Brand Name"
-                        },
-                        "SdDrF": {
-                          "content": "e.g. Starbucks, McDonald's"
-                        }
-                      }
-                    },
-                    {
-                      "id": "TIuZ7",
-                      "type": "ref",
-                      "ref": "gqrFC",
-                      "width": "fill_container",
-                      "name": "inputCategory",
-                      "descendants": {
-                        "yBLtW": {
-                          "content": "Category / Industry"
-                        },
-                        "8mNGM": {
-                          "content": "Select a category"
-                        }
-                      }
-                    },
-                    {
-                      "id": "pvY75",
-                      "type": "ref",
-                      "ref": "uEeaR",
-                      "width": "fill_container",
-                      "name": "inputWebsite",
-                      "descendants": {
-                        "EVJFg": {
-                          "content": "Website URL"
-                        },
-                        "SdDrF": {
-                          "content": "https://"
-                        }
-                      }
-                    },
-                    {
-                      "id": "cC9rX",
-                      "type": "ref",
-                      "ref": "5QESV",
-                      "width": "fill_container",
-                      "name": "inputDesc",
-                      "descendants": {
-                        "J6cRM": {
-                          "content": "Description"
-                        },
-                        "7Lfkv": {
-                          "content": "Optional brand description..."
-                        }
-                      }
-                    }
-                  ]
-                },
-                "508Xp": {
-                  "justifyContent": "start"
-                },
-                "aZctM/2Pl0N": {
-                  "enabled": false
-                },
-                "aZctM/FT3cO": {
-                  "content": "Create Brand"
-                },
-                "Gih9z/2Pl0N": {
-                  "enabled": false
-                },
-                "Gih9z/FT3cO": {
-                  "content": "Cancel"
+                  }
                 }
-              }
+              ]
             }
           ]
         }
