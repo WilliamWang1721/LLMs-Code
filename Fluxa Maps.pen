@@ -17919,8 +17919,8 @@
     {
       "type": "frame",
       "id": "B611W",
-      "x": 9112,
-      "y": 5733,
+      "x": 10719,
+      "y": 2329,
       "name": "payments-maps-web-cards",
       "width": 1440,
       "height": 936,
@@ -18003,10 +18003,10 @@
                   ],
                   "descendants": {
                     "W2XqE": {
-                      "content": "Brands"
+                      "content": "Cards"
                     },
                     "edTIG": {
-                      "iconFontName": "badge-dollar-sign"
+                      "iconFontName": "credit-card"
                     }
                   }
                 },
@@ -18021,7 +18021,7 @@
                       "iconFontName": "plus"
                     },
                     "FT3cO": {
-                      "content": "Add Brand"
+                      "content": "Add Card"
                     }
                   }
                 }
@@ -18065,7 +18065,7 @@
                   "name": "search",
                   "descendants": {
                     "4K0sM": {
-                      "content": "Search brand / category / website..."
+                      "content": "Search cards by last 4 digits, alias..."
                     }
                   }
                 },
@@ -18082,10 +18082,10 @@
                       "name": "tabOnline",
                       "descendants": {
                         "zF167": {
-                          "iconFontName": "wifi"
+                          "iconFontName": "check-circle"
                         },
                         "FT3cO": {
-                          "content": "Online"
+                          "content": "Active"
                         }
                       }
                     },
@@ -18096,10 +18096,10 @@
                       "name": "tabOffline",
                       "descendants": {
                         "zF167": {
-                          "iconFontName": "store"
+                          "iconFontName": "snowflake"
                         },
                         "FT3cO": {
-                          "content": "Offline"
+                          "content": "Frozen"
                         }
                       }
                     },
@@ -18110,10 +18110,10 @@
                       "name": "viewGrid",
                       "descendants": {
                         "zF167": {
-                          "iconFontName": "layout-grid"
+                          "iconFontName": "layout-list"
                         },
                         "FT3cO": {
-                          "content": "Grid"
+                          "content": "List"
                         }
                       }
                     }
@@ -18123,509 +18123,202 @@
             },
             {
               "type": "frame",
-              "id": "rjAgt",
-              "name": "brandBoard",
+              "id": "cSX3M",
+              "name": "cardBoard",
               "width": "fill_container",
               "height": "fill_container",
-              "gap": 8,
+              "gap": 24,
+              "padding": [
+                24,
+                0
+              ],
               "children": [
                 {
                   "type": "frame",
-                  "id": "sMyRg",
-                  "name": "leftCol",
-                  "width": "fill_container",
-                  "height": "fill_container",
+                  "id": "LHoeS",
+                  "name": "virtualCard1",
+                  "width": 320,
+                  "height": 200,
+                  "fill": "$--primary",
+                  "cornerRadius": "$--radius-l",
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "$--primary-foreground",
+                    "offset": {
+                      "x": 0,
+                      "y": 8
+                    },
+                    "blur": 16
+                  },
                   "layout": "vertical",
-                  "gap": 10,
+                  "padding": 24,
+                  "justifyContent": "space_between",
                   "children": [
                     {
                       "type": "frame",
-                      "id": "NJq19",
-                      "name": "categoryRow",
+                      "id": "ziTGQ",
                       "width": "fill_container",
-                      "gap": 8,
+                      "justifyContent": "space_between",
                       "children": [
                         {
-                          "id": "sS9JO",
-                          "type": "ref",
-                          "ref": "mxrlX",
-                          "name": "cat1",
-                          "descendants": {
-                            "zF167": {
-                              "iconFontName": "cup-soda"
-                            },
-                            "FT3cO": {
-                              "content": "Coffee"
-                            }
-                          }
+                          "type": "text",
+                          "id": "R75aE",
+                          "fill": "#ffffff",
+                          "content": "Virtual Card",
+                          "fontFamily": "Inter",
+                          "fontSize": 13,
+                          "fontWeight": "600"
                         },
                         {
-                          "id": "IzO8H",
-                          "type": "ref",
-                          "ref": "Iskt0",
-                          "name": "cat2",
-                          "descendants": {
-                            "zF167": {
-                              "iconFontName": "utensils"
-                            },
-                            "FT3cO": {
-                              "content": "Fast Food"
-                            }
-                          }
-                        },
-                        {
-                          "id": "JmVU6",
-                          "type": "ref",
-                          "ref": "Iskt0",
-                          "name": "cat3",
-                          "descendants": {
-                            "zF167": {
-                              "iconFontName": "shopping-bag"
-                            },
-                            "FT3cO": {
-                              "content": "Retail"
-                            }
-                          }
-                        },
-                        {
-                          "id": "zmxxQ",
-                          "type": "ref",
-                          "ref": "Iskt0",
-                          "name": "cat4",
-                          "descendants": {
-                            "zF167": {
-                              "iconFontName": "store"
-                            },
-                            "FT3cO": {
-                              "content": "Convenience"
-                            }
-                          }
+                          "type": "icon_font",
+                          "id": "vHEe7",
+                          "width": 20,
+                          "height": 20,
+                          "iconFontName": "wifi",
+                          "iconFontFamily": "Material Symbols Rounded",
+                          "fill": "#ffffff"
                         }
                       ]
                     },
                     {
                       "type": "frame",
-                      "id": "Y2IQj",
-                      "name": "tileGrid",
-                      "width": "fill_container",
-                      "height": "fill_container",
+                      "id": "Tuf6Q",
                       "layout": "vertical",
-                      "gap": 10,
+                      "gap": 8,
                       "children": [
                         {
+                          "type": "text",
+                          "id": "IQziH",
+                          "fill": "#ffffff",
+                          "content": "**** **** **** 4920",
+                          "fontFamily": "Inter",
+                          "fontSize": 24,
+                          "fontWeight": "normal",
+                          "letterSpacing": 2
+                        },
+                        {
                           "type": "frame",
-                          "id": "jH7D1",
-                          "name": "brandRow1",
-                          "width": "fill_container",
-                          "gap": 10,
+                          "id": "pIJdW",
+                          "gap": 16,
+                          "alignItems": "center",
                           "children": [
                             {
-                              "id": "ih2B5",
-                              "type": "ref",
-                              "ref": "hI8J0",
-                              "name": "brandStarbucks",
-                              "width": "fill_container",
-                              "height": "fit_content",
-                              "fill": "#FFFFFF",
-                              "cornerRadius": 24,
-                              "padding": 16,
-                              "stroke": {
-                                "align": "inside",
-                                "thickness": 1,
-                                "fill": "#C5C5CB"
-                              },
-                              "effect": [],
-                              "descendants": {
-                                "SaWqo": {
-                                  "layout": "vertical",
-                                  "gap": 2,
-                                  "padding": [
-                                    12,
-                                    12,
-                                    6,
-                                    12
-                                  ],
-                                  "width": "fill_container",
-                                  "children": [
-                                    {
-                                      "type": "text",
-                                      "id": "QKrab",
-                                      "fill": "$--foreground",
-                                      "textGrowth": "fixed-width",
-                                      "width": "fill_container",
-                                      "content": "Starbucks",
-                                      "fontFamily": "Inter",
-                                      "fontSize": 16,
-                                      "fontWeight": "600"
-                                    },
-                                    {
-                                      "type": "text",
-                                      "id": "lqF6x",
-                                      "fill": "$--muted-foreground",
-                                      "textGrowth": "fixed-width",
-                                      "width": "fill_container",
-                                      "content": "Coffee & Beverage",
-                                      "fontFamily": "Inter",
-                                      "fontSize": 12,
-                                      "fontWeight": "normal"
-                                    }
-                                  ]
-                                },
-                                "KD4A5": {
-                                  "layout": "vertical",
-                                  "gap": 4,
-                                  "padding": [
-                                    0,
-                                    12,
-                                    10,
-                                    12
-                                  ],
-                                  "width": "fill_container",
-                                  "children": [
-                                    {
-                                      "type": "text",
-                                      "id": "FiPyw",
-                                      "fill": "$--foreground",
-                                      "textGrowth": "fixed-width",
-                                      "width": "fill_container",
-                                      "content": "Coverage 124 stores · 92% online",
-                                      "fontFamily": "Inter",
-                                      "fontSize": 13,
-                                      "fontWeight": "500"
-                                    },
-                                    {
-                                      "type": "text",
-                                      "id": "7Kdp6",
-                                      "fill": "$--muted-foreground",
-                                      "textGrowth": "fixed-width",
-                                      "width": "fill_container",
-                                      "content": "Issue stores 6 · Last sync 5m ago",
-                                      "fontFamily": "Inter",
-                                      "fontSize": 12,
-                                      "fontWeight": "normal"
-                                    },
-                                    {
-                                      "type": "text",
-                                      "id": "7VJub",
-                                      "fill": "$--muted-foreground",
-                                      "textGrowth": "fixed-width",
-                                      "width": "fill_container",
-                                      "content": "Owner: Evelyn Chen",
-                                      "fontFamily": "Inter",
-                                      "fontSize": 12,
-                                      "fontWeight": "normal"
-                                    }
-                                  ]
-                                },
-                                "508Xp": {
-                                  "enabled": true,
-                                  "layout": "horizontal",
-                                  "justifyContent": "space_between",
-                                  "alignItems": "center",
-                                  "gap": 8,
-                                  "height": "fit_content",
-                                  "padding": [
-                                    0,
-                                    12,
-                                    12,
-                                    12
-                                  ],
-                                  "width": "fill_container",
-                                  "children": [
-                                    {
-                                      "type": "text",
-                                      "id": "Nna9T",
-                                      "fill": "$--muted-foreground",
-                                      "content": "Trend",
-                                      "fontFamily": "Inter",
-                                      "fontSize": 12,
-                                      "fontWeight": "500"
-                                    },
-                                    {
-                                      "id": "5Mw9F",
-                                      "type": "ref",
-                                      "ref": "uUsbB",
-                                      "descendants": {
-                                        "zF167": {
-                                          "iconFontName": "ellipsis"
-                                        }
-                                      }
-                                    }
-                                  ]
-                                }
-                              }
+                              "type": "text",
+                              "id": "LrAVX",
+                              "fill": "#ffffffcc",
+                              "content": "12/28",
+                              "fontFamily": "Inter",
+                              "fontSize": 13,
+                              "fontWeight": "normal"
                             },
                             {
-                              "id": "0zYBs",
-                              "type": "ref",
-                              "ref": "hI8J0",
-                              "name": "brandMcd",
-                              "width": "fill_container",
-                              "height": "fit_content",
-                              "fill": "#FFFFFF",
-                              "cornerRadius": 24,
-                              "padding": 16,
-                              "stroke": {
-                                "align": "inside",
-                                "thickness": 1,
-                                "fill": "#C5C5CB"
-                              },
-                              "effect": [],
-                              "descendants": {
-                                "SaWqo": {
-                                  "layout": "vertical",
-                                  "gap": 2,
-                                  "padding": [
-                                    12,
-                                    12,
-                                    6,
-                                    12
-                                  ],
-                                  "width": "fill_container",
-                                  "children": [
-                                    {
-                                      "type": "text",
-                                      "id": "iWBJA",
-                                      "fill": "$--foreground",
-                                      "textGrowth": "fixed-width",
-                                      "width": "fill_container",
-                                      "content": "McDonald's",
-                                      "fontFamily": "Inter",
-                                      "fontSize": 16,
-                                      "fontWeight": "600"
-                                    },
-                                    {
-                                      "type": "text",
-                                      "id": "jPtsx",
-                                      "fill": "$--muted-foreground",
-                                      "textGrowth": "fixed-width",
-                                      "width": "fill_container",
-                                      "content": "Quick Service",
-                                      "fontFamily": "Inter",
-                                      "fontSize": 12,
-                                      "fontWeight": "normal"
-                                    }
-                                  ]
-                                },
-                                "KD4A5": {
-                                  "layout": "vertical",
-                                  "gap": 4,
-                                  "padding": [
-                                    0,
-                                    12,
-                                    10,
-                                    12
-                                  ],
-                                  "width": "fill_container",
-                                  "children": [
-                                    {
-                                      "type": "text",
-                                      "id": "4diL0",
-                                      "fill": "$--foreground",
-                                      "textGrowth": "fixed-width",
-                                      "width": "fill_container",
-                                      "content": "Coverage 198 stores · 89% online",
-                                      "fontFamily": "Inter",
-                                      "fontSize": 13,
-                                      "fontWeight": "500"
-                                    },
-                                    {
-                                      "type": "text",
-                                      "id": "6GSFj",
-                                      "fill": "$--muted-foreground",
-                                      "textGrowth": "fixed-width",
-                                      "width": "fill_container",
-                                      "content": "Issue stores 14 · Last sync 12m ago",
-                                      "fontFamily": "Inter",
-                                      "fontSize": 12,
-                                      "fontWeight": "normal"
-                                    },
-                                    {
-                                      "type": "text",
-                                      "id": "CNpBy",
-                                      "fill": "$--muted-foreground",
-                                      "textGrowth": "fixed-width",
-                                      "width": "fill_container",
-                                      "content": "Owner: Jason Li",
-                                      "fontFamily": "Inter",
-                                      "fontSize": 12,
-                                      "fontWeight": "normal"
-                                    }
-                                  ]
-                                },
-                                "508Xp": {
-                                  "enabled": true,
-                                  "layout": "horizontal",
-                                  "justifyContent": "space_between",
-                                  "alignItems": "center",
-                                  "gap": 8,
-                                  "height": "fit_content",
-                                  "padding": [
-                                    0,
-                                    12,
-                                    12,
-                                    12
-                                  ],
-                                  "width": "fill_container",
-                                  "children": [
-                                    {
-                                      "type": "text",
-                                      "id": "d1RFG",
-                                      "fill": "$--muted-foreground",
-                                      "content": "Trend",
-                                      "fontFamily": "Inter",
-                                      "fontSize": 12,
-                                      "fontWeight": "500"
-                                    },
-                                    {
-                                      "id": "5OVlp",
-                                      "type": "ref",
-                                      "ref": "uUsbB",
-                                      "descendants": {
-                                        "zF167": {
-                                          "iconFontName": "ellipsis"
-                                        }
-                                      }
-                                    }
-                                  ]
-                                }
-                              }
+                              "type": "text",
+                              "id": "zHUdS",
+                              "fill": "#ffffffcc",
+                              "content": "Joe Doe",
+                              "fontFamily": "Inter",
+                              "fontSize": 13,
+                              "fontWeight": "500"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "C35lv",
+                  "name": "physicalCard1",
+                  "width": 320,
+                  "height": 200,
+                  "fill": "$--card",
+                  "cornerRadius": "$--radius-l",
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "$--border"
+                  },
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#00000014",
+                    "offset": {
+                      "x": 0,
+                      "y": 4
+                    },
+                    "blur": 12
+                  },
+                  "layout": "vertical",
+                  "padding": 24,
+                  "justifyContent": "space_between",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "1WqMR",
+                      "width": "fill_container",
+                      "justifyContent": "space_between",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "CAStx",
+                          "fill": "$--muted-foreground",
+                          "content": "Physical Card",
+                          "fontFamily": "Inter",
+                          "fontSize": 13,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "icon_font",
+                          "id": "W6Qai",
+                          "width": 20,
+                          "height": 20,
+                          "iconFontName": "credit-card",
+                          "iconFontFamily": "Material Symbols Rounded",
+                          "fill": "$--foreground"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "NO6k2",
+                      "layout": "vertical",
+                      "gap": 8,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "SJBuT",
+                          "fill": "$--foreground",
+                          "content": "**** **** **** 8812",
+                          "fontFamily": "Inter",
+                          "fontSize": 24,
+                          "fontWeight": "normal",
+                          "letterSpacing": 2
+                        },
+                        {
+                          "type": "frame",
+                          "id": "R9rc8",
+                          "gap": 16,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "OfunY",
+                              "fill": "$--muted-foreground",
+                              "content": "04/27",
+                              "fontFamily": "Inter",
+                              "fontSize": 13,
+                              "fontWeight": "normal"
                             },
                             {
-                              "id": "wCQfa",
-                              "type": "ref",
-                              "ref": "hI8J0",
-                              "name": "brandFamilyMart",
-                              "width": "fill_container",
-                              "height": "fit_content",
-                              "fill": "#FFFFFF",
-                              "cornerRadius": 24,
-                              "padding": 16,
-                              "stroke": {
-                                "align": "inside",
-                                "thickness": 1,
-                                "fill": "#C5C5CB"
-                              },
-                              "effect": [],
-                              "descendants": {
-                                "SaWqo": {
-                                  "layout": "vertical",
-                                  "gap": 2,
-                                  "padding": [
-                                    12,
-                                    12,
-                                    6,
-                                    12
-                                  ],
-                                  "width": "fill_container",
-                                  "children": [
-                                    {
-                                      "type": "text",
-                                      "id": "KV88Y",
-                                      "fill": "$--foreground",
-                                      "textGrowth": "fixed-width",
-                                      "width": "fill_container",
-                                      "content": "FamilyMart",
-                                      "fontFamily": "Inter",
-                                      "fontSize": 16,
-                                      "fontWeight": "600"
-                                    },
-                                    {
-                                      "type": "text",
-                                      "id": "Bo1g6",
-                                      "fill": "$--muted-foreground",
-                                      "textGrowth": "fixed-width",
-                                      "width": "fill_container",
-                                      "content": "Convenience",
-                                      "fontFamily": "Inter",
-                                      "fontSize": 12,
-                                      "fontWeight": "normal"
-                                    }
-                                  ]
-                                },
-                                "KD4A5": {
-                                  "layout": "vertical",
-                                  "gap": 4,
-                                  "padding": [
-                                    0,
-                                    12,
-                                    10,
-                                    12
-                                  ],
-                                  "width": "fill_container",
-                                  "children": [
-                                    {
-                                      "type": "text",
-                                      "id": "fyXh4",
-                                      "fill": "$--foreground",
-                                      "textGrowth": "fixed-width",
-                                      "width": "fill_container",
-                                      "content": "Coverage 76 stores · 84% online",
-                                      "fontFamily": "Inter",
-                                      "fontSize": 13,
-                                      "fontWeight": "500"
-                                    },
-                                    {
-                                      "type": "text",
-                                      "id": "DMAcs",
-                                      "fill": "$--muted-foreground",
-                                      "textGrowth": "fixed-width",
-                                      "width": "fill_container",
-                                      "content": "Issue stores 11 · Last sync 23m ago",
-                                      "fontFamily": "Inter",
-                                      "fontSize": 12,
-                                      "fontWeight": "normal"
-                                    },
-                                    {
-                                      "type": "text",
-                                      "id": "g1G3l",
-                                      "fill": "$--muted-foreground",
-                                      "textGrowth": "fixed-width",
-                                      "width": "fill_container",
-                                      "content": "Owner: Amber Zhao",
-                                      "fontFamily": "Inter",
-                                      "fontSize": 12,
-                                      "fontWeight": "normal"
-                                    }
-                                  ]
-                                },
-                                "508Xp": {
-                                  "enabled": true,
-                                  "layout": "horizontal",
-                                  "justifyContent": "space_between",
-                                  "alignItems": "center",
-                                  "gap": 8,
-                                  "height": "fit_content",
-                                  "padding": [
-                                    0,
-                                    12,
-                                    12,
-                                    12
-                                  ],
-                                  "width": "fill_container",
-                                  "children": [
-                                    {
-                                      "type": "text",
-                                      "id": "pm71r",
-                                      "fill": "$--muted-foreground",
-                                      "content": "Trend",
-                                      "fontFamily": "Inter",
-                                      "fontSize": 12,
-                                      "fontWeight": "500"
-                                    },
-                                    {
-                                      "id": "quW5T",
-                                      "type": "ref",
-                                      "ref": "uUsbB",
-                                      "descendants": {
-                                        "zF167": {
-                                          "iconFontName": "ellipsis"
-                                        }
-                                      }
-                                    }
-                                  ]
-                                }
-                              }
+                              "type": "text",
+                              "id": "8YRI8",
+                              "fill": "$--muted-foreground",
+                              "content": "Joe Doe",
+                              "fontFamily": "Inter",
+                              "fontSize": 13,
+                              "fontWeight": "500"
                             }
                           ]
                         }
@@ -18648,7 +18341,7 @@
                   "id": "xXru0",
                   "name": "footTxt",
                   "fill": "$--muted-foreground",
-                  "content": "Showing 3 of 186 merchants",
+                  "content": "Showing 2 active cards",
                   "fontFamily": "Inter",
                   "fontSize": 13,
                   "fontWeight": "normal"
