@@ -3153,7 +3153,7 @@
                       "id": "Fpzpi",
                       "name": "Flux",
                       "fill": "$--sidebar-primary-foreground",
-                      "content": "HALO",
+                      "content": "FLUXA",
                       "lineHeight": 1.5,
                       "fontFamily": "Inter",
                       "fontSize": 14,
@@ -17925,13 +17925,14 @@
       "width": 1440,
       "height": 936,
       "fill": "#FFFFFF",
+      "layout": "none",
       "children": [
         {
           "id": "Yt0hp",
           "type": "ref",
           "ref": "Cpvvc",
           "width": 240,
-          "height": "fill_container",
+          "height": 936,
           "name": "sidebar",
           "x": 0,
           "y": 0,
@@ -18041,9 +18042,11 @@
         {
           "type": "frame",
           "id": "SjL7C",
+          "x": 240,
+          "y": 0,
           "name": "main",
-          "width": "fill_container",
-          "height": "fill_container",
+          "width": 1200,
+          "height": 936,
           "fill": "#FAFAFA",
           "layout": "vertical",
           "gap": 7,
@@ -18082,10 +18085,10 @@
                       "name": "tabOnline",
                       "descendants": {
                         "zF167": {
-                          "iconFontName": "check-circle"
+                          "iconFontName": "globe"
                         },
                         "FT3cO": {
-                          "content": "Active"
+                          "content": "Public Card"
                         }
                       }
                     },
@@ -18096,10 +18099,10 @@
                       "name": "tabOffline",
                       "descendants": {
                         "zF167": {
-                          "iconFontName": "snowflake"
+                          "iconFontName": "user"
                         },
                         "FT3cO": {
-                          "content": "Frozen"
+                          "content": "My Card"
                         }
                       }
                     },
@@ -18127,99 +18130,330 @@
               "name": "cardBoard",
               "width": "fill_container",
               "height": "fill_container",
+              "layout": "vertical",
               "gap": 24,
-              "padding": [
-                24,
-                0
-              ],
+              "padding": 24,
               "children": [
                 {
                   "type": "frame",
-                  "id": "LHoeS",
-                  "name": "virtualCard1",
-                  "width": 320,
-                  "height": 200,
-                  "fill": "$--primary",
-                  "cornerRadius": "$--radius-l",
-                  "effect": {
-                    "type": "shadow",
-                    "shadowType": "outer",
-                    "color": "$--primary-foreground",
-                    "offset": {
-                      "x": 0,
-                      "y": 8
-                    },
-                    "blur": 16
-                  },
-                  "layout": "vertical",
-                  "padding": 24,
-                  "justifyContent": "space_between",
+                  "id": "2Cuty",
+                  "name": "row1_3cards",
+                  "width": "fill_container",
+                  "gap": 24,
                   "children": [
                     {
                       "type": "frame",
-                      "id": "ziTGQ",
-                      "width": "fill_container",
+                      "id": "LHoeS",
+                      "name": "virtualCard1",
+                      "width": 360,
+                      "height": 200,
+                      "fill": "$--card",
+                      "cornerRadius": "$--radius-l",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$--border"
+                      },
+                      "layout": "vertical",
+                      "padding": 24,
                       "justifyContent": "space_between",
                       "children": [
                         {
-                          "type": "text",
-                          "id": "R75aE",
-                          "fill": "#ffffff",
-                          "content": "Virtual Card",
-                          "fontFamily": "Inter",
-                          "fontSize": 13,
-                          "fontWeight": "600"
+                          "type": "frame",
+                          "id": "MdDn2",
+                          "width": "fill_container",
+                          "justifyContent": "space_between",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "tjYTC",
+                              "fill": "$--muted-foreground",
+                              "content": "JPMorgan Chase",
+                              "fontFamily": "Inter",
+                              "fontSize": 13,
+                              "fontWeight": "600",
+                              "letterSpacing": 0.5
+                            },
+                            {
+                              "type": "text",
+                              "id": "j4Bid",
+                              "fill": "$--foreground",
+                              "content": "VISA",
+                              "fontFamily": "Inter",
+                              "fontSize": 18,
+                              "fontWeight": "800",
+                              "fontStyle": "italic"
+                            }
+                          ]
                         },
                         {
-                          "type": "icon_font",
-                          "id": "vHEe7",
-                          "width": 20,
-                          "height": 20,
-                          "iconFontName": "wifi",
-                          "iconFontFamily": "Material Symbols Rounded",
-                          "fill": "#ffffff"
+                          "type": "frame",
+                          "id": "JApip",
+                          "name": "cardContent",
+                          "width": "fill_container",
+                          "justifyContent": "space_between",
+                          "alignItems": "end",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "jUq39",
+                              "layout": "vertical",
+                              "gap": 8,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "7oxWM",
+                                  "fill": "$--foreground",
+                                  "content": "Sapphire Reserve",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 24,
+                                  "fontWeight": "600"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "ZDfv0",
+                                  "fill": "$--muted-foreground",
+                                  "content": "Virtual Credit Card",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 13,
+                                  "fontWeight": "500"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "zSitk",
+                              "name": "cardAddBtn",
+                              "width": 32,
+                              "height": 32,
+                              "fill": "$--primary",
+                              "cornerRadius": 16,
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "icon_font",
+                                  "id": "1d6of",
+                                  "width": 22,
+                                  "height": 22,
+                                  "iconFontName": "add",
+                                  "iconFontFamily": "Material Symbols Rounded",
+                                  "fill": "$--primary-foreground"
+                                }
+                              ]
+                            }
+                          ]
                         }
                       ]
                     },
                     {
                       "type": "frame",
-                      "id": "Tuf6Q",
+                      "id": "C35lv",
+                      "name": "physicalCard1",
+                      "width": 360,
+                      "height": 200,
+                      "fill": "$--card",
+                      "cornerRadius": "$--radius-l",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$--border"
+                      },
                       "layout": "vertical",
-                      "gap": 8,
+                      "padding": 24,
+                      "justifyContent": "space_between",
                       "children": [
                         {
-                          "type": "text",
-                          "id": "IQziH",
-                          "fill": "#ffffff",
-                          "content": "**** **** **** 4920",
-                          "fontFamily": "Inter",
-                          "fontSize": 24,
-                          "fontWeight": "normal",
-                          "letterSpacing": 2
-                        },
-                        {
                           "type": "frame",
-                          "id": "pIJdW",
-                          "gap": 16,
+                          "id": "HqLan",
+                          "width": "fill_container",
+                          "justifyContent": "space_between",
                           "alignItems": "center",
                           "children": [
                             {
                               "type": "text",
-                              "id": "LrAVX",
-                              "fill": "#ffffffcc",
-                              "content": "12/28",
+                              "id": "WplHS",
+                              "fill": "$--muted-foreground",
+                              "content": "American Express",
                               "fontFamily": "Inter",
                               "fontSize": 13,
-                              "fontWeight": "normal"
+                              "fontWeight": "600",
+                              "letterSpacing": 0.5
                             },
                             {
                               "type": "text",
-                              "id": "zHUdS",
-                              "fill": "#ffffffcc",
-                              "content": "Joe Doe",
+                              "id": "8q4CB",
+                              "fill": "$--foreground",
+                              "content": "AMEX",
+                              "fontFamily": "Inter",
+                              "fontSize": 18,
+                              "fontWeight": "800",
+                              "fontStyle": "italic"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "c1i1i",
+                          "name": "cardContent",
+                          "width": "fill_container",
+                          "justifyContent": "space_between",
+                          "alignItems": "end",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "8CL07",
+                              "layout": "vertical",
+                              "gap": 8,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "ZvA2Z",
+                                  "fill": "$--foreground",
+                                  "content": "Platinum Card",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 24,
+                                  "fontWeight": "600"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "VJmIl",
+                                  "fill": "$--muted-foreground",
+                                  "content": "Physical Charge Card",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 13,
+                                  "fontWeight": "500"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "YUx41",
+                              "name": "cardAddBtn",
+                              "width": 32,
+                              "height": 32,
+                              "fill": "$--primary",
+                              "cornerRadius": 16,
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "icon_font",
+                                  "id": "1GHNN",
+                                  "width": 22,
+                                  "height": 22,
+                                  "iconFontName": "add",
+                                  "iconFontFamily": "Material Symbols Rounded",
+                                  "fill": "$--primary-foreground"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "q1Ryt",
+                      "name": "masterCard1",
+                      "width": 360,
+                      "height": 200,
+                      "fill": "$--card",
+                      "cornerRadius": "$--radius-l",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$--border"
+                      },
+                      "layout": "vertical",
+                      "padding": 24,
+                      "justifyContent": "space_between",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "8DWDg",
+                          "width": "fill_container",
+                          "justifyContent": "space_between",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "rIpYj",
+                              "fill": "$--muted-foreground",
+                              "content": "Citibank",
                               "fontFamily": "Inter",
                               "fontSize": 13,
-                              "fontWeight": "500"
+                              "fontWeight": "600",
+                              "letterSpacing": 0.5
+                            },
+                            {
+                              "type": "text",
+                              "id": "vHlDd",
+                              "fill": "$--foreground",
+                              "content": "MasterCard",
+                              "fontFamily": "Inter",
+                              "fontSize": 18,
+                              "fontWeight": "800",
+                              "fontStyle": "italic"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "4u7qR",
+                          "name": "cardContent",
+                          "width": "fill_container",
+                          "justifyContent": "space_between",
+                          "alignItems": "end",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "6bVbb",
+                              "layout": "vertical",
+                              "gap": 8,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "pXKt0",
+                                  "fill": "$--foreground",
+                                  "content": "PremierMiles",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 24,
+                                  "fontWeight": "600"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "nnUO9",
+                                  "fill": "$--muted-foreground",
+                                  "content": "World Elite Card",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 13,
+                                  "fontWeight": "500"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "HGGZB",
+                              "name": "cardAddBtn",
+                              "width": 32,
+                              "height": 32,
+                              "fill": "$--primary",
+                              "cornerRadius": 16,
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "icon_font",
+                                  "id": "TQhaw",
+                                  "width": 22,
+                                  "height": 22,
+                                  "iconFontName": "add",
+                                  "iconFontFamily": "Material Symbols Rounded",
+                                  "fill": "$--primary-foreground"
+                                }
+                              ]
                             }
                           ]
                         }
@@ -18229,96 +18463,112 @@
                 },
                 {
                   "type": "frame",
-                  "id": "C35lv",
-                  "name": "physicalCard1",
-                  "width": 320,
-                  "height": 200,
-                  "fill": "$--card",
-                  "cornerRadius": "$--radius-l",
-                  "stroke": {
-                    "align": "inside",
-                    "thickness": 1,
-                    "fill": "$--border"
-                  },
-                  "effect": {
-                    "type": "shadow",
-                    "shadowType": "outer",
-                    "color": "#00000014",
-                    "offset": {
-                      "x": 0,
-                      "y": 4
-                    },
-                    "blur": 12
-                  },
-                  "layout": "vertical",
-                  "padding": 24,
-                  "justifyContent": "space_between",
+                  "id": "GWyGU",
+                  "name": "row2_remaining",
+                  "width": "fill_container",
+                  "gap": 24,
                   "children": [
                     {
                       "type": "frame",
-                      "id": "1WqMR",
-                      "width": "fill_container",
+                      "id": "d2197",
+                      "name": "appleCard",
+                      "width": 360,
+                      "height": 200,
+                      "fill": "$--card",
+                      "cornerRadius": "$--radius-l",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$--border"
+                      },
+                      "layout": "vertical",
+                      "padding": 24,
                       "justifyContent": "space_between",
                       "children": [
                         {
-                          "type": "text",
-                          "id": "CAStx",
-                          "fill": "$--muted-foreground",
-                          "content": "Physical Card",
-                          "fontFamily": "Inter",
-                          "fontSize": 13,
-                          "fontWeight": "600"
-                        },
-                        {
-                          "type": "icon_font",
-                          "id": "W6Qai",
-                          "width": 20,
-                          "height": 20,
-                          "iconFontName": "credit-card",
-                          "iconFontFamily": "Material Symbols Rounded",
-                          "fill": "$--foreground"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "frame",
-                      "id": "NO6k2",
-                      "layout": "vertical",
-                      "gap": 8,
-                      "children": [
-                        {
-                          "type": "text",
-                          "id": "SJBuT",
-                          "fill": "$--foreground",
-                          "content": "**** **** **** 8812",
-                          "fontFamily": "Inter",
-                          "fontSize": 24,
-                          "fontWeight": "normal",
-                          "letterSpacing": 2
-                        },
-                        {
                           "type": "frame",
-                          "id": "R9rc8",
-                          "gap": 16,
+                          "id": "6Z49F",
+                          "width": "fill_container",
+                          "justifyContent": "space_between",
                           "alignItems": "center",
                           "children": [
                             {
                               "type": "text",
-                              "id": "OfunY",
+                              "id": "7wSYT",
                               "fill": "$--muted-foreground",
-                              "content": "04/27",
+                              "content": "Goldman Sachs",
                               "fontFamily": "Inter",
                               "fontSize": 13,
-                              "fontWeight": "normal"
+                              "fontWeight": "600",
+                              "letterSpacing": 0.5
                             },
                             {
                               "type": "text",
-                              "id": "8YRI8",
-                              "fill": "$--muted-foreground",
-                              "content": "Joe Doe",
+                              "id": "FTsy4",
+                              "fill": "$--foreground",
+                              "content": "MasterCard",
                               "fontFamily": "Inter",
-                              "fontSize": 13,
-                              "fontWeight": "500"
+                              "fontSize": 18,
+                              "fontWeight": "800",
+                              "fontStyle": "italic"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "hRa2R",
+                          "name": "cardContent",
+                          "width": "fill_container",
+                          "justifyContent": "space_between",
+                          "alignItems": "end",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "5DMdw",
+                              "layout": "vertical",
+                              "gap": 8,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "S2Vg1",
+                                  "fill": "$--foreground",
+                                  "content": "Apple Card",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 24,
+                                  "fontWeight": "600"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "pKSWY",
+                                  "fill": "$--muted-foreground",
+                                  "content": "Virtual Credit Card",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 13,
+                                  "fontWeight": "500"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "HegxM",
+                              "name": "cardAddBtn",
+                              "width": 32,
+                              "height": 32,
+                              "fill": "$--primary",
+                              "cornerRadius": 16,
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "icon_font",
+                                  "id": "Y7wqG",
+                                  "width": 22,
+                                  "height": 22,
+                                  "iconFontName": "add",
+                                  "iconFontFamily": "Material Symbols Rounded",
+                                  "fill": "$--primary-foreground"
+                                }
+                              ]
                             }
                           ]
                         }
