@@ -18169,7 +18169,7 @@
                               "type": "text",
                               "id": "tjYTC",
                               "fill": "$--muted-foreground",
-                              "content": "JPMorgan Chase",
+                              "content": "US · JPMorgan Chase",
                               "fontFamily": "Inter",
                               "fontSize": 13,
                               "fontWeight": "600",
@@ -18275,7 +18275,7 @@
                               "type": "text",
                               "id": "WplHS",
                               "fill": "$--muted-foreground",
-                              "content": "American Express",
+                              "content": "US · Amex",
                               "fontFamily": "Inter",
                               "fontSize": 13,
                               "fontWeight": "600",
@@ -18381,7 +18381,7 @@
                               "type": "text",
                               "id": "rIpYj",
                               "fill": "$--muted-foreground",
-                              "content": "Citibank",
+                              "content": "HK · Citibank",
                               "fontFamily": "Inter",
                               "fontSize": 13,
                               "fontWeight": "600",
@@ -18496,7 +18496,7 @@
                               "type": "text",
                               "id": "7wSYT",
                               "fill": "$--muted-foreground",
-                              "content": "Goldman Sachs",
+                              "content": "US · Goldman Sachs",
                               "fontFamily": "Inter",
                               "fontSize": 13,
                               "fontWeight": "600",
@@ -18562,6 +18562,212 @@
                                 {
                                   "type": "icon_font",
                                   "id": "Y7wqG",
+                                  "width": 22,
+                                  "height": 22,
+                                  "iconFontName": "add",
+                                  "iconFontFamily": "Material Symbols Rounded",
+                                  "fill": "$--primary-foreground"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "uyDaQ",
+                      "name": "C5",
+                      "width": 360,
+                      "height": 200,
+                      "fill": "$--card",
+                      "cornerRadius": "$--radius-l",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$--border"
+                      },
+                      "layout": "vertical",
+                      "padding": 24,
+                      "justifyContent": "space_between",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "2hyKu",
+                          "width": "fill_container",
+                          "justifyContent": "space_between",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "XrIg9",
+                              "fill": "$--muted-foreground",
+                              "content": "CN · ICBC",
+                              "fontFamily": "Inter",
+                              "fontSize": 12,
+                              "fontWeight": "600"
+                            },
+                            {
+                              "type": "text",
+                              "id": "WOpjw",
+                              "fill": "$--foreground",
+                              "content": "UnionPay",
+                              "fontFamily": "Inter",
+                              "fontSize": 18,
+                              "fontWeight": "800",
+                              "fontStyle": "italic"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "0LM1b",
+                          "width": "fill_container",
+                          "justifyContent": "space_between",
+                          "alignItems": "end",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "T5ai6",
+                              "layout": "vertical",
+                              "gap": 8,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "LTKIj",
+                                  "fill": "$--foreground",
+                                  "content": "Black Gold Card",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 24,
+                                  "fontWeight": "600"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "Syk5c",
+                                  "fill": "$--muted-foreground",
+                                  "content": "Physical Credit Card",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 13,
+                                  "fontWeight": "500"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "v1AFd",
+                              "width": 32,
+                              "height": 32,
+                              "fill": "$--primary",
+                              "cornerRadius": 16,
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "icon_font",
+                                  "id": "rtrnE",
+                                  "width": 22,
+                                  "height": 22,
+                                  "iconFontName": "add",
+                                  "iconFontFamily": "Material Symbols Rounded",
+                                  "fill": "$--primary-foreground"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "WdrfZ",
+                      "name": "C6",
+                      "width": 360,
+                      "height": 200,
+                      "fill": "$--card",
+                      "cornerRadius": "$--radius-l",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "$--border"
+                      },
+                      "layout": "vertical",
+                      "padding": 24,
+                      "justifyContent": "space_between",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "INa0c",
+                          "width": "fill_container",
+                          "justifyContent": "space_between",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "3EXY4",
+                              "fill": "$--muted-foreground",
+                              "content": "JP · Rakuten Bank",
+                              "fontFamily": "Inter",
+                              "fontSize": 12,
+                              "fontWeight": "600"
+                            },
+                            {
+                              "type": "text",
+                              "id": "kBI7K",
+                              "fill": "$--foreground",
+                              "content": "JCB",
+                              "fontFamily": "Inter",
+                              "fontSize": 18,
+                              "fontWeight": "800",
+                              "fontStyle": "italic"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "M90Aa",
+                          "width": "fill_container",
+                          "justifyContent": "space_between",
+                          "alignItems": "end",
+                          "children": [
+                            {
+                              "type": "frame",
+                              "id": "2j4aD",
+                              "layout": "vertical",
+                              "gap": 8,
+                              "children": [
+                                {
+                                  "type": "text",
+                                  "id": "vvl59",
+                                  "fill": "$--foreground",
+                                  "content": "Premium Card",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 24,
+                                  "fontWeight": "600"
+                                },
+                                {
+                                  "type": "text",
+                                  "id": "g16uY",
+                                  "fill": "$--muted-foreground",
+                                  "content": "Physical Credit Card",
+                                  "fontFamily": "Inter",
+                                  "fontSize": 13,
+                                  "fontWeight": "500"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "frame",
+                              "id": "qfpIE",
+                              "width": 32,
+                              "height": 32,
+                              "fill": "$--primary",
+                              "cornerRadius": 16,
+                              "justifyContent": "center",
+                              "alignItems": "center",
+                              "children": [
+                                {
+                                  "type": "icon_font",
+                                  "id": "UNrQl",
                                   "width": 22,
                                   "height": 22,
                                   "iconFontName": "add",
