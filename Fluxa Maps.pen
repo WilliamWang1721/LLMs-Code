@@ -5590,12 +5590,21 @@
                   "ref": "x40ze",
                   "width": "fill_container",
                   "name": "navList",
+                  "height": "fit_content",
+                  "flipX": false,
+                  "flipY": false,
+                  "x": 16,
+                  "y": 92,
+                  "textGrowth": "auto",
                   "descendants": {
                     "W2XqE": {
                       "content": "List"
                     },
                     "edTIG": {
-                      "iconFontName": "list"
+                      "iconFontName": "list",
+                      "x": 167.96334571176178,
+                      "y": 12.03668232143596,
+                      "rotation": 0.08757262580568403
                     }
                   }
                 },
@@ -5626,6 +5635,12 @@
                   "ref": "xBc88",
                   "width": "fill_container",
                   "name": "addBrand",
+                  "x": 16,
+                  "y": 206.03665428823822,
+                  "flipX": false,
+                  "flipY": false,
+                  "height": "fit_content",
+                  "textGrowth": "auto",
                   "descendants": {
                     "zF167": {
                       "iconFontName": "plus"
@@ -6542,12 +6557,12 @@
     {
       "type": "frame",
       "id": "pxPeh",
-      "x": 8908,
-      "y": -1096,
+      "x": 8978,
+      "y": 0,
       "name": "Sidebar/Collapsed",
       "reusable": true,
       "width": 88,
-      "height": 1024,
+      "height": 936,
       "fill": "$--sidebar",
       "cornerRadius": "$--radius-m",
       "stroke": {
@@ -6586,23 +6601,26 @@
           "children": [
             {
               "type": "frame",
-              "id": "o7tUg",
-              "name": "Brand",
-              "width": 56,
-              "height": 56,
-              "cornerRadius": "$--radius-m",
-              "justifyContent": "center",
-              "alignItems": "center",
+              "id": "S6nF0",
+              "name": "Mark",
+              "width": 40,
+              "height": 40,
+              "stroke": {
+                "align": "inside",
+                "thickness": 1
+              },
+              "layout": "none",
               "children": [
                 {
-                  "type": "icon_font",
-                  "id": "RzN9y",
-                  "name": "brandIcon",
-                  "width": 24,
-                  "height": 24,
-                  "iconFontName": "sparkles",
-                  "iconFontFamily": "lucide",
-                  "fill": "$--sidebar-foreground"
+                  "type": "path",
+                  "id": "WKRpu",
+                  "x": 4,
+                  "y": 4,
+                  "name": "Union",
+                  "geometry": "M16 26c1.65686 0 3 1.34314 3 3 0 1.65686-1.34314 3-3 3-1.65686 0-3-1.34314-3-3 0-1.65686 1.34314-3 3-3z m-10-2c1.10457 0 2 0.89543 2 2 0 1.10457-0.89543 2-2 2-1.10457 0-2-0.89543-2-2 0-1.10457 0.89543-2 2-2z m20 0c1.10457 0 2 0.89543 2 2 0 1.10457-0.89543 2-2 2-1.10457 0-2-0.89543-2-2 0-1.10457 0.89543-2 2-2z m-10-12c2.20914 0 4 1.79086 4 4 0 2.20914-1.79086 4-4 4-2.20914 0-4-1.79086-4-4 0-2.20914 1.79086-4 4-4z m-13 1c1.65685 0 3 1.34314 3 3 0 1.65686-1.34315 3-3 3-1.65685 0-3-1.34314-3-3 0-1.65686 1.34315-3 3-3z m26 0c1.65686 0 3 1.34314 3 3 0 1.65686-1.34314 3-3 3-1.65686 0-3-1.34314-3-3 0-1.65686 1.34314-3 3-3z m-23-9c1.10457 0 2 0.89543 2 2 0 1.10457-0.89543 2-2 2-1.10457 0-2-0.89543-2-2 0-1.10457 0.89543-2 2-2z m20 0c1.10457 0 2 0.89543 2 2 0 1.10457-0.89543 2-2 2-1.10457 0-2-0.89543-2-2 0-1.10457 0.89543-2 2-2z m-10-4c1.65686 0 3 1.34315 3 3 0 1.65685-1.34314 3-3 3-1.65686 0-3-1.34315-3-3 0-1.65685 1.34314-3 3-3z",
+                  "fill": "$--sidebar-primary-foreground",
+                  "width": 32,
+                  "height": 32
                 }
               ]
             },
@@ -6617,40 +6635,15 @@
               "type": "frame",
               "id": "E7MzW",
               "name": "Nav",
-              "width": "fill_container",
-              "height": 220,
+              "width": 64,
+              "height": 188,
               "layout": "none",
               "children": [
                 {
                   "type": "frame",
-                  "id": "dy5YJ",
-                  "x": 4,
-                  "y": 10,
-                  "name": "Item/Active",
-                  "width": 56,
-                  "height": 48,
-                  "fill": "$--sidebar-accent",
-                  "cornerRadius": "$--radius-m",
-                  "justifyContent": "center",
-                  "alignItems": "center",
-                  "children": [
-                    {
-                      "type": "icon_font",
-                      "id": "VlfTv",
-                      "name": "itemActiveIcon",
-                      "width": 24,
-                      "height": 24,
-                      "iconFontName": "map",
-                      "iconFontFamily": "lucide",
-                      "fill": "$--sidebar-accent-foreground"
-                    }
-                  ]
-                },
-                {
-                  "type": "frame",
                   "id": "yqALr",
                   "x": 4,
-                  "y": 64,
+                  "y": 80,
                   "name": "Item",
                   "width": 56,
                   "height": 48,
@@ -6674,7 +6667,7 @@
                   "type": "frame",
                   "id": "oBEkT",
                   "x": 4,
-                  "y": 115,
+                  "y": 129,
                   "name": "Item",
                   "width": 56,
                   "height": 54,
@@ -6696,28 +6689,51 @@
                 },
                 {
                   "type": "frame",
-                  "id": "xaozf",
+                  "id": "dy5YJ",
                   "x": 4,
-                  "y": 176,
-                  "name": "Add",
+                  "y": 25,
+                  "name": "Item/Active",
                   "width": 56,
-                  "height": 40,
-                  "fill": "$--primary",
+                  "height": 48,
+                  "fill": "$--sidebar-accent",
                   "cornerRadius": "$--radius-m",
                   "justifyContent": "center",
                   "alignItems": "center",
                   "children": [
                     {
                       "type": "icon_font",
-                      "id": "I0cbl",
-                      "name": "addBtnIcon",
-                      "width": 16,
-                      "height": 16,
-                      "iconFontName": "plus",
+                      "id": "VlfTv",
+                      "name": "itemActiveIcon",
+                      "width": 24,
+                      "height": 24,
+                      "iconFontName": "map",
                       "iconFontFamily": "lucide",
-                      "fill": "$--primary-foreground"
+                      "fill": "$--sidebar-accent-foreground"
                     }
                   ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "xaozf",
+              "name": "Add",
+              "width": 56,
+              "height": 40,
+              "fill": "$--primary",
+              "cornerRadius": "$--radius-m",
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "I0cbl",
+                  "name": "addBtnIcon",
+                  "width": 16,
+                  "height": 16,
+                  "iconFontName": "plus",
+                  "iconFontFamily": "lucide",
+                  "fill": "$--primary-foreground"
                 }
               ]
             }
@@ -18002,12 +18018,16 @@
                     18,
                     24
                   ],
+                  "effect": [],
+                  "fill": [],
                   "descendants": {
                     "W2XqE": {
-                      "content": "Cards"
+                      "content": "Brands",
+                      "fill": "$--sidebar-foreground"
                     },
                     "edTIG": {
-                      "iconFontName": "credit-card"
+                      "iconFontName": "tag",
+                      "fill": "$--sidebar-foreground"
                     }
                   }
                 },
@@ -18017,6 +18037,7 @@
                   "ref": "xBc88",
                   "width": "fill_container",
                   "name": "addBrand",
+                  "effect": [],
                   "descendants": {
                     "zF167": {
                       "iconFontName": "plus"
@@ -18824,6 +18845,130 @@
                       ]
                     }
                   }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "Qh5Vv",
+          "x": 20,
+          "y": 720,
+          "name": "userDropdown",
+          "width": 200,
+          "fill": "$--popover",
+          "cornerRadius": "$--radius-m",
+          "stroke": {
+            "align": "inside",
+            "thickness": 1,
+            "fill": "$--border"
+          },
+          "effect": {
+            "type": "shadow",
+            "shadowType": "outer",
+            "color": "#0000000a",
+            "offset": {
+              "x": 0,
+              "y": 4
+            },
+            "blur": 12
+          },
+          "layout": "vertical",
+          "gap": 4,
+          "padding": 8,
+          "children": [
+            {
+              "type": "frame",
+              "id": "T7gmm",
+              "name": "menuItem_profile",
+              "gap": 8,
+              "padding": [
+                8,
+                12
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "hAiFD",
+                  "width": 16,
+                  "height": 16,
+                  "iconFontName": "user",
+                  "iconFontFamily": "Material Symbols Rounded",
+                  "fill": "$--foreground"
+                },
+                {
+                  "type": "text",
+                  "id": "KX8qG",
+                  "fill": "$--foreground",
+                  "content": "Profile",
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "e3UpY",
+              "name": "menuItem_cards",
+              "fill": "$--accent",
+              "gap": 8,
+              "padding": [
+                8,
+                12
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "kHnLU",
+                  "width": 16,
+                  "height": 16,
+                  "iconFontName": "credit-card",
+                  "iconFontFamily": "Material Symbols Rounded",
+                  "fill": "$--foreground"
+                },
+                {
+                  "type": "text",
+                  "id": "rgEmr",
+                  "fill": "$--foreground",
+                  "content": "Cards",
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "600"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "lYiPF",
+              "name": "menuItem_settings",
+              "gap": 8,
+              "padding": [
+                8,
+                12
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "6y7uV",
+                  "width": 16,
+                  "height": 16,
+                  "iconFontName": "settings",
+                  "iconFontFamily": "Material Symbols Rounded",
+                  "fill": "$--foreground"
+                },
+                {
+                  "type": "text",
+                  "id": "v0P2C",
+                  "fill": "$--foreground",
+                  "content": "Settings",
+                  "fontFamily": "Inter",
+                  "fontSize": 13,
+                  "fontWeight": "500"
                 }
               ]
             }
