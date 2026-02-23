@@ -55,7 +55,9 @@ export default function App(): React.JSX.Element {
         <FluxaSidebar
           activeTab={sidebarActiveTab}
           onAddBrand={() => setBrandDraftCount((prev) => prev + 1)}
+          onAddCard={() => setActiveView("cards")}
           onAddLocation={openAddLocation}
+          isCardsView={activeView === "cards"}
           onOpenAlbum={openCards}
           onOpenSettings={openWebSettings}
           onTabChange={setActiveView}
