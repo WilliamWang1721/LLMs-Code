@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 
 import { useI18n } from "@/i18n";
+import { TabsWarp } from "@/components/ui/tabs-warp";
 
 type DetailContentTab = "overview" | "attempt" | "reviews";
 
@@ -581,22 +582,14 @@ export function PlaceDetailWeb({ onViewMap }: PlaceDetailWebProps): React.JSX.El
       </header>
 
       <div className="border-b border-[var(--input)] pb-4">
-        <div className="inline-flex h-14 items-center gap-2 rounded-pill border border-[var(--input)] bg-[var(--card)] p-2">
-          {DETAIL_TABS.map((tab) => (
-            <button
-              className={`ui-hover-shadow inline-flex h-10 items-center justify-center rounded-pill px-6 text-sm leading-[1.4286] transition-colors duration-200 [--hover-outline:#2a29332e] ${
-                activeTab === tab.key
-                  ? "bg-[var(--secondary)] text-[var(--secondary-foreground)] shadow-[0_1px_3px_-1px_#0000000f] hover:bg-[var(--secondary-hover)]"
-                  : "bg-white text-[var(--accent-foreground)] hover:bg-[var(--muted-hover)]"
-              }`}
-              key={tab.key}
-              onClick={() => setActiveTab(tab.key)}
-              type="button"
-            >
-              {t(tab.label)}
-            </button>
-          ))}
-        </div>
+        <TabsWarp
+          items={DETAIL_TABS.map((tab) => ({
+            key: tab.key,
+            label: t(tab.label)
+          }))}
+          onValueChange={setActiveTab}
+          value={activeTab}
+        />
       </div>
 
       {activeTab === "overview" ? (
