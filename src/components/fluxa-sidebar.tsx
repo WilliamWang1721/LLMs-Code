@@ -12,14 +12,30 @@ interface FluxaSidebarProps {
   onTabChange: (tab: SidebarTab) => void;
   onAddLocation?: () => void;
   onAddBrand?: () => void;
+  onAddCard?: () => void;
+  isCardsView?: boolean;
+  onOpenAlbum?: () => void;
   onOpenSettings?: () => void;
 }
 
-export function FluxaSidebar({ activeTab, onTabChange, onAddLocation, onAddBrand, onOpenSettings }: FluxaSidebarProps): React.JSX.Element {
+export function FluxaSidebar({
+  activeTab,
+  onTabChange,
+  onAddLocation,
+  onAddBrand,
+  onAddCard,
+  isCardsView = false,
+  onOpenAlbum,
+  onOpenSettings
+}: FluxaSidebarProps): React.JSX.Element {
   const { t } = useI18n();
   const [collapsedLabels, setCollapsedLabels] = useState(false);
 
   const handlePrimaryAddClick = (): void => {
+    if (isCardsView) {
+      onAddCard?.();
+      return;
+    }
     if (activeTab === "map" || activeTab === "list") {
       onAddLocation?.();
       return;
@@ -27,8 +43,10 @@ export function FluxaSidebar({ activeTab, onTabChange, onAddLocation, onAddBrand
     onAddBrand?.();
   };
 
+  const primaryAddLabel = isCardsView ? t("Add Card") : activeTab === "brands" ? t("Add Brand") : t("Add Location");
+
   return (
-    <aside className="flex h-full w-[72px] shrink-0 flex-col rounded-l-none rounded-r-m border border-[var(--sidebar-border)] bg-[var(--sidebar)] md:w-56 lg:w-[240px]">
+    <aside className="flex h-full w-[240px] shrink-0 basis-[240px] flex-col rounded-l-none rounded-r-m border border-[var(--sidebar-border)] bg-[var(--sidebar)]">
       <div className="flex items-center gap-2 p-6">
         <div className="flex flex-1 items-center justify-center gap-2 md:justify-start">
           <div className="relative h-10 w-10">
@@ -95,7 +113,7 @@ export function FluxaSidebar({ activeTab, onTabChange, onAddLocation, onAddBrand
           type="button"
         >
           <Plus className="h-4 w-4" />
-          <span className={collapsedLabels ? "hidden" : "hidden md:inline"}>{activeTab === "brands" ? t("Add Brand") : t("Add Location")}</span>
+          <span className={collapsedLabels ? "hidden" : "hidden md:inline"}>{primaryAddLabel}</span>
         </button>
       </nav>
 
@@ -137,10 +155,16 @@ export function FluxaSidebar({ activeTab, onTabChange, onAddLocation, onAddBrand
           </DropdownMenuItem>
           <DropdownMenuItem
             className="flex h-10 cursor-pointer items-center gap-2.5 !rounded-xs px-3.5 py-2.5 text-sm font-medium leading-[1.4286] text-[var(--foreground)] outline-none transition-colors data-[highlighted]:!rounded-m data-[highlighted]:bg-[var(--accent)]"
-            onSelect={() => onTabChange("history")}
+            onSelect={() => {
+              if (onOpenAlbum) {
+                onOpenAlbum();
+                return;
+              }
+              onTabChange("history");
+            }}
           >
             <Images className="h-4 w-4" />
-            {t("Album")}
+            {t("Cards")}
           </DropdownMenuItem>
           <DropdownMenuItem
             className="flex h-10 cursor-pointer items-center gap-2.5 !rounded-xs px-3.5 py-2.5 text-sm font-medium leading-[1.4286] text-[var(--foreground)] outline-none transition-colors data-[highlighted]:!rounded-m data-[highlighted]:bg-[var(--accent)]"

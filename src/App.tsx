@@ -3,13 +3,14 @@ import { useState } from "react";
 
 import { AddLocationSuccess } from "@/components/add-location-success";
 import { AddLocationWizard } from "@/components/add-location-wizard";
+import { CardsAlbumWeb } from "@/components/cards-album-web";
 import { FluxaHeader } from "@/components/fluxa-header";
 import { FluxaMapCanvas } from "@/components/fluxa-map-canvas";
 import { PlaceDetailWeb } from "@/components/place-detail-web";
 import { FluxaSidebar, type SidebarTab } from "@/components/fluxa-sidebar";
 import { WebSettings } from "@/components/web-settings";
 
-type AppView = SidebarTab | "detail" | "addLocation" | "addLocationSuccess" | "webSettings";
+type AppView = SidebarTab | "detail" | "cards" | "addLocation" | "addLocationSuccess" | "webSettings";
 type ReturnView = SidebarTab | "detail";
 
 function isSidebarTab(view: AppView | ReturnView): view is SidebarTab {
@@ -37,17 +38,25 @@ export default function App(): React.JSX.Element {
     setActiveView("webSettings");
   };
 
+  const openCards = (): void => {
+    if (isSidebarTab(activeView)) {
+      setReturnView(activeView);
+    }
+    setActiveView("cards");
+  };
+
   const sidebarActiveTab: SidebarTab = isSidebarTab(activeView) ? activeView : isSidebarTab(returnView) ? returnView : "list";
 
   const isFullCanvasPage = activeView === "profile" || activeView === "history";
 
   return (
-    <div className="h-screen w-screen bg-[var(--background)] font-sans text-[var(--foreground)]">
-      <main className="flex h-full w-full min-w-0 bg-[var(--background)]">
+    <div className="h-screen w-screen overflow-hidden bg-[var(--background)] font-sans text-[var(--foreground)]">
+      <main className="flex h-full w-full min-w-0 overflow-hidden bg-[var(--background)]">
         <FluxaSidebar
           activeTab={sidebarActiveTab}
           onAddBrand={() => setBrandDraftCount((prev) => prev + 1)}
           onAddLocation={openAddLocation}
+          onOpenAlbum={openCards}
           onOpenSettings={openWebSettings}
           onTabChange={setActiveView}
         />
@@ -73,6 +82,12 @@ export default function App(): React.JSX.Element {
         {activeView === "webSettings" ? (
           <div className="tab-switch-enter flex min-h-0 min-w-0 flex-1">
             <WebSettings onExplore={() => setActiveView("map")} />
+          </div>
+        ) : null}
+
+        {activeView === "cards" ? (
+          <div className="tab-switch-enter flex min-h-0 min-w-0 flex-1">
+            <CardsAlbumWeb />
           </div>
         ) : null}
 
