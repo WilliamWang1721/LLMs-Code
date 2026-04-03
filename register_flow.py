@@ -129,10 +129,10 @@ def submit_callback_url(
     state = (query.get("state", [""])[0] or "").strip()
 
     if not code:
-        print("[Error] callback URL 中缺少 code 参数")
+        print("[错误] 回调 URL 中缺少 code 参数")
         return None
     if state != expected_state:
-        print(f"[Error] state 不匹配: 期望 {expected_state[:20]}..., 收到 {state[:20]}...")
+        print(f"[错误] state 不匹配: 期望 {expected_state[:20]}..., 收到 {state[:20]}...")
         return None
 
     try:
@@ -147,7 +147,7 @@ def submit_callback_url(
             },
         )
     except Exception as e:
-        print(f"[Error] Token 交换失败: {e}")
+        print(f"[错误] Token 交换失败: {e}")
         return None
 
     access_token = (token_resp.get("access_token") or "").strip()
@@ -202,12 +202,12 @@ class ChatGPTRegistrar:
 
         try:
             # 1. 获取临时邮箱
-            print("[1/7] 获取临时邮箱...")
+            print("[1/7] 正在获取临时邮箱...")
             email, mail_token = get_email_and_token(proxies)
             if not email or not mail_token:
-                print("[Error] 获取邮箱失败")
+                print("[错误] 获取邮箱失败")
                 return None
-            print(f"[✓] 邮箱: {email}")
+            print(f"[✓] 邮箱地址: {email}")
 
             # 2. 生成 OAuth URL 和密码
             oauth = generate_oauth_url()
@@ -221,7 +221,7 @@ class ChatGPTRegistrar:
             print(f"[*] 姓名: {rand_name}, 生日: {rand_bday}")
 
             # 3. 启动指纹浏览器
-            print("[2/7] 启动指纹浏览器...")
+            print("[2/7] 正在启动指纹浏览器...")
             self.page = await self.browser_mgr.launch(
                 proxy_url=self.proxy_url,
                 headless=self.headless,
@@ -229,7 +229,7 @@ class ChatGPTRegistrar:
             self.human = HumanSimulator(self.page)
 
             # 4. 导航到注册页面
-            print("[3/7] 打开 ChatGPT 注册页面...")
+            print("[3/7] 正在打开 ChatGPT 注册页面...")
             await self.page.goto(oauth["auth_url"], wait_until="domcontentloaded")
             await self.human.thinking_pause()
 
@@ -237,41 +237,41 @@ class ChatGPTRegistrar:
             await self.human.simulate_reading(random.uniform(1.5, 3.0))
 
             # 5. 输入邮箱
-            print("[4/7] 输入注册邮箱...")
+            print("[4/7] 正在输入注册邮箱...")
             result = await self._step_enter_email(email)
             if not result:
                 return None
 
             # 6. 设置密码
-            print("[5/7] 设置密码...")
+            print("[5/7] 正在设置密码...")
             result = await self._step_set_password(password)
             if not result:
                 return None
 
             # 7. 邮箱验证（如需要）
-            print("[6/7] 等待邮箱验证...")
+            print("[6/7] 正在等待邮箱验证...")
             result = await self._step_email_verification(mail_token, email, proxies)
             if not result:
                 return None
 
             # 8. 填写个人信息
-            print("[7/7] 填写个人信息...")
+            print("[7/7] 正在填写个人信息...")
             result = await self._step_fill_profile(rand_name, rand_bday)
             if not result:
                 return None
 
             # 9. 等待并捕获 OAuth callback
-            print("[*] 等待 OAuth 回调...")
+            print("[*] 正在等待 OAuth 授权回调...")
             token_json = await self._capture_oauth_callback(oauth)
             if token_json:
-                print("[✓] 注册成功！Token 已获取")
+                print("[✓] 注册成功！Token 已成功获取")
                 return token_json
             else:
-                print("[Error] 未能捕获到 OAuth callback")
+                print("[错误] 未能捕获到 OAuth 授权回调")
                 return None
 
         except Exception as e:
-            print(f"[Error] 注册流程异常: {e}")
+            print(f"[错误] 注册流程异常: {e}")
             import traceback
             traceback.print_exc()
             return None
@@ -339,11 +339,11 @@ class ChatGPTRegistrar:
                         continue
 
             if not email_input:
-                print("[Error] 未找到邮箱输入框")
-                # 打印页面内容用于调试
+                print("[错误] 未找到邮箱输入框")
+                # 打印页面信息用于调试
                 title = await self.page.title()
-                print(f"[Debug] 页面标题: {title}")
-                print(f"[Debug] URL: {self.page.url}")
+                print(f"[调试] 页面标题: {title}")
+                print(f"[调试] URL: {self.page.url}")
                 return False
 
             # 人类化输入邮箱
@@ -388,7 +388,7 @@ class ChatGPTRegistrar:
             return True
 
         except Exception as e:
-            print(f"[Error] 输入邮箱步骤失败: {e}")
+            print(f"[错误] 输入邮箱步骤失败: {e}")
             return False
 
     async def _step_set_password(self, password: str) -> bool:
@@ -418,7 +418,7 @@ class ChatGPTRegistrar:
             if not pwd_input:
                 # 可能页面显示「已有账号」—— 检查是否需要切换到注册
                 current_url = self.page.url
-                print(f"[Debug] 密码页 URL: {current_url}")
+                print(f"[调试] 密码页 URL: {current_url}")
 
                 # 可能跳转到了登录页，需要找注册入口
                 signup_link_selectors = [
@@ -447,7 +447,7 @@ class ChatGPTRegistrar:
                         continue
 
             if not pwd_input:
-                print("[Error] 未找到密码输入框")
+                print("[错误] 未找到密码输入框")
                 return False
 
             # 人类化输入密码
@@ -482,7 +482,7 @@ class ChatGPTRegistrar:
             return True
 
         except Exception as e:
-            print(f"[Error] 设置密码步骤失败: {e}")
+            print(f"[错误] 设置密码步骤失败: {e}")
             return False
 
     async def _step_email_verification(self, mail_token: str, email: str, proxies: Any) -> bool:
@@ -527,17 +527,17 @@ class ChatGPTRegistrar:
                 print("[*] 无需邮箱验证，跳过此步骤")
                 return True
 
-            print("[*] 需要邮箱验证，正在等待验证码...")
+            print("[*] 需要邮箱验证，正在轮询验证码...")
 
             # 轮询邮箱获取验证码
             seen_ids = set()
             otp_code = get_oai_code(mail_token, email, proxies, seen_msg_ids=seen_ids)
 
             if not otp_code:
-                print("[Error] 未收到验证码")
+                print("[错误] 未收到邮箱验证码")
                 return False
 
-            print(f"[✓] 收到验证码: {otp_code}")
+            print(f"[✓] 成功收到验证码: {otp_code}")
 
             # 查找验证码输入框
             otp_selectors = [
@@ -563,7 +563,7 @@ class ChatGPTRegistrar:
                 # 有些验证码有 6 个独立输入框
                 individual_inputs = await self.page.query_selector_all('input[maxlength="1"]')
                 if len(individual_inputs) >= 6:
-                    print("[*] 检测到 6 个独立验证码输入框")
+                    print("[*] 检测到 6 位独立验证码输入框")
                     for idx, digit in enumerate(otp_code[:6]):
                         await individual_inputs[idx].click()
                         await asyncio.sleep(random.uniform(0.1, 0.3))
@@ -571,7 +571,7 @@ class ChatGPTRegistrar:
                         await asyncio.sleep(random.uniform(0.1, 0.25))
                     await self.human.random_wait(0.5, 1.0)
                 else:
-                    print("[Error] 未找到验证码输入框")
+                    print("[错误] 未找到验证码输入框")
                     return False
             else:
                 # 人类化输入验证码
@@ -606,7 +606,7 @@ class ChatGPTRegistrar:
             return True
 
         except Exception as e:
-            print(f"[Error] 邮箱验证步骤失败: {e}")
+            print(f"[错误] 邮箱验证步骤失败: {e}")
             return False
 
     async def _step_fill_profile(self, name: str, birthday: str) -> bool:
@@ -712,7 +712,7 @@ class ChatGPTRegistrar:
             return True
 
         except Exception as e:
-            print(f"[Error] 填写个人信息步骤失败: {e}")
+            print(f"[错误] 填写个人信息步骤失败: {e}")
             return False
 
     async def _capture_oauth_callback(self, oauth: dict, timeout: int = 30) -> Optional[str]:
@@ -725,7 +725,7 @@ class ChatGPTRegistrar:
 
                 # 检查是否已经跳转到 callback URL
                 if "code=" in current_url and "state=" in current_url:
-                    print(f"[✓] 捕获到 OAuth callback!")
+                    print(f"[✓] 成功捕获到 OAuth 授权回调!")
                     return submit_callback_url(
                         callback_url=current_url,
                         expected_state=oauth["state"],
@@ -735,7 +735,7 @@ class ChatGPTRegistrar:
 
                 # 检查是否到了 localhost callback（浏览器会显示连接错误）
                 if "localhost" in current_url and "code=" in current_url:
-                    print(f"[✓] 捕获到 localhost callback!")
+                    print(f"[✓] 成功捕获到本地回调!")
                     return submit_callback_url(
                         callback_url=current_url,
                         expected_state=oauth["state"],
@@ -745,7 +745,7 @@ class ChatGPTRegistrar:
 
                 # 检查是否到了 ChatGPT 主页（注册成功可能直接跳转）
                 if "chatgpt.com" in current_url and "/c/" in current_url:
-                    print("[*] 已跳转到 ChatGPT 主页，尝试从 cookie 获取 token...")
+                    print("[*] 已跳转到 ChatGPT 主页，正在尝试从 Cookie 获取 Token...")
                     # 不一定能从 cookie 直接拿到 token，但注册是成功的
                     break
 
@@ -783,10 +783,10 @@ class ChatGPTRegistrar:
                     redirect_uri=oauth["redirect_uri"],
                 )
 
-            print("[Error] 等待 OAuth callback 超时")
-            print(f"[Debug] 最终 URL: {final_url}")
+            print("[错误] 等待 OAuth 授权回调超时")
+            print(f"[调试] 最终 URL: {final_url}")
             return None
 
         except Exception as e:
-            print(f"[Error] 捕获 callback 失败: {e}")
+            print(f"[错误] 捕获授权回调失败: {e}")
             return None

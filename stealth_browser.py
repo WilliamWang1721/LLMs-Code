@@ -332,10 +332,10 @@ class StealthBrowser:
         self.fingerprint = _generate_fingerprint()
         fp = self.fingerprint
 
-        print(f"[Browser] UA: {fp['user_agent'][:60]}...")
-        print(f"[Browser] 分辨率: {fp['screen']['width']}x{fp['screen']['height']}")
-        print(f"[Browser] 时区: {fp['timezone']}")
-        print(f"[Browser] WebGL: {fp['webgl']['renderer'][:50]}...")
+        print(f"[浏览器] 用户代理: {fp['user_agent'][:60]}...")
+        print(f"[浏览器] 分辨率: {fp['screen']['width']}x{fp['screen']['height']}")
+        print(f"[浏览器] 时区: {fp['timezone']}")
+        print(f"[浏览器] WebGL 渲染器: {fp['webgl']['renderer'][:50]}...")
 
         self.playwright = await async_playwright().start()
 
@@ -430,7 +430,7 @@ class StealthBrowser:
             });
         """)
 
-        print("[Browser] 指纹浏览器启动完成")
+        print("[浏览器] ✓ 指纹浏览器启动完成")
         return self.page
 
     async def close(self):
@@ -448,7 +448,7 @@ class StealthBrowser:
         self.context = None
         self.browser = None
         self.playwright = None
-        print("[Browser] 浏览器已关闭")
+        print("[浏览器] 浏览器已关闭")
 
     async def new_page(self) -> Page:
         """在当前上下文中创建新页面"""
